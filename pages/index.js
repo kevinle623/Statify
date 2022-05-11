@@ -3,7 +3,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {useRouter } from 'next/router';
 
-const CLIENT_ID = "e80f29b550fb4604bfd9d4fd0208405d"; // insert your client id here from spotify
+
+const CLIENT_ID = "e80f29b550fb4604bfd9d4fd0208405d"; 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/home";
 const SPACE_DELIMITER = "%20";
@@ -33,21 +34,21 @@ function Login() {
     
     <div className="App">
       
-       <section id="hero" class="hero d-flex align-items-center">
+       <section id="hero" className="hero d-flex align-items-center">
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12 d-flex flex-column justify-content-center">
+<div className="container">
+  <div className="row">
+    <div className="col-lg-12 d-flex flex-column justify-content-center">
       <h1 data-aos="fade-up">Statify</h1>
       <h2 data-aos="fade-up" data-aos-delay="400">Your one stop shop to track your Spotify!</h2>
-      <div class= 'hello' data-aos="fade-up" data-aos-delay="600">
-        <div class="hello text-center text-lg-centre">
+      <div className= 'hello' data-aos="fade-up" data-aos-delay="600">
+        <div className="hello text-center text-lg-centre">
           
-          <a onClick={handleLogin} class="btn-get-started  align-items-center justify-content-center align-self-center">
-            <span>  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-spotify" viewBox="0 0 16 16">
+          <a onClick={handleLogin} className="btn-get-started  align-items-center justify-content-center align-self-center">
+            <span>  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-spotify" viewBox="0 0 16 16">
   <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288z"/>
 </svg> CONNECT WITH SPOTIFY</span>
-            <i class="bi bi-arrow-right"></i>
+            <i className="bi bi-arrow-right"></i>
           </a>
         </div>
       </div>
@@ -57,15 +58,15 @@ function Login() {
 </div>
 
 </section>
-<footer id="footer" class="footer"> 
-<div class="container ">
-      <div class="hello copyright">
+<footer id="footer" className="footer"> 
+<div className="container ">
+      <div className="hello copyright">
         &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
       </div>
       
-      <div class="hello credits">
+      <div className="hello credits">
   
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank">Kevin Le  </a>
+        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623"  target="_blank" rel="noopener noreferrer">Kevin Le  </a>
       </div>
     </div>
 

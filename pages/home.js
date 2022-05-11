@@ -1,6 +1,6 @@
 import { Toolbar } from "../components/toolbar"
 import Spotify from 'spotify-web-api-js'
-
+import Image from 'next/image'
 import React, { Component } from 'react'
 
 
@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 const spotifyWebApi = new Spotify();
 
 var username = ' '
-var profile_pic = ' '
+var profile_pic = 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'
 var followers = ' '
 var message = 'short_term'
 
@@ -151,7 +151,7 @@ class Home extends Component {
             }
             catch(err){
               username = response.display_name
-              profile_pic = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Simple_Music.svg/600px-Simple_Music.svg.png'
+              profile_pic = 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'
               followers = response.followers.total
 
 
@@ -272,15 +272,7 @@ class Home extends Component {
             }
             
           })
-          // lst = "<ol style='list-style-type:none;'>"
-          // var counter = 1
-  
-          //     for (let i of response.items) {
-          //         lst += `<li><h4>${counter}. ${i.name}</h4><img src = ${i.images[0].url} class = "list-img"/></li>`;
-          //         counter += 1
-          //       }
-          //       lst += "</ol>";
-          //       document.getElementById("artistlist").innerHTML = lst;
+         
   
         })
   }
@@ -295,7 +287,7 @@ class Home extends Component {
           
           
     
-            <div class="App hero2">
+            <div className="App hero2">
             
            
             
@@ -303,27 +295,27 @@ class Home extends Component {
            <Toolbar/>
                
 
-                <section id="hero" class="hero d-flex align-items-center">
+                <section id="hero" className="hero d-flex align-items-center">
 
-    <div class="container">
-      <div class="row">
-        <div class=" col-lg-6 d-flex flex-column justify-content-center">
+    <div className="container">
+      <div className="row">
+        <div className=" col-lg-6 d-flex flex-column justify-content-center">
           <h1 data-aos="fade-up">Welcome Back { username }!</h1>
-          <div class='hello'>
-                          <img class = 'profile-pic' src = {profile_pic}/> 
+          <div className='hello'>
+                          <img className= 'profile-pic' src = {profile_pic}/> 
                         </div>
                         <div><h4>Followers: {followers}</h4></div>
           <h2 data-aos="fade-up" data-aos-delay="400">Take a look behind the curtain of your Spotify music.</h2>
-          <div class="hello" data-aos="fade-up" data-aos-delay="600">
-            <div class=" hello text-center">
-              <a href="#about" class="btn-get-started  align-items-center justify-content-center align-self-center">
+          <div className="hello" data-aos="fade-up" data-aos-delay="600">
+            <div className=" hello text-center">
+              <a href="#about" className="btn-get-started  align-items-center justify-content-center align-self-center">
                 <span>OVERVIEW</span>
                 
               </a>
             </div>
           </div>
         </div>
-        <div class="col-lg-6 d-flex flex-column justify-content-center " data-aos="zoom-out" data-aos-delay="200">
+        <div className="col-lg-6 d-flex flex-column justify-content-center " data-aos="zoom-out" data-aos-delay="200">
         <h1 data-aos="fade-up"> Now Playing: </h1>
           
            
@@ -332,9 +324,9 @@ class Home extends Component {
   <img src= {this.state.nowPlaying.image} style= {{width: 200}}/>
 </div>
 <h2 data-aos="fade-up" data-aos-delay="400">{ this.state.nowPlaying.name }</h2>
-<div class = " hello" data-aos="fade-up" data-aos-delay="600">
-<div class="hello text-center ">
-<a onClick={() => this.getNowPlaying()} class="btn-get-started align-items-center justify-content-center align-self-center">
+<div className= " hello" data-aos="fade-up" data-aos-delay="600">
+<div className="hello text-center ">
+<a onClick={() => this.getNowPlaying()} className="btn-get-started align-items-center justify-content-center align-self-center">
 <span>CHECK NOW PLAYING</span>
 </a>
 </div>
@@ -349,64 +341,64 @@ class Home extends Component {
 
   <main id="main">
   
-    <section id="about" class="about hero align-items-center">
-    <div class = 'hello'><h1 data-aos="fade-up">Your Favourites</h1>
+    <section id="about" className="about hero align-items-center">
+    <div className= 'hello'><h1 data-aos="fade-up">Your Favourites</h1>
     <h3>({this.state.nowTime.message})</h3>
                
-               <div class="hello btn-group" role="group" aria-label="Basic radio toggle button group">
-               <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopStats('short_term')}>
+               <div className="hello btn-group" role="group" aria-label="Basic radio toggle button group">
+               <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopStats('short_term')}>
                  Past Month
                </button>
-               <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopStats('medium_term')}>
+               <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopStats('medium_term')}>
                  Past 6 Months
                </button>
-               <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopStats('long_term')}>
+               <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopStats('long_term')}>
                  All Time
                </button>
                </div></div>
 
-      <div class="container" data-aos="fade-up">
-        <div class="hello row gx-0">
+      <div className="container" data-aos="fade-up">
+        <div className="hello row gx-0">
 
-          <div class="hello col-lg-9 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="content">
+          <div className="hello col-lg-9 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div className="content">
               <h3>Your favourite artist</h3>
               <h2>{this.state.topArtist.name}</h2>
               <p>
                 Followers: {this.state.topArtist.followers}
               </p>
-              <div class="hello text-center text-lg-center">
-                <a href={this.state.topArtist.link} target="_blank" class="btn-get-started  align-items-center justify-content-center align-self-center">
+              <div className="hello text-center text-lg-center">
+                <a href={this.state.topArtist.link} target="_blank" rel="noopener noreferrer" className="btn-get-started  align-items-center justify-content-center align-self-center">
                   <span>VISIT ON SPOTIFY</span>
-                  <i class="bi bi-arrow-right"></i>
+                  <i className="bi bi-arrow-right"></i>
                 </a>
                 
               </div>
             </div>
           </div>
 
-          <div class="hello col-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src={this.state.topArtist.image} class="img-fluid" alt=""/>
+          <div className="hello col-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src={this.state.topArtist.image} className="img-fluid" alt=""/>
           </div>
 
         </div>
       </div>
-      <div class="container" data-aos="fade-up">
-        <div class="hello row gx-0">
-        <div class="hello col-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src={this.state.topSong.image} class="img-fluid" alt=""/>
+      <div className="container" data-aos="fade-up">
+        <div className="hello row gx-0">
+        <div className="hello col-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src={this.state.topSong.image} className="img-fluid" alt=""/>
             
           </div>
 
-          <div class="hello col-lg-9 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="content">
+          <div className="hello col-lg-9 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div className="content">
               <h3>Your favourite track</h3>
               <h2>{this.state.topSong.name}</h2>
               <p>
               {this.state.topSong.artist}
               </p>
-              <div class="hello text-center text-lg-center">
-                <a href={this.state.topSong.link} target="_blank" class="btn-get-started  align-items-center justify-content-center align-self-center">
+              <div className="hello text-center text-lg-center">
+                <a href={this.state.topSong.link} target="_blank" rel="noopener noreferrer" className="btn-get-started  align-items-center justify-content-center align-self-center">
                   <span>LISTEN ON SPOTIFY</span>
                   
                 </a>
@@ -423,15 +415,15 @@ class Home extends Component {
 
     </section>
     </main>
-    <footer id="footer" class="footer hello"> 
-<div class="container ">
-      <div class="copyright hello">
+    <footer id="footer" className="footer hello"> 
+<div className="container ">
+      <div className="copyright hello">
         &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
       </div>
       
-      <div class="credits hello">
+      <div className="credits hello">
   
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank">Kevin Le  </a>
+        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
       </div>
     </div>
 

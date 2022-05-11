@@ -1,6 +1,6 @@
 import { Toolbar } from "../components/toolbar"
 import Spotify from 'spotify-web-api-js'
-
+import Image from 'next/image'
 import React, { Component } from 'react'
 
 
@@ -81,17 +81,7 @@ class History extends Component {
             })
             
             
-            // lst = "<ol style='list-style-type:none;'>"
-         
-    
-            // for (let i of response.items) {
-                
-            //     lst += `<li><div><h4>${i.track.name} by ${i.track.artists[0].name} | ${i.played_at}</h4> <img src = ${i.track.album.images[0].url} class = "list-img"/>    </div></li>`;
-          
-                
-            //   }
-            //   lst += "</ol>";
-            //   document.getElementById("historylist").innerHTML = lst;
+           
     
     
     
@@ -106,25 +96,25 @@ class History extends Component {
 
       const words = props.words;
       const items = words.map((song, idx) =>
-      <tr>
-      <th scope="row" class = 'num-history'>{idx + 1}</th>
+      <tr key = {idx}>
+      <th scope="row" className= 'num-history'>{idx + 1}</th>
       <td>
-        <div class="container">
-            <div class="hello row align-items-center">
-                <div class="hello col-md-3">
-                <a href = {song.track.external_urls.spotify} target="_blank">
-                              <img src = {song.track.album.images[0].url} class = 'list-img'/> 
+        <div className="container">
+            <div className="hello row align-items-center">
+                <div className="hello col-md-3">
+                <a href = {song.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                              <Image src = {song.track.album.images[0].url} className= 'list-Image'/> 
                       </a>
                   </div>
-            <div class="hello col song-detail">
+            <div className="hello col song-detail">
             
                                      
                                       
-                                  <a href = {song.track.external_urls.spotify} target="_blank"><div class = 'song-name'> 
+                                  <a href = {song.track.external_urls.spotify} target="_blank" rel="noopener noreferrer"><div className= 'song-name'> 
                                     {song.track.name} 
                                     </div> </a>
-                                      <a href = {song.track.artists[0].external_urls.spotify} target="_blank">
-                                        <div class ='artist'> 
+                                      <a href = {song.track.artists[0].external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                                        <div className='artist'> 
                                            {song.track.artists[0].name} 
                                       </div> 
                                         </a >
@@ -133,7 +123,7 @@ class History extends Component {
           </div>
           </div>
   </td>
-    <a href = {song.track.album.external_urls.spotify} target="_blank"><td class = 'song-name'>{song.track.album.name}</td></a>
+    <a href = {song.track.album.external_urls.spotify} target="_blank" rel="noopener noreferrer"><td className= 'song-name'>{song.track.album.name}</td></a>
       <td >{convertTime(song.played_at)}</td>
     </tr>
 
@@ -141,7 +131,7 @@ class History extends Component {
       );
 
       return (
-        <table class="table ">
+        <table className="table ">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -161,19 +151,19 @@ class History extends Component {
             
             <div className="App hero2">
                 <Toolbar/>
-                <section  id="about" class="about hero2">
-                <div class = 'hello'><h1>Your Recently Played Tracks</h1></div>
+                <section  id="about" className="about hero2">
+                <div className= 'hello'><h1>Your Recently Played Tracks</h1></div>
                 <this.WordList words = {this.state.nowList.songs}/>
                 </section>
-                <footer id="footer" class="footer"> 
-<div class="container">
-      <div class="copyright">
+                <footer id="footer" className="footer"> 
+<div className="container">
+      <div className="copyright">
         &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
       </div>
       
-      <div class="credits">
+      <div className="credits">
   
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank">Kevin Le  </a>
+        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
       </div>
     </div>
 

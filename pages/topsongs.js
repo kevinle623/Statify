@@ -1,5 +1,6 @@
 
 import { Toolbar } from "../components/toolbar"
+import Image from 'next/image'
 
 import Spotify from 'spotify-web-api-js'
 
@@ -94,34 +95,7 @@ class Topsongs extends Component {
 
 
 
-        // lst = "<ol >"
-        // var counter = 1
-
-
-        // for (let i of response.items) {
-        //     // lst += `<li><a onclick='thisnewwin()'><div class = 'song'><h4>${counter}. ${i.name} by ${i.artists[0].name}</h4> <img src = ${i.album.images[0].url} class = "list-img"/>   </div></a></li>`;
-        //     lst += `<li>
-        //               <button onClick = ${() => this.getTopSongs('short_term')}>
-        //                 <div class = 'song'> 
-        //                      <div class = 'song-img'> 
-        //                             <img src = ${i.album.images[0].url} class = "list-img"/> 
-        //                       </div> 
-        //                 <div class = 'song-detail'> 
-        //                       <div class = 'song-name'> 
-        //                             ${i.name} 
-        //                       </div> 
-        //                       <div class ='artist'> 
-        //                             ${i.artists[0].name} 
-        //                       </div>
-        //                 </div>
-        //                 </div>
-        //               </button>
-        //             </li>`;
-        //     counter += 1;
-        //   }
-        //   lst += "</ol>";
-        //   document.getElementById("tracklist").DangerouslySetInnerHTML = lst;
-
+       
 
 
 
@@ -209,27 +183,27 @@ class Topsongs extends Component {
 
 
 
-      <div>
+      <div key = {idx}>
     
-        <div class="mx-auto card mb-3">
-          <div class="row-margin row align-items-center g-0 ">
-            <div class="portfolio-wrap img-margin col-md-2">
+        <div className="mx-auto card mb-3">
+          <div className="row-margin row align-items-center g-0 ">
+            <div className="portfolio-wrap Image-margin col-md-2">
               
-                <img src={song.album.images[0].url} class="img-margin img-fluid rounded-start" alt="..." />
-                <a href= {song.external_urls.spotify} target="_blank"><div class="portfolio-info">
+                <Image src={song.album.images[0].url} className="Image-margin Image-fluid rounded-start" alt="..." />
+                <a href= {song.external_urls.spotify} target="_blank" rel="noopener noreferrer"><div className="portfolio-info">
                <h1>{idx + 1}</h1>
           
                 
               </div></a>
              
             </div>
-            <div class="song-info-marg col-md-9">
-              <div class="song-info-marg card-body">
-                <a href={song.external_urls.spotify} target="_blank">
-                  <h5 class="card-title">{song.name} </h5>
+            <div className="song-info-marg col-md-9">
+              <div className="song-info-marg card-body">
+                <a href={song.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                  <h5 className="card-title">{song.name} </h5>
                 </a>
-                <a href={song.artists[0].external_urls.spotify} target="_blank">
-                  <p class="card-text">{song.artists[0].name} </p>
+                <a href={song.artists[0].external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                  <p className="card-text">{song.artists[0].name} </p>
                 </a>
 
               </div>
@@ -238,75 +212,16 @@ class Topsongs extends Component {
         </div>
       </div>
 
-      //   <li  class="list-group-item" key={idx}>
-      //   <div class="card mb-3" style="max-width: 540px;">
-      //   <div class="row g-0">
-      //     <div class="col-md-4">
-      //       <img src={song.album.images[0].url} class="img-fluid rounded-start" />
-      //     </div>
-      //     <div class="col-md-8">
-      //       <div class="card-body">
-      //         <h5 class="card-title">Card title</h5>
-      //         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      //         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </div>
-      // </li>
-
-
-
-      // <li  class="list-group-item" key={idx}>
-      //   {/* <button onClick = {() => this.getNowDisplay(1, song, song.artists[0])}> */}
-
-
-      //                      <div class = 'container-fluid'>
-      //                        <div class = 'row align-items-center row-list'>
-      //                        <div class = 'num-list col-md-4'> 
-
-      //                        {idx +1}
-
-
-      //                            </div> 
-      //                            <div class = 'col-md-1'> 
-      //                             <a href = {song.external_urls.spotify} target="_blank">
-      //                            <img src = {song.album.images[0].url} class = 'list-img'/> 
-      //                            </a>
-
-      //                             </div> 
-      //                                 <div class = 'col'> 
-      //                                 <div class = 'song-detail'>
-
-
-      //                                 <a href = {song.external_urls.spotify} target="_blank"><div class = 'song-name'> 
-      //                                       {song.name} 
-      //                                   </div> </a>
-      //                                   <a href = {song.artists[0].external_urls.spotify} target="_blank">
-      //                                   <div class ='artist'> 
-      //                                   {song.artists[0].name} 
-      //                                   </div> 
-      //                                   </a >
-      //                                   </div> 
-      //                                   </div>
-      //                       </div>
-      //                       </div>
-
-      // {/* </button> */}
-
-
-
-      // </li>
-
+     
     );
 
 
     return (
 
 
-      <section id="portfolio" class="portfolio">
+      <section id="portfolio" className="portfolio">
 
-      <div class="container" data-aos="fade-up">
+      <div className="container" data-aos="fade-up">
       
         {items}
         </div>
@@ -324,19 +239,19 @@ class Topsongs extends Component {
     return (
       <div className="App hero2">
         <Toolbar />
-        <section  id="about" class="about hero2">
+        <section  id="about" className="about hero2">
 
-        <div class = 'hello '><h1>Your Top Tracks</h1>
+        <div className= 'hello '><h1>Your Top Tracks</h1>
           <h3>({this.state.nowTime.message})</h3>
 
-          <div class="hello btn-group" role="group" aria-label="Basic radio toggle button group">
-            <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopSongs('short_term')}>
+          <div className="hello btn-group" role="group" aria-label="Basic radio toggle button group">
+            <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopSongs('short_term')}>
               Past Month
             </button>
-            <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopSongs('medium_term')}>
+            <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopSongs('medium_term')}>
               Past 6 Months
             </button>
-            <button type="button" class="btn btn-outline-dark" onClick={() => this.getTopSongs('long_term')}>
+            <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopSongs('long_term')}>
               All Time
             </button>
           </div>
@@ -348,15 +263,15 @@ class Topsongs extends Component {
 
 
       </section>
-      <footer id="footer" class="footer hello"> 
-<div class="container ">
-      <div class="copyright hello">
+      <footer id="footer" className="footer hello"> 
+<div className="container ">
+      <div className="copyright hello">
         &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
       </div>
       
-      <div class="credits hello">
+      <div className="credits hello">
   
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank">Kevin Le  </a>
+        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
       </div>
     </div>
 
