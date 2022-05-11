@@ -49,7 +49,7 @@ export const Toolbar = () => {
       
 
      
-      <a onClick={() => router.push('/home') } className="logo align-items-center">
+      <a onClick={() => router.push('/') } className="logo align-items-center">
       <i className="gg-log-out"></i></a>
 
     </div>
