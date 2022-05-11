@@ -103,7 +103,7 @@ class History extends Component {
             <div className="hello row align-items-center">
                 <div className="hello col-md-3">
                 <a href = {song.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                              <Image src = {song.track.album.images[0].url} className= 'list-Image'/> 
+                              <img src = {song.track.album.images[0].url} alt = '' className= 'list-img'/> 
                       </a>
                   </div>
             <div className="hello col song-detail">

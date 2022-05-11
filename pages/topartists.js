@@ -140,7 +140,7 @@ WordList(props) {
   const items = words.map((song, idx) =>
   <div key = {idx} className="col-lg-4 col-md-6 portfolio-item filter-app">
             <div className="portfolio-wrap">
-              <Image src={song.images[0].url} className="Image-album Image-fluid" alt=""/>
+              <img src={song.images[0].url} className="img-album img-fluid" alt=""/>
               <div className="portfolio-info">
                 <h4>{idx + 1}. {song.name}</h4>
                 <p>Followers: {(song.followers.total).toLocaleString()} </p>

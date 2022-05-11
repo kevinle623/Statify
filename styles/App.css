@@ -32,19 +32,12 @@ th{
   width: 900px;
 }
 
-.Image-fluid {
-  width: '100%'; 
-  height: '100%'; 
-  position: 'relative';
-
-}
-
-.Image-album {
+.img-album {
   width: 420px;
   max-height: 420px;
 }
 
-.Image-margin {
+.img-margin {
   margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
@@ -98,7 +91,7 @@ th{
 .artist-list {
   text-align: center !important;
 }
-.artist-Image {
+.artist-img {
   width: 300px;
   height: 300px;
 }
@@ -108,7 +101,7 @@ th{
   width: 400px;
 }
 
-.image__Image {
+.image__img {
   display: block;
   width: 100%;
 }
@@ -200,13 +193,13 @@ th{
   
 }
 
-.list-Image {
+.list-img {
   width: 130px;
   
   
 }
 
-.song-Image {
+.song-img {
  
   width: 100px;
   height: 100px;
@@ -486,7 +479,7 @@ section {
   cursor: pointer;
   font-family: "Nunito", sans-serif;
 }
-.header .logo Image {
+.header .logo img {
   max-height: 40px;
   margin-right: 6px;
 }
@@ -823,7 +816,7 @@ section {
 .hero .btn-get-started:hover i {
   transform: translateX(5px);
 }
-.hero .hero-Image {
+.hero .hero-img {
   text-align: right;
 }
 @media (min-width: 1024px) {
@@ -836,11 +829,11 @@ section {
     height: auto;
     padding: 120px 0 60px 0;
   }
-  .hero .hero-Image {
+  .hero .hero-img {
     text-align: center;
     margin-top: 80px;
   }
-  .hero .hero-Image Image {
+  .hero .hero-img img {
     width: 80%;
   }
 }
@@ -854,7 +847,7 @@ section {
   .hero h2 {
     font-size: 24px;
   }
-  .hero .hero-Image Image {
+  .hero .hero-img img {
     width: 100%;
   }
 }
@@ -904,7 +897,7 @@ section {
 .hero2 .btn-get-started:hover i {
   transform: translateX(5px);
 }
-.hero2 .hero-Image {
+.hero2 .hero-img {
   text-align: right;
 }
 @media (min-width: 1024px) {
@@ -917,11 +910,11 @@ section {
     height: auto;
     padding: 120px 0 60px 0;
   }
-  .hero2 .hero-Image {
+  .hero2 .hero-img {
     text-align: center;
     margin-top: 80px;
   }
-  .hero2 .hero-Image Image {
+  .hero2 .hero-img img {
     width: 80%;
   }
 }
@@ -935,7 +928,7 @@ section {
   .hero2 h2 {
     font-size: 24px;
   }
-  .hero2 .hero-Image Image {
+  .hero2 .hero-img img {
     width: 100%;
   }
 }
@@ -999,7 +992,7 @@ section {
   transition: 0.3s;
   height: 100%;
 }
-.values .box Image {
+.values .box img {
   padding: 30px 50px;
   transition: 0.5s;
   transform: scale(1.1);
@@ -1013,7 +1006,7 @@ section {
 .values .box:hover {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
 }
-.values .box:hover Image {
+.values .box:hover img {
   transform: scale(1);
 }
 
@@ -1318,7 +1311,7 @@ section {
   font-size: 16px;
   font-weight: 300;
 }
-.pricing Image {
+.pricing img {
   padding: 30px 40px;
 }
 .pricing ul {
@@ -1445,7 +1438,7 @@ section {
   z-index: 2;
   opacity: 0;
 }
-.portfolio .portfolio-wrap Image {
+.portfolio .portfolio-wrap img {
   transition: 1s;
 }
 .portfolio .portfolio-wrap .portfolio-info {
@@ -1525,7 +1518,7 @@ section {
 .portfolio .portfolio-wrap .portfolio-links a:hover {
   background: #1DB954;
 }
-.portfolio .portfolio-wrap:hover Image {
+.portfolio .portfolio-wrap:hover img {
   transform: scale(1.1);
 }
 .portfolio .portfolio-wrap:hover::before {
@@ -1553,7 +1546,7 @@ section {
 .portfolio-details {
   padding-top: 40px;
 }
-.portfolio-details .portfolio-details-slider Image {
+.portfolio-details .portfolio-details-slider img {
   width: 100%;
 }
 .portfolio-details .portfolio-details-slider .swiper-pagination {
@@ -1623,7 +1616,7 @@ section {
   color: #ffc107;
   margin: 0 1px;
 }
-.testimonials .testimonial-item .testimonial-Image {
+.testimonials .testimonial-item .testimonial-img {
   width: 90px;
   border-radius: 50%;
   border: 4px solid #fff;
@@ -1691,11 +1684,11 @@ section {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
   transition: 0.3s;
 }
-.team .member .member-Image {
+.team .member .member-img {
   position: relative;
   overflow: hidden;
 }
-.team .member .member-Image:after {
+.team .member .member-img:after {
   position: absolute;
   content: "";
   left: 0;
@@ -1764,11 +1757,11 @@ section {
 /*--------------------------------------------------------------
 # Clients
 --------------------------------------------------------------*/
-.clients .clients-slider .swiper-slide Image {
+.clients .clients-slider .swiper-slide img {
   opacity: 0.5;
   transition: 0.3s;
 }
-.clients .clients-slider .swiper-slide Image:hover {
+.clients .clients-slider .swiper-slide img:hover {
   opacity: 1;
 }
 .clients .clients-slider .swiper-pagination {
@@ -1800,12 +1793,12 @@ section {
   display: flex;
   flex-direction: column;
 }
-.recent-blog-posts .post-box .post-Image {
+.recent-blog-posts .post-box .post-img {
   overflow: hidden;
   margin: -30px -30px 15px -30px;
   position: relative;
 }
-.recent-blog-posts .post-box .post-Image Image {
+.recent-blog-posts .post-box .post-img img {
   transition: 0.5s;
 }
 .recent-blog-posts .post-box .post-date {
@@ -1838,7 +1831,7 @@ section {
 .recent-blog-posts .post-box:hover .post-title {
   color: #4154f1;
 }
-.recent-blog-posts .post-box:hover .post-Image Image {
+.recent-blog-posts .post-box:hover .post-img img {
   transform: rotate(6deg) scale(1.2);
 }
 
@@ -1963,7 +1956,7 @@ section {
   margin-bottom: 60px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
-.blog .entry .entry-Image {
+.blog .entry .entry-img {
   max-height: 440px;
   margin: -30px -30px 20px -30px;
   overflow: hidden;
@@ -2110,7 +2103,7 @@ section {
   margin-bottom: 30px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
-.blog .blog-author Image {
+.blog .blog-author img {
   width: 120px;
   margin-right: 20px;
 }
@@ -2142,10 +2135,10 @@ section {
   margin-top: 30px;
   position: relative;
 }
-.blog .blog-comments .comment .comment-Image {
+.blog .blog-comments .comment .comment-img {
   margin-right: 14px;
 }
-.blog .blog-comments .comment .comment-Image Image {
+.blog .blog-comments .comment .comment-img img {
   width: 60px;
 }
 .blog .blog-comments .comment h5 {
@@ -2316,7 +2309,7 @@ section {
 .blog .sidebar .recent-posts .post-item + .post-item {
   margin-top: 15px;
 }
-.blog .sidebar .recent-posts Image {
+.blog .sidebar .recent-posts img {
   width: 80px;
   float: left;
 }
@@ -2443,7 +2436,7 @@ section {
   line-height: 0;
   margin-bottom: 15px;
 }
-.footer .footer-top .footer-info .logo Image {
+.footer .footer-top .footer-info .logo img {
   max-height: 40px;
   margin-right: 6px;
 }
@@ -2518,7 +2511,7 @@ section {
   text-align: center;
   padding-top: 30px;
   color: #191414;
-  font-size: 15px;
+  font-size: 16px;
 }
 .footer .credits {
   padding-top: 10px;

@@ -187,9 +187,9 @@ class Topsongs extends Component {
     
         <div className="mx-auto card mb-3">
           <div className="row-margin row align-items-center g-0 ">
-            <div className="portfolio-wrap Image-margin col-md-2">
+            <div className="portfolio-wrap img-margin col-md-2">
               
-                <Image src={song.album.images[0].url} className="Image-margin Image-fluid rounded-start" alt="..." />
+                <img src={song.album.images[0].url} className="img-margin img-fluid rounded-start" alt="..." />
                 <a href= {song.external_urls.spotify} target="_blank" rel="noopener noreferrer"><div className="portfolio-info">
                <h1>{idx + 1}</h1>
           
