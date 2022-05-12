@@ -1,4 +1,5 @@
 import { Toolbar } from "../components/toolbar"
+import { Footbar } from "../components/footer"
 import Spotify from 'spotify-web-api-js'
 import Image from 'next/image'
 import React, { Component } from 'react'
@@ -18,7 +19,7 @@ var hashParams = {};
         while ( e = r.exec(q)) {
            hashParams[e[1]] = decodeURIComponent(e[2]);
         }
-export { hashParams, username }
+export { hashParams, username, profile_pic }
 
 
 class Home extends Component {
@@ -232,7 +233,6 @@ class Home extends Component {
     getTopSongs(time) {
       spotifyWebApi.getMyTopTracks({ limit: 50, time_range: time })
         .then((response) => {
-          console.log(response)
          
           this.setState({
   
@@ -259,7 +259,7 @@ class Home extends Component {
     getTopArtists(time) {
       spotifyWebApi.getMyTopArtists({limit: 50, time_range: time})
         .then((response) => {
-          console.log(response)
+     
           this.setState({
       
             topArtist: {
@@ -287,7 +287,7 @@ class Home extends Component {
           
           
     
-            <div className="App hero2">
+            <div className="App hero3">
             
            
             
@@ -341,7 +341,7 @@ class Home extends Component {
 
   <main id="main">
   
-    <section id="about" className="about hero align-items-center">
+    <section id="about" className="about hero2 align-items-center">
     <div className= 'hello'><h1 data-aos="fade-up">Your Favourites</h1>
     <h3>({this.state.nowTime.message})</h3>
                
@@ -414,28 +414,18 @@ class Home extends Component {
       
 
     </section>
+    
+
     </main>
-    <footer id="footer" className="footer hello"> 
-<div className="container ">
-      <div className="copyright hello">
-        &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
-      </div>
-      
-      <div className="credits hello">
-  
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
-      </div>
-    </div>
-
-</footer>
-
+    
+    
                
                 
 
                       
                 
 
-           
+           <Footbar/>
                 
         
         

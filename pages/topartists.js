@@ -2,7 +2,7 @@
 import { Toolbar } from "../components/toolbar"
 import Image from 'next/image'
 import Spotify from 'spotify-web-api-js'
-
+import { Footbar } from "../components/footer"
 import { hashParams, username } from './home.js'
 
 import React, { Component } from 'react'
@@ -68,7 +68,7 @@ class Topartist extends Component {
   getTopArtists(time) {
     spotifyWebApi.getMyTopArtists({limit: 50, time_range: time})
       .then((response) => {
-        console.log(response)
+  
         this.getUserOption(time)
         this.setState({
     
@@ -190,11 +190,11 @@ WordList(props) {
 
     render() {
         return (
-            <div className="App hero2">
+            <div className="App hero3">
             <Toolbar/>
 
             <section  id="about" className="about hero2">
-                <div className ='hello'><h1>Your Top Artists </h1>
+                <div className='hello'><h1>Your Top Artists </h1>
                 <h3>({this.state.nowTime.message})</h3>
                 <div className="hello btn-group" role="group" aria-label="Basic radio toggle button group">
                 <button type="button" className="btn btn-outline-dark" onClick={() => this.getTopArtists('short_term')}>
@@ -214,23 +214,11 @@ WordList(props) {
                 
                 </div>
 
-                <this.WordList words={this.state.nowList.songs}/>,
+                <this.WordList words={this.state.nowList.songs}/>
 
 
                 </section>
-                <footer id="footer" className="footer hello"> 
-<div className="container ">
-      <div className="copyright hello">
-        &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
-      </div>
-      
-      <div className="credits hello">
-  
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
-      </div>
-    </div>
-
-</footer>
+               <Footbar/>
 
                
                 

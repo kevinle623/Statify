@@ -79,10 +79,9 @@ th{
 }
 .num-list {
   
-  text-align: right;
+
   font-size: 50px;
-  margin-left: 10%;
-  position: absolute;
+
   
 }
 .artist-list {
@@ -191,7 +190,7 @@ th{
 }
 
 .list-img {
-  width: 130px;
+  width: 100%;
   
   
 }
@@ -242,7 +241,7 @@ a {
 } 
 .num-history {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 25px;
 }
 .song-name {
 
@@ -298,7 +297,7 @@ body {
 }
 
 a {
-  color: #4154f1;
+  color: #1DB954;
   text-decoration: none;
 }
 
@@ -328,7 +327,7 @@ section {
   letter-spacing: 1px;
   font-weight: 700;
   margin: 0;
-  color: #4154f1;
+  color: #1DB954;
   text-transform: uppercase;
 }
 .section-header p {
@@ -394,7 +393,7 @@ section {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #4154f1;
+  background: #1DB954;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -436,6 +435,14 @@ section {
 
   padding: 0px 0;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+}
+.logos {
+  line-height: 0;
+  font-size: 35px;
+  font-weight: 700;
+  color: #191414;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
 }
 .header .logo {
   
@@ -493,7 +500,7 @@ section {
 }
 
 .click:hover {
-  color: rgb(168, 168, 168)
+  color: #1DB954
 }
 .navbar li:hover {
   color: rgb(168, 168, 168)
@@ -518,10 +525,10 @@ section {
   margin-left: 5px;
 }
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
-  color: #4154f1;
+  color: #1DB954;
 }
 .navbar .getstarted, .navbar .getstarted:focus {
-  background: #4154f1;
+  background: #1DB954;
   padding: 8px 20px;
   margin-left: 30px;
   border-radius: 4px;
@@ -529,7 +536,7 @@ section {
 }
 .navbar .getstarted:hover, .navbar .getstarted:focus:hover {
   color: #fff;
-  background: #5969f3;
+  background: #1DB954;
 }
 .navbar .dropdown ul {
   display: block;
@@ -564,7 +571,7 @@ section {
   font-size: 12px;
 }
 .navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
-  color: #4154f1;
+  color: #1DB954;
 }
 .navbar .dropdown:hover > ul {
   opacity: 1;
@@ -694,7 +701,7 @@ section {
   color: #012970;
 }
 .navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
-  color: #4154f1;
+  color: #1DB954;
 }
 .navbar-mobile .getstarted, .navbar-mobile .getstarted:focus {
   margin: 15px;
@@ -710,6 +717,10 @@ section {
   background: #fff;
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
+
+.names:hover {
+  color: #191414
+}
 .navbar-mobile .dropdown ul li {
   min-width: 200px;
 }
@@ -720,7 +731,7 @@ section {
   font-size: 12px;
 }
 .navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
-  color: #4154f1;
+  color: #1DB954;
 }
 .navbar-mobile .dropdown > .dropdown-active {
   display: block;
@@ -772,6 +783,15 @@ section {
   font-size: 18px;
   transition: 0.3s;
 }
+.names {
+  color: #1DB954;
+}
+.textfoot {
+  color: #191414 !important;
+}
+.textfoot:hover {
+  color: #1DB954 !important;
+}
 .hero .btn-get-started:hover i {
   transform: translateX(5px);
 }
@@ -781,12 +801,13 @@ section {
 @media (min-width: 1024px) {
   .hero {
     background-attachment: fixed;
+  
   }
 }
 @media (max-width: 991px) {
   .hero {
     height: auto;
-    padding: 120px 0 60px 0;
+    padding: 120px 0 120px 0;
   }
   .hero .hero-img {
     text-align: center;
@@ -807,6 +828,89 @@ section {
     font-size: 24px;
   }
   .hero .hero-img img {
+    width: 100%;
+  }
+}
+
+.hero3 {
+  width: 100%;
+ 
+
+
+ 
+  
+}
+
+.hero3 a {
+  cursor: pointer;
+}
+.hero3 h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  color: #191414;
+}
+.hero3 h2 {
+  color: #444444;
+  margin: 15px 0 0 0;
+  font-size: 26px;
+}
+.hero3 .btn-get-started {
+  margin-top: 30px;
+  line-height: 0;
+  padding: 15px 5%;
+  border-radius: 100px;
+  transition: 0.5s;
+  color: #fff;
+  background: #1DB954;
+  box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
+}
+.hero3 .btn-get-started span {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+.hero3 .btn-get-started i {
+  margin-left: 5px;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.hero3 .btn-get-started:hover i {
+  transform: translateX(5px);
+}
+.hero3 .hero-img {
+  text-align: right;
+}
+@media (min-width: 0px) {
+  .hero3 {
+    background-attachment: fixed;
+  }
+}
+@media (max-width: 991px) {
+  .hero3 {
+    height: auto;
+    padding-top: 10%;
+  }
+  .hero3 .hero-img {
+    text-align: center;
+    margin-top: 80px;
+  }
+  .hero3 .hero-img img {
+    width: 80%;
+  }
+}
+@media (max-width: 768px) {
+  .hero3 {
+    text-align: center;
+  }
+  .hero3 h1 {
+    font-size: 32px;
+  }
+  .hero3 h2 {
+    font-size: 24px;
+  }
+  .hero3 .hero-img img {
     width: 100%;
   }
 }
@@ -834,7 +938,7 @@ section {
 .hero2 .btn-get-started {
   margin-top: 30px;
   line-height: 0;
-  padding: 15px 40px;
+  padding: 15px 5%;
   border-radius: 100px;
   transition: 0.5s;
   color: #fff;
@@ -866,7 +970,7 @@ section {
 @media (max-width: 991px) {
   .hero2 {
     height: auto;
-    padding: 120px 0 60px 0;
+   
   }
   .hero2 .hero-img {
     text-align: center;
@@ -917,7 +1021,7 @@ section {
   border-radius: 4px;
   transition: 0.5s;
   color: #fff;
-  background: #4154f1;
+  background: #1DB954;
   box-shadow: 0px 5px 25px rgba(65, 84, 241, 0.3);
 }
 .about .btn-read-more span {
@@ -978,7 +1082,7 @@ section {
   font-size: 42px;
   line-height: 0;
   margin-right: 20px;
-  color: #4154f1;
+  color: #1DB954;
 }
 .counts .count-box span {
   font-size: 36px;
@@ -1017,7 +1121,7 @@ section {
   transition: 0.3s;
 }
 .features .feature-box:hover i {
-  background: #4154f1;
+  background: #1DB954;
   color: #fff;
 }
 .features .feture-tabs {
@@ -1049,8 +1153,8 @@ section {
   border-radius: 0;
 }
 .features .feture-tabs .nav-link.active {
-  color: #4154f1;
-  border-bottom: 3px solid #4154f1;
+  color: #1DB954;
+  border-bottom: 3px solid #1DB954;
 }
 .features .feture-tabs .tab-content h4 {
   font-size: 18px;
@@ -1062,7 +1166,7 @@ section {
   font-size: 24px;
   line-height: 0;
   margin-right: 8px;
-  color: #4154f1;
+  color: #1DB954;
 }
 .features .feature-icons {
   margin-top: 120px;
@@ -1280,17 +1384,17 @@ section {
   display: inline-block;
   padding: 8px 40px 10px 40px;
   border-radius: 50px;
-  color: #4154f1;
+  color: #1DB954;
   transition: none;
   font-size: 16px;
   font-weight: 400;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
   transition: 0.3s;
-  border: 1px solid #4154f1;
+  border: 1px solid #1DB954;
 }
 .pricing .btn-buy:hover {
-  background: #4154f1;
+  background: #1DB954;
   color: #fff;
 }
 .pricing .featured {
@@ -1302,7 +1406,7 @@ section {
   z-index: 1;
   font-size: 14px;
   padding: 1px 0 3px 0;
-  background: #4154f1;
+  background: #1DB954;
   color: #fff;
 }
 
@@ -1324,7 +1428,7 @@ section {
 }
 .faq .accordion-button:not(.collapsed) {
   background: none;
-  color: #4154f1;
+  color: #1DB954;
   border-bottom: 0;
 }
 .faq .accordion-body {
@@ -1501,10 +1605,10 @@ section {
   height: 12px;
   background-color: #fff;
   opacity: 1;
-  border: 1px solid #4154f1;
+  border: 1px solid #1DB954;
 }
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #4154f1;
+  background-color: #1DB954;
 }
 .portfolio-details .portfolio-info {
   padding: 30px;
@@ -1566,7 +1670,7 @@ section {
   margin-top: 20px;
   background: #fff;
   padding: 6px 10px;
-  position: relative;
+  position: absolute;
   border-radius: 4px;
   border: 1px solid #e1ecff;
 }
@@ -1585,7 +1689,7 @@ section {
   font-size: 16px;
   padding: 0 30px;
   margin: 3px;
-  background: #4154f1;
+  background: #1DB954;
   color: #fff;
   transition: 0.3s;
   border-radius: 4px;
@@ -1659,7 +1763,7 @@ section {
 }
 .footer .footer-top .footer-links ul i {
   padding-right: 2px;
-  color: #d0d4fc;
+  color: #191414;
   font-size: 12px;
   line-height: 0;
 }
@@ -1672,13 +1776,17 @@ section {
   padding-top: 0;
 }
 .footer .footer-top .footer-links ul a {
-  color: #013289;
+  color: #191414;
   transition: 0.3s;
   display: inline-block;
   line-height: 1;
 }
 .footer .footer-top .footer-links ul a:hover {
-  color: #4154f1;
+  color: #1DB954;
+}
+
+.logos:hover {
+  color: #1DB954;
 }
 .footer .footer-top .footer-contact p {
   line-height: 26px;

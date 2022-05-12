@@ -1,7 +1,7 @@
 
 import { Toolbar } from "../components/toolbar"
 import Image from 'next/image'
-
+import { Footbar } from "../components/footer"
 import Spotify from 'spotify-web-api-js'
 
 import React, { Component } from 'react'
@@ -237,7 +237,7 @@ class Topsongs extends Component {
 
   render() {
     return (
-      <div className="App hero2">
+      <div className="App hero3">
         <Toolbar />
         <section  id="about" className="about hero2">
 
@@ -263,20 +263,7 @@ class Topsongs extends Component {
 
 
       </section>
-      <footer id="footer" className="footer hello"> 
-<div className="container ">
-      <div className="copyright hello">
-        &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
-      </div>
-      
-      <div className="credits hello">
-  
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
-      </div>
-    </div>
-
-</footer>
-
+      <Footbar/>
 
 
 

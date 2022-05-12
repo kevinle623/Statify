@@ -2,58 +2,58 @@ import {useRouter } from 'next/router';
 import styles from '../styles/Toolbar.module.css'
 import Image from 'next/image'
 
+import { profile_pic } from '../pages/home.js'
+
 export const Toolbar = () => {
     const router = useRouter();
 
 
     return (
+      <div className="container">
+
     
-        <header id="header" className="header">
-    <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-      <a onClick={() => router.push('/home') } className="logo d-flex align-items-center">
-        Statify
-      </a>
-      <nav className="navbar navbar-expand-lg navbar-light ">
-  <div className="container-fluid">
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
- 
-     
-    <div className='hello click' onClick={() => router.push('/home')}>
+        <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+          <a onClick={() => router.push('/home') } className="logos d-flex align-items-center">
+     Statify
+  </a>
+    
+          <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><div className='hello click' onClick={() => router.push('/home')}>
               Home
-      </div >
-
-      <div className='hello click' onClick={() => router.push('/topsongs')}>
-      Tracks
-      </div >
-      <div className='hello click' onClick={() => router.push('/topartists')}>
-      Artists
-      </div >
-
-      <div className='hello click' onClick={() => router.push('/topgenres')}>
-      Genres
-      </div >
-
-      <div className='hello click' onClick={() => router.push('/history')}>
+      </div ></li>
+            <li><div className='hello click' onClick={() => router.push('/topsongs')}>
+     Tracks
+     </div ></li>
+            <li><div className='hello click' onClick={() => router.push('/topartists')}>
+       Artists
+       </div ></li>
+            <li><div className='hello click' onClick={() => router.push('/topgenres')}>
+       Genres
+      </div ></li>
+            <li><div className='hello click' onClick={() => router.push('/history')}>
       Recently Played
-      </div >
-      
-   
-      
-    </div>
-  </div>
-</nav>
-      
+    </div ></li>
+          </ul>
+    
+          <div className="col-md-1 text-end">
+          <div className="align-items-center">
+       
 
-     
-      <a onClick={() => router.push('/') } className="logo align-items-center">
-      <i className="gg-log-out"></i></a>
-
-    </div>
-  </header>
+        <div className="flex-shrink-0 dropdown">
+          <a href="#" className="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src={profile_pic} alt="" width="32" height="32" className="rounded-circle"/>
+          </a>
+          <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+            <li><a className="dropdown-item click" onClick={() => router.push('/home#') }>Profile</a></li>
+            <li><a className="dropdown-item click" onClick={() => router.push('/') }>Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+          </div>
+        </header>
+        </div>
+ 
+  
 
         
         

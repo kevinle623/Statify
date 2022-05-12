@@ -1,4 +1,5 @@
 import { Toolbar } from "../components/toolbar"
+import { Footbar } from "../components/footer"
 import Spotify from 'spotify-web-api-js'
 import Image from 'next/image'
 import React, { Component } from 'react'
@@ -68,7 +69,7 @@ class History extends Component {
       getHistorySongs() {
         spotifyWebApi.getMyRecentlyPlayedTracks({limit: 50})
           .then((response) => {
-            console.log(response)
+           
             this.setState({
     
               nowList: {
@@ -101,12 +102,12 @@ class History extends Component {
       <td>
         <div className="container">
             <div className="hello row align-items-center">
-                <div className="hello col-md-3">
+                <div className="col-lg-4">
                 <a href = {song.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
                               <img src = {song.track.album.images[0].url} alt = '' className= 'list-img'/> 
                       </a>
                   </div>
-            <div className="hello col song-detail">
+            <div className="col-lg-8 song-detail">
             
                                      
                                       
@@ -123,8 +124,9 @@ class History extends Component {
           </div>
           </div>
   </td>
-    <a href = {song.track.album.external_urls.spotify} target="_blank" rel="noopener noreferrer"><td className= 'song-name'>{song.track.album.name}</td></a>
-      <td >{convertTime(song.played_at)}</td>
+ 
+    <td><a  className= 'song-name' href = {song.track.album.external_urls.spotify} target="_blank" rel="noopener noreferrer">{song.track.album.name}</a></td>
+      <td ><div>{convertTime(song.played_at)}</div></td>
     </tr>
 
 
@@ -149,25 +151,13 @@ class History extends Component {
     render(){
         return (
             
-            <div className="App hero2">
+            <div className="App hero3">
                 <Toolbar/>
                 <section  id="about" className="about hero2">
                 <div className= 'hello'><h1>Your Recently Played Tracks</h1></div>
                 <this.WordList words = {this.state.nowList.songs}/>
                 </section>
-                <footer id="footer" className="footer"> 
-<div className="container">
-      <div className="copyright">
-        &copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.
-      </div>
-      
-      <div className="credits">
-  
-        Developed by   <a href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> Taha Zaryab  </a>  and  <a href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer">Kevin Le  </a>
-      </div>
-    </div>
-
-</footer>
+                <Footbar/>
             </div>
 
         )
