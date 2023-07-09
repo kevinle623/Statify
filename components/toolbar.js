@@ -7,37 +7,32 @@ import { profile_pic } from '../pages/home.js'
 export const Toolbar = () => {
     const router = useRouter();
 
-
     return (
       <div className="container">
-
-    
         <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
           <a onClick={() => router.push('/home') } className="logos d-flex align-items-center">
-     Statify
-  </a>
-    
+          Statify
+          </a>
           <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><div className='hello click' onClick={() => router.push('/home')}>
               Home
-      </div ></li>
+            </div ></li>
             <li><div className='hello click' onClick={() => router.push('/topsongs')}>
-     Tracks
-     </div ></li>
+              Tracks
+            </div ></li>
             <li><div className='hello click' onClick={() => router.push('/topartists')}>
-       Artists
-       </div ></li>
+              Artists
+            </div ></li>
             <li><div className='hello click' onClick={() => router.push('/topgenres')}>
-       Genres
-      </div ></li>
+              Genres
+            </div ></li>
             <li><div className='hello click' onClick={() => router.push('/history')}>
-      Recently Played
-    </div ></li>
+              Recently Played
+            </div ></li>
           </ul>
-    
+
           <div className="col-md-1 text-end">
           <div className="align-items-center">
-       
 
         <div className="flex-shrink-0 dropdown">
           <a href="#" className="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -52,13 +47,5 @@ export const Toolbar = () => {
           </div>
         </header>
         </div>
- 
-  
-
-        
-        
-      
-   
     );
-
 };

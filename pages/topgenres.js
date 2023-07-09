@@ -13,22 +13,15 @@ const spotifyWebApi = new Spotify();
 class Topgenres extends Component {
 
     render(){
-        return (
-            
+        return (            
             <div className="App hero3">
                 <Toolbar/>
                 <section id="about" className="about hero align-items-center">
                 <div><h1>Coming soon...</h1></div>
-            
                 </section>
                 <Footbar/>
-
-
             </div>
-            
-
         )
     }
-    
 }
 export default Topgenres
