@@ -6,20 +6,13 @@ import Spotify from 'spotify-web-api-js'
 
 import React, { Component } from 'react'
 
-
-
 import { hashParams, username } from './home.js'
-
 
 const spotifyWebApi = new Spotify();
 var time = 'short_term'
 var text = 'Past Month'
 var lst = []
 var index = 0
-
-
-
-
 
 class Topsongs extends Component {
 
@@ -39,13 +32,10 @@ class Topsongs extends Component {
       loggedIn: params.access_token ? true : false,
 
       nowTime: {
-
         message: text,
-
       },
 
       nowList: {
-
         songs: [],
       },
 
@@ -54,12 +44,7 @@ class Topsongs extends Component {
         songname: '',
         artistname: '',
         rank: '',
-
       }
-
-
-
-
     }
   }
 
@@ -72,33 +57,11 @@ class Topsongs extends Component {
 
         this.getUserOption(time)
         this.setState({
-
           nowList: {
-
             songs: response.items,
-
-
           }
-
         }
-
         )
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
-
-
       })
   }
 
@@ -106,96 +69,56 @@ class Topsongs extends Component {
   getUserOption(time) {
     if (time == 'short_term') {
       this.setState({
-
         nowTime: {
-
           message: 'Past Month'
-
-
         }
-
       }
-
       )
     }
     else if (time == 'medium_term') {
       this.setState({
-
         nowTime: {
-
           message: 'Past 6 Months'
-
-
         }
-
       }
-
       )
     }
     else {
       this.setState({
-
         nowTime: {
-
           message: 'All Time'
-
-
         }
-
       }
-
       )
     }
   }
+
   getNowDisplay(rank, song, artist) {
-
     this.setState({
-
       nowDisplay: {
-
         songname: song.name,
         rank: rank,
         artistname: artist.name,
-
-
-
-
       }
-
     }
-
     )
-
-
   }
 
-
-
   WordList(props) {
-
-
-
-
     const words = props.words;
     const items = words.map((song, idx) =>
-    
-
-
-
-
       <div key = {idx}>
-    
+
         <div className="mx-auto card mb-3">
           <div className="row-margin row align-items-center g-0 ">
             <div className="portfolio-wrap img-margin col-md-2">
-              
+
                 <img src={song.album.images[0].url} className="img-margin img-fluid rounded-start" alt="..." />
                 <a href= {song.external_urls.spotify} target="_blank" rel="noopener noreferrer"><div className="portfolio-info">
                <h1>{idx + 1}</h1>
-          
-                
+
               </div></a>
-             
+
             </div>
             <div className="song-info-marg col-md-9">
               <div className="song-info-marg card-body">
@@ -205,33 +128,23 @@ class Topsongs extends Component {
                 <a href={song.artists[0].external_urls.spotify} target="_blank" rel="noopener noreferrer">
                   <p className="card-text">{song.artists[0].name} </p>
                 </a>
-
               </div>
             </div>
           </div>
         </div>
       </div>
 
-     
+
     );
 
 
     return (
-
-
       <section id="portfolio" className="portfolio">
-
-      <div className="container" data-aos="fade-up">
-      
-        {items}
+        <div className="container" data-aos="fade-up">
+          {items}
         </div>
 
-    </section>
-
-   
-
-
-
+      </section>
     );
   }
 
@@ -256,29 +169,12 @@ class Topsongs extends Component {
             </button>
           </div>
         </div>
-
-
-
         <this.WordList words={this.state.nowList.songs} />,
-
-
       </section>
       <Footbar/>
-
-
-
-
       </div>
-
-
-
-
-
-
     )
-
   }
-
 }
 
 export default Topsongs
