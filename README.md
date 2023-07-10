@@ -88,7 +88,7 @@
 </p>
 
 <ol>
-  <li>Clone this repository: <code>git clone https://github.com/KayenM/Statify.git</code></li>
+  <li>Clone this repository: <code>git clone [repo link]</code></li>
   <li>Navigate to the project directory: <code>cd statify</code></li>
   <li>Install the dependencies: <code>npm install</code></li>
   <li>Create a <code>.env.local</code> file in the root directory and add your Spotify API credentials</li>
