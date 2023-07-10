@@ -20,7 +20,7 @@
   <a href="#demo">Demo</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="#contributing">Contributing</a> •
+  <a href="#contributing">Contributing</a>
 </p>
 
 <h2 id="about">About</h2>
@@ -40,7 +40,7 @@
 <h2 id="features">Features</h2>
 
 <p align="center">
-  🎶 <b>Real-time Song Display:</b> Statify shows you the song you're currently playing on Spotify. Whether it's your guilty pleasure or the latest hit, we've got you covered.
+  🎶 <b>Real-time Song Display:</b> Statify shows you the song you're currently playing on Spotify. You can even check out your recently played, for when you hear an amazing song and forget to save it!
 </p>
 
 <p align="center">
@@ -88,7 +88,7 @@
 </p>
 
 <ol>
-  <li>Clone this repository: <code>git clone https://github.com/your-username/statify.git</code></li>
+  <li>Clone this repository: <code>git clone [repo link]</code></li>
   <li>Navigate to the project directory: <code>cd statify</code></li>
   <li>Install the dependencies: <code>npm install</code></li>
   <li>Create a <code>.env.local</code> file in the root directory and add your Spotify API credentials</li>
@@ -106,7 +106,7 @@
 <h2 id="contributing">Contributing</h2>
 
 <p align="center">
-  We welcome contributions from everyone! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request. Let's make Statify even more awesome together.
+  We welcome contributions from everyone! If you have any suggestions, bug reports, or feature requests, please open an issue. Let's make Statify even more awesome together.
 </p>
 
 <hr>

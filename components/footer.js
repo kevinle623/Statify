@@ -23,7 +23,7 @@ export const Footbar = () => {
         <p className="text-center ">&copy; Copyright <strong><span>Statify</span></strong>. All Rights Reserved.</p>
         <p className="text-center ">
 
-            Developed by   <a className= 'names' href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> <strong>Taha Zaryab</strong>  </a>  and  <a className= 'names'  href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer"> <strong>Kevin Le</strong>  </a>
+            Developed by   <a className= 'names' href="https://github.com/tahazaryab" target="_blank" rel="noopener noreferrer"> <strong>Taha Zaryab</strong>  </a>,  <a className= 'names'  href="https://github.com/kevinle623" target="_blank" rel="noopener noreferrer"> <strong>Kevin Le</strong>  </a>  and  <a className= 'names'  href="https://github.com/KayenM" target="_blank" rel="noopener noreferrer"> <strong>Kayen Mehta</strong>  </a>
             </p>
       </footer>
     </div>
