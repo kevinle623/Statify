@@ -40,7 +40,7 @@
 <h2 id="features">Features</h2>
 
 <p align="center">
-  🎶 <b>Real-time Song Display:</b> Statify shows you the song you're currently playing on Spotify. Whether it's your guilty pleasure or the latest hit, we've got you covered.
+  🎶 <b>Real-time Song Display:</b> Statify shows you the song you're currently playing on Spotify. You can even check out your recently played, for when you hear an amazing song and forget to save it!
 </p>
 
 <p align="center">
