@@ -88,7 +88,7 @@
 </p>
 
 <ol>
-  <li>Clone this repository: <code>git clone https://github.com/your-username/statify.git</code></li>
+  <li>Clone this repository: <code>git clone https://github.com/KayenM/Statify.git</code></li>
   <li>Navigate to the project directory: <code>cd statify</code></li>
   <li>Install the dependencies: <code>npm install</code></li>
   <li>Create a <code>.env.local</code> file in the root directory and add your Spotify API credentials</li>
@@ -106,7 +106,7 @@
 <h2 id="contributing">Contributing</h2>
 
 <p align="center">
-  We welcome contributions from everyone! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request. Let's make Statify even more awesome together.
+  We welcome contributions from everyone! If you have any suggestions, bug reports, or feature requests, please open an issue. Let's make Statify even more awesome together.
 </p>
 
 <hr>
