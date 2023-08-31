@@ -15,14 +15,16 @@
 <h2 align="center">Table of Contents</h2>
 
 <p align="center">
+  <a href="#video-demo">Video Demo</a> •
   <a href="#about">About</a> •
   <a href="#features">Features</a> •
-  <a href="#demo">Demo</a> •
+  <a href="#access-statify">Access Statify</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#contributing">Contributing</a>
 </p>
 
+<h2 id="video-demo">🎥 Video Demo</h2>
 <p align="center">
   <a href="https://www.youtube.com/watch?v=6gvmcJLWSi8">
     <img src="https://img.youtube.com/vi/6gvmcJLWSi8/0.jpg" alt="Demo Video">
@@ -65,10 +67,10 @@
   🌈 <b>Stunning UI:</b> We believe that beauty lies in simplicity. Statify's user interface is designed to be visually appealing, intuitive, and easy to navigate. Prepare to be amazed!
 </p>
 
-<h2 id="demo">Demo</h2>
+<h2 id="access-statify">Access Statify</h2>
 
 <p align="center">
-  You can access the live demo of Statify <a href="https://statify-flow.vercel.app/">here</a>. Go ahead, give it a spin, and embrace the magic of your music stats!
+  You can access Statify <a href="https://statify-flow.vercel.app/">here</a>. Go ahead, give it a spin, and embrace the magic of your music stats!
 </p>
 
 <!-- <p align="center">
