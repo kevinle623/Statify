@@ -23,6 +23,12 @@
   <a href="#contributing">Contributing</a>
 </p>
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=6gvmcJLWSi8">
+    <img src="https://img.youtube.com/vi/6gvmcJLWSi8/0.jpg" alt="Demo Video">
+  </a>
+</p>
+
 <h2 id="about">About</h2>
 
 <p align="center">
