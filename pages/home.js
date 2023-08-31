@@ -4,14 +4,15 @@ import Spotify from 'spotify-web-api-js'
 import Image from 'next/image'
 import React, { Component } from 'react'
 
-
-
+const cohere = require("cohere-ai");
 const spotifyWebApi = new Spotify();
+cohere.init('qikBdfl2vVYSrm5Qw4CCQ4FJoiYBUn9MF00xmT64');
+
 
 var username = ' '
 var profile_pic = 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'
 var followers = ' '
-var message = 'short_term'
+var message = 'medium_term'
 
 var hashParams = {};
         var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -63,10 +64,39 @@ class Home extends Component {
             name: '',
             followers: 0,
             link: '',
+            genre: '',
 
-          }
+          },
+
+          generatedStory: ''
         }
       }
+      generateStory = async () => {
+        try {
+          const { name, genre } = this.state.topArtist;
+          const { name: songName, artist } = this.state.topSong;
+          const { followers } = this.state;
+      
+          const prompt = `John has 50 followers, his favourite artist is Cocteau Twins which has the genre alternative pop. His favourite song is Love Lost by Mac Miller. When John opens Spotify he sees the following description of his profile: Your Spotify persona is the Alternative Enthusiast! With 50 followers, you're clearly well-connected and have a knack for discovering unique sounds. Cocteau Twins' alternative pop style perfectly resonates with your musical taste, and it's no surprise that they're your favourite artist! Despite that, your top song is Love Lost by Mac Miller, adding an intriguing twist to your eclectic music preferences. Keep exploring and sharing those offbeat tracks with your followers! Vladimir has 5 followers, his favourite artist is Taylor Swift, which has the genre of American pop. His favourite song is Blue Savannah by Erasure. When Vladimir opens Spotify he sees the following description of his profile: Your Spotify persona is the Dreamy Explorer, and you keep your musical findings well guarded for you and your few followers. You're also a big fan of Talyor Swift (swifties unite), but in contrast, your top song is Blue Savannah by Erasure! That's a throwback, and it really makes you feel like a wilderness Explorer. ${username} has ${followers} followers, and their favourite artist is ${name}, which has the genre ${genre}. Their favourite song is ${songName} by ${artist}. When ${username} opens Spotify they see the following description of their profile: `;
+      
+          const response = await cohere.generate({
+            model: 'command-light',
+            prompt: prompt,
+            max_tokens: 300,
+            temperature: 0.7,
+            k: 0,
+            stop_sequences: [],
+            return_likelihoods: 'NONE'
+          });
+      
+          const generatedStory = response.body.generations[0].text;
+          this.setState({ generatedStory });
+          console.log(prompt);
+        } catch (error) {
+          console.error('Error generating story:', error);
+        }
+      };
+
       getNowPlaying(){
         spotifyWebApi.getMyCurrentPlaybackState()
           .then((response) => {
@@ -176,6 +206,7 @@ class Home extends Component {
               name: response.items[0].name,
               followers: (response.items[0].followers.total).toLocaleString(),
               link: response.items[0].external_urls.spotify,
+              genre: response.items[0].genres[0]
             }
           })
         })
@@ -186,7 +217,7 @@ class Home extends Component {
 
     <div className="App hero3">
     <Toolbar/>
-    <section id="hero" className="hero d-flex align-items-center">
+    <section id="hero" className="splash-page d-flex align-items-center">
 
     <div className="container">
       <div className="row">
@@ -206,6 +237,9 @@ class Home extends Component {
             </div>
           </div>
         </div>
+
+
+
         <div className="col-lg-6 d-flex flex-column justify-content-center " data-aos="zoom-out" data-aos-delay="200">
         <h1 data-aos="fade-up"> Now Playing: </h1>
 
@@ -227,11 +261,24 @@ class Home extends Component {
         </div>
       </div>
     </div>
-
   </section>
 
-  <main id="main">
+  <div className= 'statify-ai'><h1 className= 'helloLarge' data-aos="fade-up">Statify ai</h1>
+        <div className="spotify-story-div align-items-center">
+          <a onClick={() => this.generateStory()} className="btn-get-started align-items-center justify-content-center align-self-center">
+            <span>SEE YOUR UNIQUE BIOGRAPHY</span>
+          </a>
+          {this.state.generatedStory && ( // Conditional rendering based on this.state.generatedStory
+            <div className="spotify-story-text align-items-center justify-content-center align-self-center">
+              <h2>{this.state.generatedStory}</h2>
+            </div>
+          )}
+        </div>
+    </div>
 
+
+  <main id="main">
+        
     <section id="about" className="about hero2 align-items-center">
     <div className= 'hello'><h1 data-aos="fade-up">Your Favourites</h1>
     <h3>({this.state.nowTime.message})</h3>
@@ -256,7 +303,7 @@ class Home extends Component {
               <h3>Your favourite artist</h3>
               <h2>{this.state.topArtist.name}</h2>
               <p>
-                Followers: {this.state.topArtist.followers}
+                Genre: {this.state.topArtist.genre}
               </p>
               <div className="hello text-center text-lg-center">
                 <a href={this.state.topArtist.link} target="_blank" rel="noopener noreferrer" className="btn-get-started  align-items-center justify-content-center align-self-center">
