@@ -70,7 +70,7 @@
 <h2 id="access-statify">Access Statify</h2>
 
 <p align="center">
-  You can access Statify <a href="https://statify-flow.vercel.app/">here</a>. Go ahead, give it a spin, and embrace the magic of your music stats!
+  You can access Statify <a href="https://statify-chi.vercel.app">here</a>. Go ahead, give it a spin, and embrace the magic of your music stats!
 </p>
 
 <!-- <p align="center">
