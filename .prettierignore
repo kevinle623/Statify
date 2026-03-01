@@ -1,0 +1,9 @@
+.next
+node_modules
+bun.lock
+.env
+.env.local
+.env.*.local
+coverage
+dist
+build

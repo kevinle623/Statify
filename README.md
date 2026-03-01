@@ -1,34 +1,109 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Statify
+
+Statify is a Spotify analytics app rebuilt on the Next.js App Router with:
+
+- a simple glass-heavy UI that still feels like a normal Vercel-style app
+- server-side Spotify Authorization Code auth
+- secure HTTP-only cookies for Spotify tokens
+- a split client/server architecture inspired by `dashboard-13`
+- SWR for client-side fetching and mutations
+
+## Environment
+
+Create a local env file from `.env.example` and set:
+
+- `SPOTIFY_CLIENT_ID`
+- `SPOTIFY_CLIENT_SECRET`
+- `SPOTIFY_REDIRECT_URI`
+- `NEXT_PUBLIC_APP_URL`
+
+The redirect URI must match your Spotify app settings exactly.
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://127.0.0.1:3000`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Install dependencies:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+bun install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Development Checks
 
-## Learn More
+Run ESLint:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+bun run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run Prettier in check mode:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+bun run format:check
+```
 
-## Deploy on Vercel
+Format the codebase:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+bun run format
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Run unit tests:
+
+```bash
+bun run test
+```
+
+Run a production build:
+
+```bash
+bun run build
+```
+
+## Architecture
+
+The app is organized around a client/server split:
+
+1. `client/components/`
+   UI components and screens for landing, dashboard, top items, history, auth, theme, and shared UI primitives.
+2. `client/hooks/`
+   SWR-backed client hooks for auth status, top items, current playback, recent history, theme state, and mutations.
+3. `client/services/`
+   Browser-side fetch wrappers that call the Next.js route handlers.
+4. `client/lib/`
+   Client-only utilities such as `cn` and display constants like time-range labels.
+5. `app/`
+   Next.js App Router pages, layouts, loading states, and API route handlers.
+6. `server/services/`
+   Server-side application logic for Spotify auth and data fetching.
+7. `server/adapters/`
+   Low-level Spotify API integrations.
+8. `server/lib/`
+   Server-only env access, cookie helpers, session helpers, and Spotify auth constants.
+9. `types/`
+   Shared TypeScript contracts for Spotify data and app-facing response shapes.
+
+The runtime request flow is:
+
+1. client UI in `client/components/`
+2. client orchestration in `client/hooks/`
+3. browser fetch layer in `client/services/`
+4. Next.js route handlers in `app/api/**`
+5. server business logic in `server/services/`
+6. Spotify HTTP adapters in `server/adapters/`
+
+## Spotify scopes
+
+The current implementation requests only:
+
+- `user-top-read`
+- `user-read-currently-playing`
+- `user-read-private`
+- `user-read-recently-played`
