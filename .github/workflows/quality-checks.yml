@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  format-lint-test:
+  format-lint-test-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
 
   # Deploys are handled automatically by pushes to main.
   # deploy:
-  #   needs: format-lint-test
+  #   needs: format-lint-test-build
   #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
   #   runs-on: ubuntu-latest
   #
