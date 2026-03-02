@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import {
   BarChart3,
   Clock3,
@@ -27,8 +27,67 @@ const navigationItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuState, setMobileMenuState] = useState<
+    "closed" | "opening" | "open" | "closing"
+  >("closed");
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const mobileMenuOpenedAtRef = useRef(0);
+  const mobileMenuFrameRef = useRef<number | null>(null);
+  const mobileMenuTimeoutRef = useRef<number | null>(null);
+
+  const isMobileMenuOpen =
+    mobileMenuState === "opening" || mobileMenuState === "open";
+  const shouldRenderMobileMenu = mobileMenuState !== "closed";
+  const isMobileMenuVisible = mobileMenuState !== "closing";
+
+  function clearMobileMenuTimers() {
+    if (mobileMenuFrameRef.current !== null) {
+      window.cancelAnimationFrame(mobileMenuFrameRef.current);
+      mobileMenuFrameRef.current = null;
+    }
+
+    if (mobileMenuTimeoutRef.current !== null) {
+      window.clearTimeout(mobileMenuTimeoutRef.current);
+      mobileMenuTimeoutRef.current = null;
+    }
+  }
+
+  function openMobileMenu() {
+    clearMobileMenuTimers();
+    mobileMenuOpenedAtRef.current = window.performance.now();
+    setMobileMenuState("opening");
+    mobileMenuFrameRef.current = window.requestAnimationFrame(() => {
+      setMobileMenuState("open");
+      mobileMenuFrameRef.current = null;
+    });
+  }
+
+  function closeMobileMenu() {
+    if (mobileMenuState === "closed" || mobileMenuState === "closing") {
+      return;
+    }
+
+    clearMobileMenuTimers();
+    setMobileMenuState("closing");
+    mobileMenuTimeoutRef.current = window.setTimeout(() => {
+      setMobileMenuState("closed");
+      mobileMenuTimeoutRef.current = null;
+    }, 220);
+  }
+
+  function toggleMobileMenu() {
+    if (isMobileMenuOpen) {
+      closeMobileMenu();
+      return;
+    }
+
+    openMobileMenu();
+  }
+
+  const handleMobileMenuDismiss = useEffectEvent(() => {
+    closeMobileMenu();
+  });
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -36,26 +95,38 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     }
 
     function handlePointerDown(event: PointerEvent) {
-      if (!mobileNavRef.current?.contains(event.target as Node)) {
-        setIsMobileMenuOpen(false);
+      const target = event.target as Node;
+
+      if (
+        !mobileNavRef.current?.contains(target) &&
+        !mobileMenuButtonRef.current?.contains(target)
+      ) {
+        handleMobileMenuDismiss();
       }
     }
 
     function handleScroll() {
-      setIsMobileMenuOpen(false);
+      if (window.performance.now() - mobileMenuOpenedAtRef.current < 250) {
+        return;
+      }
+
+      handleMobileMenuDismiss();
     }
 
-    const timeoutId = window.setTimeout(() => {
-      document.addEventListener("pointerdown", handlePointerDown);
-      window.addEventListener("scroll", handleScroll, { passive: true });
-    }, 0);
+    document.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.clearTimeout(timeoutId);
       document.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    return () => {
+      clearMobileMenuTimers();
+    };
+  }, []);
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
@@ -81,41 +152,61 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button
+              ref={mobileMenuButtonRef}
               aria-expanded={isMobileMenuOpen}
               aria-label={
                 isMobileMenuOpen
                   ? "Close navigation menu"
                   : "Open navigation menu"
               }
-              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              onClick={toggleMobileMenu}
               size="icon"
               type="button"
               variant="secondary"
+              className="relative overflow-hidden"
             >
-              {isMobileMenuOpen ? (
-                <X className="size-4.5" />
-              ) : (
-                <Menu className="size-4.5" />
-              )}
+              <Menu
+                className={cn(
+                  "absolute size-4.5 transition-all duration-200 ease-out",
+                  isMobileMenuOpen
+                    ? "rotate-90 scale-75 opacity-0"
+                    : "rotate-0 scale-100 opacity-100",
+                )}
+              />
+              <X
+                className={cn(
+                  "absolute size-4.5 transition-all duration-200 ease-out",
+                  isMobileMenuOpen
+                    ? "rotate-0 scale-100 opacity-100"
+                    : "-rotate-90 scale-75 opacity-0",
+                )}
+              />
             </Button>
           </div>
         </div>
 
-        {isMobileMenuOpen ? (
-          <div className="glass-panel mt-3 rounded-[28px] p-3 shadow-[0_30px_100px_rgba(2,6,23,0.42)]">
+        {shouldRenderMobileMenu ? (
+          <div
+            className={cn(
+              "glass-panel absolute inset-x-0 top-[calc(100%+0.75rem)] origin-top rounded-[28px] p-3 shadow-[0_30px_100px_rgba(2,6,23,0.42)] transition-all duration-200 ease-out",
+              isMobileMenuVisible
+                ? "translate-y-0 scale-100 opacity-100"
+                : "-translate-y-2 scale-[0.98] opacity-0",
+            )}
+          >
             <nav className="grid gap-2">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   className={cn(
-                    "group flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50",
+                    "group flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50",
                     pathname === item.href
                       ? "border-cyan-300/35 bg-cyan-300/12 text-white shadow-[0_0_0_1px_rgba(125,211,252,0.2)]"
                       : "border-white/10 bg-white/[0.05] text-zinc-300 hover:border-white/18 hover:bg-white/[0.08]",
                   )}
                   aria-current={pathname === item.href ? "page" : undefined}
                   href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   <item.icon
                     className={cn(

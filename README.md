@@ -5,7 +5,6 @@ Statify is a Spotify analytics app rebuilt on the Next.js App Router with:
 - a simple glass-heavy UI that still feels like a normal Vercel-style app
 - server-side Spotify Authorization Code auth
 - secure HTTP-only cookies for Spotify tokens
-- a split client/server architecture inspired by `dashboard-13`
 - SWR for client-side fetching and mutations
 
 ## Environment
