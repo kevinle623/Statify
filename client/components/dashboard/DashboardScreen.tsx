@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { useCurrentlyPlaying } from "@/client/hooks/use-currently-playing";
 import { useProfile } from "@/client/hooks/use-profile";
 import { useRecentHistoryPreview } from "@/client/hooks/use-recent-history-preview";
@@ -122,13 +123,22 @@ export function DashboardScreen() {
               <span className="font-label text-xs uppercase tracking-[0.2em] text-primary">
                 Now Playing
               </span>
-              <h2 className="text-4xl lg:text-7xl font-bold tracking-tighter leading-none text-on-surface font-headline">
+              <h2 className="text-4xl lg:text-7xl font-bold tracking-tighter leading-none text-on-surface font-headline line-clamp-2">
                 {nowPlayingTrack.name}
               </h2>
-              <p className="text-xl lg:text-2xl font-light text-on-surface-variant tracking-wide">
+              <p className="text-xl lg:text-2xl font-light text-on-surface-variant tracking-wide truncate">
                 {nowPlayingTrack.artists.map((a) => a.name).join(", ")}
               </p>
             </div>
+            <a
+              href={nowPlayingTrack.external_urls.spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-primary hover:text-on-surface transition-colors w-fit"
+            >
+              Open in Spotify
+              <ArrowUpRight className="size-3.5" />
+            </a>
             {currentlyPlaying?.progress_ms != null && (
               <div className="space-y-3">
                 <div className="w-full h-[2px] bg-white/5 relative">
