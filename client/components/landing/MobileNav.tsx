@@ -15,13 +15,10 @@ export function MobileNav() {
   const [iconActive, setIconActive] = useState(false);
   const [overlayMounted, setOverlayMounted] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const canPortal = typeof document !== "undefined";
 
   const handleOpen = useCallback(() => {
     setIconActive(true);
@@ -76,9 +73,7 @@ export function MobileNav() {
           className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
           style={{
             top: iconActive ? "50%" : "0",
-            transform: iconActive
-              ? "translateY(-50%) rotate(45deg)"
-              : "none",
+            transform: iconActive ? "translateY(-50%) rotate(45deg)" : "none",
           }}
         />
         <span
@@ -95,15 +90,13 @@ export function MobileNav() {
           style={{
             bottom: iconActive ? "auto" : "0",
             top: iconActive ? "50%" : "auto",
-            transform: iconActive
-              ? "translateY(-50%) rotate(-45deg)"
-              : "none",
+            transform: iconActive ? "translateY(-50%) rotate(-45deg)" : "none",
           }}
         />
       </button>
 
       {overlayMounted &&
-        mounted &&
+        canPortal &&
         createPortal(
           <div
             ref={overlayRef}
