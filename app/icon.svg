@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0A0A0A"/>
+  <text
+    x="256"
+    y="380"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-weight="900"
+    font-size="420"
+    fill="#1DB954"
+    letter-spacing="-20"
+  >S</text>
+</svg>
