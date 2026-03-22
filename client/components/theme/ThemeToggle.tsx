@@ -1,7 +1,6 @@
 "use client";
 
-import { MoonStar, SunMedium } from "lucide-react";
-import { Button } from "@/client/components/ui/button";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/client/hooks/use-theme";
 
 export function ThemeToggle() {
@@ -9,22 +8,21 @@ export function ThemeToggle() {
   const resolvedTheme = isMounted ? theme : "dark";
 
   return (
-    <Button
+    <button
       aria-label={
         resolvedTheme === "dark"
           ? "Switch to light mode"
           : "Switch to dark mode"
       }
+      className="text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
       onClick={toggleTheme}
-      size="icon"
       type="button"
-      variant="secondary"
     >
       {resolvedTheme === "dark" ? (
-        <SunMedium className="size-4.5" />
+        <Moon className="size-5" />
       ) : (
-        <MoonStar className="size-4.5" />
+        <Sun className="size-5" />
       )}
-    </Button>
+    </button>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { useLogout } from "@/client/hooks/use-logout";
-import { Button } from "@/client/components/ui/button";
 
 export function LogoutButton() {
   const router = useRouter();
@@ -15,13 +15,14 @@ export function LogoutButton() {
   }
 
   return (
-    <Button
+    <button
+      className="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-50 cursor-pointer hover:cursor-pointer"
       disabled={isMutating}
       onClick={handleLogout}
       type="button"
-      variant="secondary"
+      aria-label="Log out"
     >
-      {isMutating ? "Logging out..." : "Log out"}
-    </Button>
+      <LogOut className="size-5" />
+    </button>
   );
 }

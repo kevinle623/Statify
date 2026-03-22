@@ -2,513 +2,337 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BarChart3, Globe2, Radio, Sparkles, Waves } from "lucide-react";
 import { useCurrentlyPlaying } from "@/client/hooks/use-currently-playing";
 import { useProfile } from "@/client/hooks/use-profile";
 import { useRecentHistoryPreview } from "@/client/hooks/use-recent-history-preview";
 import { useTopItems } from "@/client/hooks/use-top-items";
-import { Badge } from "@/client/components/ui/badge";
-import { Button } from "@/client/components/ui/button";
-import { Card, CardContent } from "@/client/components/ui/card";
 import { Skeleton } from "@/client/components/ui/skeleton";
 import { formatDuration } from "@/client/lib/format";
-import { cn } from "@/client/lib/utils";
 import type { SpotifyArtist, SpotifyTrack } from "@/types/spotify";
 
-function DashboardHeaderSkeleton() {
+function NowPlayingSkeleton() {
   return (
-    <header className="glass-panel overflow-hidden rounded-[32px] p-7">
-      <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <Skeleton className="h-6 w-28" />
-          <Skeleton className="mt-5 h-14 w-full max-w-xl" />
-          <Skeleton className="mt-4 h-5 w-full max-w-2xl" />
-          <div className="mt-6">
-            <Skeleton className="h-28 w-full rounded-[24px]" />
-          </div>
-        </div>
-        <div className="grid gap-3">
-          <Skeleton className="h-16 w-full rounded-[24px]" />
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-            <Skeleton className="h-16 w-full rounded-[24px]" />
-            <Skeleton className="h-16 w-full rounded-[24px]" />
-          </div>
-          <Skeleton className="h-24 w-full rounded-[28px]" />
-        </div>
+    <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+      <div className="lg:col-span-5">
+        <Skeleton className="aspect-square w-full" />
       </div>
-    </header>
+      <div className="lg:col-span-7 space-y-6 pb-4">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-16 w-3/4" />
+        <Skeleton className="h-6 w-48" />
+        <Skeleton className="h-1 w-full" />
+      </div>
+    </section>
   );
 }
 
-function DashboardListSkeleton() {
+function StatsSkeleton() {
   return (
-    <Card className="rounded-[30px]">
-      <CardContent className="p-0">
-        <div className="mb-5 flex items-center justify-between">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-5 w-20" />
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {[1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="bg-surface-container-low ghost-border p-8 space-y-6"
+        >
+          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-6 w-32" />
         </div>
-        <div className="grid gap-3">
-          <Skeleton className="h-20 w-full rounded-[22px]" />
-          <Skeleton className="h-20 w-full rounded-[22px]" />
-          <Skeleton className="h-20 w-full rounded-[22px]" />
-        </div>
-      </CardContent>
-    </Card>
+      ))}
+    </section>
   );
 }
 
-function DashboardSectionState({
-  title,
-  message,
-}: {
-  title: string;
-  message: string;
-}) {
+function RecentSkeleton() {
   return (
-    <Card className="rounded-[30px]">
-      <CardContent className="p-0">
-        <div className="mb-5 flex items-center justify-between">
-          <span className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-            {title}
-          </span>
+    <div className="bg-surface-container-low ghost-border overflow-hidden">
+      {[1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          className="flex items-center justify-between p-6 border-t border-white/5 first:border-t-0"
+        >
+          <div className="flex items-center gap-6">
+            <Skeleton className="w-4 h-4" />
+            <Skeleton className="w-10 h-10" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-3 w-20" />
+            </div>
+          </div>
+          <Skeleton className="h-3 w-16" />
         </div>
-        <div className="rounded-[22px] border border-white/10 bg-white/[0.04] px-5 py-6 text-sm text-zinc-400">
-          {message}
-        </div>
-      </CardContent>
-    </Card>
+      ))}
+    </div>
   );
 }
 
 export function DashboardScreen() {
+  const { data: profile } = useProfile();
   const {
-    data: profile,
-    isLoading: isProfileLoading,
-    error: profileError,
-  } = useProfile();
-  const {
-    data: liveCurrentlyPlaying,
-    isLoading: isCurrentlyPlayingLoading,
-    error: currentlyPlayingError,
+    data: currentlyPlaying,
+    isLoading: cpLoading,
+    error: cpError,
   } = useCurrentlyPlaying();
-  const {
-    data: topArtistsData,
-    isLoading: isTopArtistsLoading,
-    error: topArtistsError,
-  } = useTopItems("artists", "medium_term", 5);
-  const {
-    data: topTracksData,
-    isLoading: isTopTracksLoading,
-    error: topTracksError,
-  } = useTopItems("tracks", "medium_term", 5);
-  const {
-    data: recentHistoryData,
-    isLoading: isRecentHistoryLoading,
-    error: recentHistoryError,
-  } = useRecentHistoryPreview(6);
+  const { data: topArtists, isLoading: artistsLoading } = useTopItems(
+    "artists",
+    "medium_term",
+    1,
+  );
+  const { data: topTracks, isLoading: tracksLoading } = useTopItems(
+    "tracks",
+    "medium_term",
+    1,
+  );
+  const { data: recentHistory, isLoading: historyLoading } =
+    useRecentHistoryPreview(4);
 
-  if (profileError) {
-    return (
-      <div className="glass-panel rounded-[32px] p-6">
-        Failed to load your Spotify data.
-      </div>
-    );
-  }
-
-  const topArtists = (topArtistsData?.items ?? []) as SpotifyArtist[];
-  const topTracks = (topTracksData?.items ?? []) as SpotifyTrack[];
-  const currentTrack = liveCurrentlyPlaying?.item;
-  const currentArtwork = currentTrack?.album.images[0]?.url;
-  const profileImage = profile?.images[0]?.url;
+  const nowPlayingTrack = currentlyPlaying?.item ?? null;
+  const topArtist = topArtists?.items?.[0] as SpotifyArtist | undefined;
+  const topTrack = topTracks?.items?.[0] as SpotifyTrack | undefined;
+  const recentItems = recentHistory?.items ?? [];
 
   return (
-    <section className="grid gap-5">
-      {isProfileLoading || !profile ? (
-        <DashboardHeaderSkeleton />
-      ) : (
-        <header className="glass-panel overflow-hidden rounded-[32px] p-7">
-          <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
-            <div>
-              <Badge variant="accent" className="mb-4 w-fit">
-                Dashboard
-              </Badge>
-              <h1 className="max-w-[16ch] text-4xl font-semibold tracking-[-0.06em] text-white md:text-5xl">
-                Welcome back, {profile.display_name}.
-              </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-300">
-                Here is your listening summary, with current playback, favorite
-                artists, and repeat-heavy tracks.
-              </p>
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-6 lg:pb-12 space-y-12 lg:space-y-16">
+      {/* Welcome + Now Playing Hero */}
+      <section>
+        <h1 className="text-4xl lg:text-6xl font-black font-headline tracking-tighter mb-2 uppercase">
+          Welcome back, {profile?.display_name?.split(" ")[0] ?? "Archivist"}.
+        </h1>
+        <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
+          Here&apos;s what your ears have been telling us
+        </span>
+      </section>
 
-              <div className="mt-6">
-                <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(135deg,rgba(56,189,248,0.14),rgba(255,255,255,0.04))] px-5 py-5">
-                  <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_center,rgba(125,211,252,0.18),transparent_70%)]" />
-                  <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                    Listening motion
-                  </p>
-                  <div className="mt-4 flex items-end gap-2">
-                    <span className="animate-meter h-8 w-3 rounded-full bg-cyan-200/80" />
-                    <span className="animate-meter-delayed h-14 w-3 rounded-full bg-white/70" />
-                    <span className="animate-meter-late h-10 w-3 rounded-full bg-emerald-200/70" />
-                    <span className="animate-meter h-16 w-3 rounded-full bg-cyan-300/80" />
-                    <span className="animate-meter-delayed h-11 w-3 rounded-full bg-white/80" />
-                    <span className="animate-meter-late h-7 w-3 rounded-full bg-cyan-100/70" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-3">
-              <div className="flex items-center gap-3 rounded-[24px] border border-white/10 bg-white/[0.05] px-4 py-4">
-                <Sparkles className="size-4 text-emerald-200" />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                    Profile
-                  </p>
-                  <p className="text-sm font-medium text-white">
-                    {profile.display_name}
-                  </p>
-                </div>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <div className="flex items-center gap-3 rounded-[24px] border border-white/10 bg-white/[0.05] px-4 py-4">
-                  <Radio className="size-4 text-cyan-200" />
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                      Current plan
-                    </p>
-                    <p className="text-sm font-medium text-white">
-                      {profile.product}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 rounded-[24px] border border-white/10 bg-white/[0.05] px-4 py-4">
-                  <Globe2 className="size-4 text-emerald-200" />
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                      Country
-                    </p>
-                    <p className="text-sm font-medium text-white">
-                      {profile.country}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 rounded-[28px] border border-white/12 bg-white/[0.06] p-4">
-                {profileImage ? (
-                  <Image
-                    src={profileImage}
-                    alt={profile.display_name}
-                    width={72}
-                    height={72}
-                    className="rounded-[20px]"
-                  />
-                ) : (
-                  <div className="flex size-[72px] items-center justify-center rounded-[20px] bg-cyan-300/15 text-2xl font-semibold text-cyan-100">
-                    {profile.display_name.slice(0, 1)}
-                  </div>
-                )}
-                <div>
-                  <strong className="text-lg text-white">
-                    {profile.display_name}
-                  </strong>
-                  <p className="mt-1 text-sm text-zinc-400">
-                    {profile.product} plan • {profile.country}
-                  </p>
-                </div>
-              </div>
-            </div>
+      {cpLoading ? (
+        <NowPlayingSkeleton />
+      ) : nowPlayingTrack ? (
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          <div className="lg:col-span-5 aspect-square relative group">
+            <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl" />
+            {nowPlayingTrack.album.images[0] && (
+              <Image
+                src={nowPlayingTrack.album.images[0].url}
+                alt={nowPlayingTrack.name}
+                fill
+                className="object-cover grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700 ghost-border relative z-10"
+              />
+            )}
           </div>
-        </header>
-      )}
-
-      <div className="grid gap-5">
-        <Card className="rounded-[30px] bg-[linear-gradient(135deg,rgba(56,189,248,0.16),rgba(255,255,255,0.04))]">
-          <CardContent className="grid gap-6 p-0 lg:grid-cols-[0.9fr_1.1fr]">
-            <div>
-              <span className="mb-5 inline-flex text-xs uppercase tracking-[0.18em] text-zinc-400">
-                Currently listening
+          <div className="lg:col-span-7 space-y-6 lg:space-y-8 pb-4">
+            <div className="space-y-2">
+              <span className="font-label text-xs uppercase tracking-[0.2em] text-primary">
+                Now Playing
               </span>
-              {currentlyPlayingError ? (
-                <p className="text-zinc-300">
-                  Current playback is unavailable right now.
+              <h2 className="text-4xl lg:text-7xl font-bold tracking-tighter leading-none text-on-surface font-headline">
+                {nowPlayingTrack.name}
+              </h2>
+              <p className="text-xl lg:text-2xl font-light text-on-surface-variant tracking-wide">
+                {nowPlayingTrack.artists.map((a) => a.name).join(", ")}
+              </p>
+            </div>
+            {currentlyPlaying?.progress_ms != null && (
+              <div className="space-y-3">
+                <div className="w-full h-[2px] bg-white/5 relative">
+                  <div
+                    className="absolute top-0 left-0 h-full bg-primary shadow-[0_0_15px_rgba(29,185,84,0.4)]"
+                    style={{
+                      width: `${(currentlyPlaying.progress_ms / nowPlayingTrack.duration_ms) * 100}%`,
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between font-label text-[10px] tracking-widest text-on-surface-variant">
+                  <span>{formatDuration(currentlyPlaying.progress_ms)}</span>
+                  <span>{formatDuration(nowPlayingTrack.duration_ms)}</span>
+                </div>
+              </div>
+            )}
+            <div className="flex gap-6 pt-2">
+              <div className="space-y-1">
+                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+                  Album
+                </span>
+                <p className="text-sm text-on-surface">
+                  {nowPlayingTrack.album.name}
                 </p>
-              ) : isCurrentlyPlayingLoading && !liveCurrentlyPlaying ? (
-                <div className="flex items-center gap-4">
-                  <Skeleton className="size-28 rounded-[24px]" />
-                  <div className="min-w-0 flex-1">
-                    <Skeleton className="h-7 w-2/3" />
-                    <Skeleton className="mt-3 h-4 w-1/2" />
-                    <Skeleton className="mt-4 h-4 w-20" />
-                  </div>
+              </div>
+              <div className="space-y-1">
+                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+                  Duration
+                </span>
+                <p className="text-sm text-on-surface">
+                  {formatDuration(nowPlayingTrack.duration_ms)}
+                </p>
+              </div>
+              {nowPlayingTrack.album.release_date && (
+                <div className="space-y-1">
+                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+                    Released
+                  </span>
+                  <p className="text-sm text-on-surface">
+                    {nowPlayingTrack.album.release_date.slice(0, 4)}
+                  </p>
                 </div>
-              ) : currentTrack ? (
-                <div className="flex items-center gap-4">
-                  {currentArtwork ? (
-                    <Image
-                      src={currentArtwork}
-                      alt={currentTrack.album.name}
-                      width={112}
-                      height={112}
-                      className="rounded-[24px] object-cover shadow-[0_18px_40px_rgba(34,211,238,0.18)]"
-                    />
-                  ) : null}
-                  <div>
-                    <h2 className="text-2xl font-semibold text-white">
-                      {currentTrack.name}
-                    </h2>
-                    <p className="mt-1 text-sm text-zinc-300">
-                      {currentTrack.artists
-                        .map((artist) => artist.name)
-                        .join(", ")}
-                    </p>
-                    <small className="mt-3 inline-flex text-sm text-cyan-200">
-                      {formatDuration(currentTrack.duration_ms)}
-                    </small>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-zinc-300">Nothing is currently playing.</p>
               )}
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                {
-                  label: "Queue energy",
-                  value: currentTrack ? "Active" : "Quiet",
-                  kind: "status" as const,
-                },
-                {
-                  label: "Top artist",
-                  value: topArtists[0]?.name ?? "No data yet",
-                  image: topArtists[0]?.images[0]?.url,
-                  fallback: topArtists[0]?.name?.slice(0, 1) ?? "A",
-                  kind: "artist" as const,
-                  href: "/artists",
-                },
-                {
-                  label: "Top track",
-                  value: topTracks[0]?.name ?? "No data yet",
-                  image: topTracks[0]?.album.images[0]?.url,
-                  fallback: topTracks[0]?.name?.slice(0, 1) ?? "T",
-                  kind: "track" as const,
-                  href: "/tracks",
-                },
-              ].map((item) => {
-                const content = (
-                  <div
-                    className={cn(
-                      "flex min-h-[92px] items-center rounded-[24px] border border-white/10 bg-white/[0.05] px-4 py-4",
-                      item.href &&
-                        "transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50",
-                    )}
-                  >
-                    <div className="w-full">
-                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                        {item.label}
-                      </p>
-                      <div className="mt-3 grid grid-cols-[42px_minmax(0,1fr)] items-center gap-3">
-                        {item.image ? (
-                          <Image
-                            src={item.image}
-                            alt={item.value}
-                            width={42}
-                            height={42}
-                            className="rounded-[12px] object-cover"
-                          />
-                        ) : item.kind === "status" ? (
-                          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[12px] bg-cyan-300/12">
-                            <Waves className="size-4 text-cyan-200" />
-                          </div>
-                        ) : (
-                          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[12px] bg-cyan-300/12 text-sm font-semibold text-cyan-100">
-                            {item.fallback}
-                          </div>
-                        )}
-                        <p className="line-clamp-2 min-w-0 text-sm font-medium leading-5 text-white">
-                          {item.value}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
+          </div>
+        </section>
+      ) : (
+        <section className="bg-surface-container-low ghost-border p-8 lg:p-12">
+          <span className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant">
+            Now Playing
+          </span>
+          <p className="text-on-surface-variant mt-4 text-lg">
+            {cpError
+              ? "Current playback unavailable"
+              : "Nothing is currently playing"}
+          </p>
+        </section>
+      )}
 
-                if (item.href) {
-                  return (
-                    <Link key={item.label} href={item.href}>
-                      {content}
-                    </Link>
-                  );
-                }
-
-                return <div key={item.label}>{content}</div>;
-              })}
+      {/* Quick Stats Row */}
+      {artistsLoading || tracksLoading ? (
+        <StatsSkeleton />
+      ) : (
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Top Artist */}
+          <Link
+            href="/artists"
+            className="bg-surface-container-low ghost-border p-8 space-y-6 hover:bg-surface-container transition-colors"
+          >
+            <p className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+              Primary Influence
+            </p>
+            <div className="flex items-center gap-4">
+              {topArtist?.images?.[0] && (
+                <Image
+                  src={topArtist.images[0].url}
+                  alt={topArtist.name}
+                  width={48}
+                  height={48}
+                  className="rounded-full grayscale ghost-border"
+                />
+              )}
+              <div>
+                <h3 className="text-lg font-bold">{topArtist?.name ?? "—"}</h3>
+                <p className="text-[10px] text-primary font-label uppercase">
+                  {topArtist?.genres?.[0] ?? "Artist"}
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </Link>
 
-        <div className="grid gap-5 xl:grid-cols-2">
-          {isTopArtistsLoading ? (
-            <DashboardListSkeleton />
-          ) : topArtistsError ? (
-            <DashboardSectionState
-              title="Top artists"
-              message="Top artists are unavailable right now."
-            />
-          ) : (
-            <Card className="rounded-[30px]">
-              <CardContent className="p-0">
-                <div className="mb-5 flex items-center justify-between">
-                  <span className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                    Top artists
-                  </span>
-                  <BarChart3 className="size-4 text-cyan-200" />
-                </div>
-                <ol className="grid gap-3">
-                  {topArtists.map((artist) => (
-                    <li
-                      key={artist.id}
-                      className="grid grid-cols-[56px_minmax(0,1fr)_auto] items-center gap-4 rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4"
-                    >
-                      {artist.images[0]?.url ? (
-                        <Image
-                          src={artist.images[0].url}
-                          alt={artist.name}
-                          width={56}
-                          height={56}
-                          className="rounded-[16px] object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-14 w-14 items-center justify-center rounded-[16px] bg-cyan-300/14 text-cyan-100">
-                          {artist.name.slice(0, 1)}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <strong className="text-white">{artist.name}</strong>
-                        <p className="mt-1 text-sm text-zinc-400">
-                          {artist.genres.slice(0, 2).join(" • ") ||
-                            "No genre metadata"}
-                        </p>
-                      </div>
-                      <span className="text-sm text-zinc-400">
-                        {artist.popularity}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          )}
+          {/* Top Track */}
+          <Link
+            href="/tracks"
+            className="bg-surface-container-low ghost-border p-8 space-y-6 hover:bg-surface-container transition-colors"
+          >
+            <p className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+              Peak Resonance
+            </p>
+            <div>
+              <h3 className="text-lg font-bold">{topTrack?.name ?? "—"}</h3>
+              <p className="text-[10px] text-primary font-label uppercase">
+                {topTrack?.artists.map((a) => a.name).join(", ") ?? "Track"}
+              </p>
+            </div>
+          </Link>
 
-          {isTopTracksLoading ? (
-            <DashboardListSkeleton />
-          ) : topTracksError ? (
-            <DashboardSectionState
-              title="Top tracks"
-              message="Top tracks are unavailable right now."
-            />
-          ) : (
-            <Card className="rounded-[30px]">
-              <CardContent className="p-0">
-                <div className="mb-5 flex items-center justify-between">
-                  <span className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                    Top tracks
-                  </span>
-                  <Badge variant="default">Medium term</Badge>
-                </div>
-                <ol className="grid gap-3">
-                  {topTracks.map((track) => (
-                    <li
-                      key={track.id}
-                      className="grid grid-cols-[56px_minmax(0,1fr)_auto] items-center gap-4 rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4"
-                    >
-                      {track.album.images[0]?.url ? (
-                        <Image
-                          src={track.album.images[0].url}
-                          alt={track.name}
-                          width={56}
-                          height={56}
-                          className="rounded-[16px] object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-14 w-14 items-center justify-center rounded-[16px] bg-cyan-300/14 text-cyan-100">
-                          {track.name.slice(0, 1)}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <strong className="text-white">{track.name}</strong>
-                        <p className="mt-1 text-sm text-zinc-400">
-                          {track.artists
-                            .map((artist) => artist.name)
-                            .join(", ")}
-                        </p>
-                      </div>
-                      <span className="text-sm text-zinc-400">
-                        {formatDuration(track.duration_ms)}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          )}
+          {/* Activity */}
+          <div className="bg-surface-container-low ghost-border p-8 space-y-6">
+            <p className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+              Account Status
+            </p>
+            <div className="flex items-end gap-2">
+              <span className="text-4xl font-bold font-label leading-none text-primary">
+                {profile?.product === "premium" ? "PRO" : "FREE"}
+              </span>
+              <span className="text-[10px] text-on-surface-variant uppercase font-label pb-1">
+                {profile?.country ?? "—"}
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Recent Listens */}
+      <section className="space-y-6 lg:space-y-8">
+        <div className="flex justify-between items-end">
+          <h2 className="text-2xl lg:text-3xl font-bold tracking-tighter font-headline">
+            Temporal Log
+          </h2>
+          <Link
+            href="/history"
+            className="font-label text-[10px] uppercase tracking-widest text-primary hover:underline"
+          >
+            View Full Archive
+          </Link>
         </div>
-
-        {isRecentHistoryLoading ? (
-          <DashboardListSkeleton />
-        ) : recentHistoryError ? (
-          <DashboardSectionState
-            title="Recent listening history"
-            message="Recent listening history is unavailable right now."
-          />
+        {historyLoading ? (
+          <RecentSkeleton />
+        ) : recentItems.length === 0 ? (
+          <div className="bg-surface-container-low ghost-border p-8">
+            <p className="text-on-surface-variant">
+              Your listening history will appear here once Spotify has recent
+              playback to show.
+            </p>
+          </div>
         ) : (
-          <Card className="rounded-[30px]">
-            <CardContent className="p-0">
-              <div className="mb-5 flex items-center justify-between">
-                <span className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                  Recent listening history
-                </span>
-                <Button asChild size="sm" variant="secondary">
-                  <a href="/history">View history</a>
-                </Button>
-              </div>
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {recentHistoryData?.items.map((item, index) => (
-                  <div
-                    key={`${item.track.id}-${item.played_at}-${index}`}
-                    className="grid grid-cols-[56px_minmax(0,1fr)] items-center gap-4 rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4"
-                  >
-                    {item.track.album.images[0]?.url ? (
-                      <Image
-                        src={item.track.album.images[0].url}
-                        alt={item.track.name}
-                        width={56}
-                        height={56}
-                        className="rounded-[16px] object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-14 w-14 items-center justify-center rounded-[16px] bg-cyan-300/14 text-cyan-100">
-                        {item.track.name.slice(0, 1)}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <strong className="line-clamp-1 text-white">
-                        {item.track.name}
-                      </strong>
-                      <p className="mt-1 line-clamp-1 text-sm text-zinc-400">
-                        {item.track.artists
-                          .map((artist) => artist.name)
-                          .join(", ")}
-                      </p>
-                    </div>
+          <div className="bg-surface-container-low ghost-border overflow-hidden">
+            {recentItems.map((item, index) => (
+              <a
+                key={`${item.track.id}-${item.played_at}`}
+                href={item.track.external_urls.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between p-4 lg:p-6 transition-colors duration-200 hover:bg-white/5 border-t border-white/5 first:border-t-0 track-row-animate"
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
+              >
+                <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+                  <span className="font-label text-xs text-outline-variant w-4 hidden sm:block">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item.track.album.images[0] && (
+                    <Image
+                      src={item.track.album.images[0].url}
+                      alt={item.track.name}
+                      width={40}
+                      height={40}
+                      className="grayscale ghost-border group-hover:grayscale-0 transition-all flex-shrink-0"
+                    />
+                  )}
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">
+                      {item.track.name}
+                    </h4>
+                    <p className="text-xs text-on-surface-variant truncate">
+                      {item.track.artists.map((a) => a.name).join(", ")}
+                    </p>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="flex items-center gap-6 lg:gap-12 flex-shrink-0">
+                  <span className="font-label text-[10px] uppercase tracking-tighter text-outline-variant hidden md:block">
+                    {formatDuration(item.track.duration_ms)}
+                  </span>
+                  <span className="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant w-20 lg:w-24 text-right">
+                    {formatPlayedAt(item.played_at)}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
         )}
-      </div>
-    </section>
+      </section>
+    </div>
   );
+}
+
+function formatPlayedAt(value: string) {
+  const diffMs = Date.now() - new Date(value).getTime();
+  const diffMinutes = Math.round(diffMs / 60_000);
+  const diffHours = Math.round(diffMs / 3_600_000);
+  const diffDays = Math.round(diffMs / 86_400_000);
+
+  if (diffMinutes < 1) return "Just now";
+  if (diffMinutes < 60) return `${diffMinutes}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${diffDays}d ago`;
 }

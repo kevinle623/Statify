@@ -11,4 +11,16 @@ describe("cn", () => {
       "rounded-xl shadow",
     );
   });
+
+  it("returns empty string when given no arguments", () => {
+    expect(cn()).toBe("");
+  });
+
+  it("handles conditional class application", () => {
+    const isActive = true;
+    const isDisabled = false;
+    expect(
+      cn("base", isActive && "text-primary", isDisabled && "opacity-50"),
+    ).toBe("base text-primary");
+  });
 });

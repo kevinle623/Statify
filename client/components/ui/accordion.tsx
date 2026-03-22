@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { cn } from "@/client/lib/utils";
 
 function Accordion({
@@ -18,7 +18,7 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       className={cn(
-        "rounded-3xl border border-white/12 bg-white/[0.04] px-6",
+        "bg-surface-container-low ghost-border p-6 hover:bg-surface-container transition-colors",
         className,
       )}
       {...props}
@@ -35,13 +35,13 @@ function AccordionTrigger({
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          "group flex flex-1 items-center justify-between gap-4 py-5 text-left text-base font-medium text-white",
+          "group flex flex-1 items-center justify-between gap-4 font-headline text-sm font-bold uppercase tracking-wide text-on-surface",
           className,
         )}
         {...props}
       >
         {children}
-        <ChevronDown className="size-4 shrink-0 text-zinc-400 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        <Plus className="size-4 shrink-0 text-on-surface-variant transition-transform duration-200 group-data-[state=open]:rotate-45 group-data-[state=open]:text-primary" />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
@@ -53,11 +53,13 @@ function AccordionContent({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
-    <AccordionPrimitive.Content
-      className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-      {...props}
-    >
-      <div className={cn("pb-5 text-sm leading-7 text-zinc-300", className)}>
+    <AccordionPrimitive.Content className="overflow-hidden" {...props}>
+      <div
+        className={cn(
+          "pt-4 mt-4 border-t border-white/5 text-sm leading-relaxed text-on-surface-variant",
+          className,
+        )}
+      >
         {children}
       </div>
     </AccordionPrimitive.Content>

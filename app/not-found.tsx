@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { Disc3, Home, LayoutDashboard } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/client/components/ui/button";
 import { SPOTIFY_COOKIE_KEYS } from "@/server/lib/spotify";
 
@@ -9,40 +9,75 @@ export default async function NotFound() {
   const isAuthenticated = cookieStore.has(SPOTIFY_COOKIE_KEYS.refreshToken);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-10 sm:px-6 lg:px-8">
-      <section className="glass-panel relative w-full overflow-hidden rounded-[32px] px-6 py-12 sm:px-10 sm:py-14">
-        <div className="aurora absolute inset-0 opacity-80" />
-        <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-          <div className="mb-6 flex size-16 items-center justify-center rounded-[24px] border border-cyan-300/25 bg-cyan-300/10 text-cyan-100">
-            <Disc3 className="size-7" />
-          </div>
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-zinc-400">
-            404
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.06em] text-white sm:text-6xl">
-            This page drifted off the playlist.
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
-            The route you tried to open does not exist anymore, or the link is
-            wrong.
-          </p>
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-16 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary rounded-full blur-[160px]" />
+      </div>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button asChild>
-              <Link href="/">
-                <Home className="size-4" />
-                Back home
-              </Link>
-            </Button>
-            <Button asChild variant="secondary">
-              <Link href={isAuthenticated ? "/dashboard" : "/api/auth/login"}>
-                <LayoutDashboard className="size-4" />
-                {isAuthenticated ? "Open dashboard" : "Connect Spotify"}
-              </Link>
-            </Button>
+      <div className="relative z-10 w-full max-w-7xl flex flex-col md:flex-row items-baseline justify-between gap-12">
+        {/* 404 number */}
+        <div className="flex flex-col">
+          <span className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-4">
+            Error Code
+          </span>
+          <h1 className="text-[8rem] md:text-[18rem] font-extrabold leading-none tracking-tighter text-on-surface flex items-start font-headline">
+            404
+            <span className="text-primary text-4xl mt-12">.</span>
+          </h1>
+        </div>
+
+        {/* Message & CTA */}
+        <div className="flex flex-col items-start md:items-end text-left md:text-right max-w-md">
+          <span className="font-label text-xs uppercase tracking-[0.2em] text-primary mb-8">
+            System Notification
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-on-surface mb-6 leading-tight font-headline">
+            The beat has dropped.
+          </h2>
+          <p className="text-on-surface-variant text-lg leading-relaxed mb-12">
+            The archival record you are looking for has been moved or purged
+            from the database. It exists now only in the silence between tracks.
+          </p>
+          <Button asChild size="lg">
+            <Link
+              href={isAuthenticated ? "/dashboard" : "/"}
+              className="flex items-center gap-3"
+            >
+              {isAuthenticated ? "RETURN TO DASHBOARD" : "RETURN HOME"}
+              <ArrowRight className="size-4" />
+            </Link>
+          </Button>
+          <div className="mt-16 flex flex-col items-start md:items-end gap-2">
+            <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
+              Request ID
+            </span>
+            <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface">
+              STF-09X-ARCHIVE-ERR
+            </span>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Bottom branding */}
+      <div className="fixed bottom-12 left-6 right-6 lg:left-16 lg:right-16 flex justify-between items-end border-t border-white/5 pt-8">
+        <div className="flex flex-col gap-1">
+          <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
+            Statify
+          </span>
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
+            The Digital Archivist
+          </span>
+        </div>
+        <nav className="flex gap-8">
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
+            Support
+          </span>
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
+            API Status
+          </span>
+        </nav>
+      </div>
     </main>
   );
 }

@@ -2,290 +2,241 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  BarChart3,
-  Clock3,
-  Disc3,
-  Menu,
-  Music4,
-  Sparkles,
-  X,
+  LayoutDashboard,
+  User,
+  Music,
+  Clock,
+  Bell,
+  BellOff,
+  UserCircle,
 } from "lucide-react";
-import { LogoutButton } from "@/client/components/auth/LogoutButton";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
-import { Badge } from "@/client/components/ui/badge";
-import { Button } from "@/client/components/ui/button";
+import { LogoutButton } from "@/client/components/auth/LogoutButton";
+import { useProfile } from "@/client/hooks/use-profile";
 import { cn } from "@/client/lib/utils";
 
-const navigationItems = [
-  { href: "/dashboard", label: "Dashboard", icon: Sparkles },
-  { href: "/artists", label: "Top artists", icon: BarChart3 },
-  { href: "/tracks", label: "Top tracks", icon: Music4 },
-  { href: "/history", label: "History", icon: Clock3 },
-];
+const NAV_ITEMS = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/artists", label: "Artists", icon: User },
+  { href: "/tracks", label: "Tracks", icon: Music },
+  { href: "/history", label: "History", icon: Clock },
+] as const;
+
+function getBreadcrumb(pathname: string): string {
+  if (pathname.startsWith("/dashboard")) return "Status: Synchronized";
+  if (pathname.startsWith("/artists")) return "Archive / Top Artists";
+  if (pathname.startsWith("/tracks")) return "Archive / Top Tracks";
+  if (pathname.startsWith("/history")) return "Archive / History";
+  return "Archive";
+}
+
+function NotificationPanel() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    if (open) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
+  return (
+    <div className="relative flex items-center" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-label="Notifications"
+        className="cursor-pointer"
+      >
+        <Bell className="size-5 text-on-surface-variant hover:text-primary transition-colors" />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-3 w-80 bg-surface-container ghost-border shadow-xl z-50">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
+            <span className="font-label text-xs uppercase tracking-widest text-on-surface font-bold">
+              Notifications
+            </span>
+            <span className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">
+              0 New
+            </span>
+          </div>
+          <div className="flex flex-col items-center justify-center py-12 px-6">
+            <BellOff className="size-8 text-on-surface-variant/30 mb-4" />
+            <p className="text-sm text-on-surface-variant text-center">
+              No notifications right now
+            </p>
+            <p className="text-xs text-on-surface-variant/50 text-center mt-1">
+              We&apos;ll let you know when something comes up.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [mobileMenuState, setMobileMenuState] = useState<
-    "closed" | "opening" | "open" | "closing"
-  >("closed");
-  const mobileNavRef = useRef<HTMLDivElement | null>(null);
-  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
-  const mobileMenuOpenedAtRef = useRef(0);
-  const mobileMenuFrameRef = useRef<number | null>(null);
-  const mobileMenuTimeoutRef = useRef<number | null>(null);
+  const { data: profile } = useProfile();
 
-  const isMobileMenuOpen =
-    mobileMenuState === "opening" || mobileMenuState === "open";
-  const shouldRenderMobileMenu = mobileMenuState !== "closed";
-  const isMobileMenuVisible = mobileMenuState !== "closing";
-
-  function clearMobileMenuTimers() {
-    if (mobileMenuFrameRef.current !== null) {
-      window.cancelAnimationFrame(mobileMenuFrameRef.current);
-      mobileMenuFrameRef.current = null;
-    }
-
-    if (mobileMenuTimeoutRef.current !== null) {
-      window.clearTimeout(mobileMenuTimeoutRef.current);
-      mobileMenuTimeoutRef.current = null;
-    }
-  }
-
-  function openMobileMenu() {
-    clearMobileMenuTimers();
-    mobileMenuOpenedAtRef.current = window.performance.now();
-    setMobileMenuState("opening");
-    mobileMenuFrameRef.current = window.requestAnimationFrame(() => {
-      setMobileMenuState("open");
-      mobileMenuFrameRef.current = null;
-    });
-  }
-
-  function closeMobileMenu() {
-    if (mobileMenuState === "closed" || mobileMenuState === "closing") {
-      return;
-    }
-
-    clearMobileMenuTimers();
-    setMobileMenuState("closing");
-    mobileMenuTimeoutRef.current = window.setTimeout(() => {
-      setMobileMenuState("closed");
-      mobileMenuTimeoutRef.current = null;
-    }, 220);
-  }
-
-  function toggleMobileMenu() {
-    if (isMobileMenuOpen) {
-      closeMobileMenu();
-      return;
-    }
-
-    openMobileMenu();
-  }
-
-  const handleMobileMenuDismiss = useEffectEvent(() => {
-    closeMobileMenu();
-  });
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) {
-      return;
-    }
-
-    function handlePointerDown(event: PointerEvent) {
-      const target = event.target as Node;
-
-      if (
-        !mobileNavRef.current?.contains(target) &&
-        !mobileMenuButtonRef.current?.contains(target)
-      ) {
-        handleMobileMenuDismiss();
-      }
-    }
-
-    function handleScroll() {
-      if (window.performance.now() - mobileMenuOpenedAtRef.current < 250) {
-        return;
-      }
-
-      handleMobileMenuDismiss();
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    return () => {
-      clearMobileMenuTimers();
-    };
-  }, []);
+  const displayName = profile?.display_name ?? "User";
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
-      <div className="sticky top-3 z-40 mb-5 lg:hidden" ref={mobileNavRef}>
-        <div className="glass-panel flex items-center justify-between rounded-[24px] px-4 py-3 backdrop-blur-2xl">
-          <Link
-            href="/"
-            className="flex min-w-0 items-center gap-3 rounded-2xl transition hover:opacity-90"
-          >
-            <span className="flex size-10 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-cyan-100">
-              <Disc3 className="size-4" />
-            </span>
-            <div className="min-w-0">
-              <strong className="animate-shimmer block truncate bg-[linear-gradient(90deg,#f8fbff,#c4f1ff,#f8fbff)] bg-clip-text text-base tracking-[-0.04em] text-transparent">
-                Statify
-              </strong>
-              <p className="truncate text-xs font-medium tracking-[-0.03em] text-zinc-300">
-                Your recap
-              </p>
-            </div>
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="fixed left-0 top-0 h-full hidden lg:flex flex-col py-8 px-6 bg-background w-64 border-r border-white/5 z-50">
+        <div className="mb-12">
+          <Link href="/dashboard">
+            <h1 className="text-xl font-bold tracking-tighter text-on-surface font-headline">
+              Statify
+            </h1>
           </Link>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button
-              ref={mobileMenuButtonRef}
-              aria-expanded={isMobileMenuOpen}
-              aria-label={
-                isMobileMenuOpen
-                  ? "Close navigation menu"
-                  : "Open navigation menu"
-              }
-              onClick={toggleMobileMenu}
-              size="icon"
-              type="button"
-              variant="secondary"
-              className="relative overflow-hidden"
-            >
-              <Menu
-                className={cn(
-                  "absolute size-4.5 transition-all duration-200 ease-out",
-                  isMobileMenuOpen
-                    ? "rotate-90 scale-75 opacity-0"
-                    : "rotate-0 scale-100 opacity-100",
-                )}
-              />
-              <X
-                className={cn(
-                  "absolute size-4.5 transition-all duration-200 ease-out",
-                  isMobileMenuOpen
-                    ? "rotate-0 scale-100 opacity-100"
-                    : "-rotate-90 scale-75 opacity-0",
-                )}
-              />
-            </Button>
-          </div>
+          <p className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant mt-1">
+            The Digital Archivist
+          </p>
         </div>
 
-        {shouldRenderMobileMenu ? (
-          <div
-            className={cn(
-              "glass-panel absolute inset-x-0 top-[calc(100%+0.75rem)] origin-top rounded-[28px] p-3 shadow-[0_30px_100px_rgba(2,6,23,0.42)] transition-all duration-200 ease-out",
-              isMobileMenuVisible
-                ? "translate-y-0 scale-100 opacity-100"
-                : "-translate-y-2 scale-[0.98] opacity-0",
-            )}
-          >
-            <nav className="grid gap-2">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  className={cn(
-                    "group flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50",
-                    pathname === item.href
-                      ? "border-cyan-300/35 bg-cyan-300/12 text-white shadow-[0_0_0_1px_rgba(125,211,252,0.2)]"
-                      : "border-white/10 bg-white/[0.05] text-zinc-300 hover:border-white/18 hover:bg-white/[0.08]",
-                  )}
-                  aria-current={pathname === item.href ? "page" : undefined}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                >
-                  <item.icon
-                    className={cn(
-                      "size-4",
-                      pathname === item.href
-                        ? "text-cyan-100"
-                        : "text-cyan-200",
-                    )}
-                  />
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+        <nav className="flex-1 space-y-1">
+          {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+            const isActive = pathname.startsWith(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "flex items-center gap-4 px-4 py-3 font-medium text-sm transition-all duration-200",
+                  isActive
+                    ? "text-primary border-r-2 border-primary bg-primary/5"
+                    : "text-on-surface-variant hover:text-on-surface hover:bg-white/5",
+                )}
+              >
+                <Icon className="size-[18px]" />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-            <div className="mt-3 border-t border-white/10 pt-3">
+        <div className="mt-auto pt-8 border-t border-white/5">
+          <button
+            disabled
+            className="w-full ghost-border bg-white/5 text-on-surface-variant/50 py-3 text-xs font-label uppercase tracking-widest cursor-not-allowed"
+          >
+            Export Data
+            <span className="block text-[9px] tracking-normal text-on-surface-variant/30 mt-1">
+              Coming Soon
+            </span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Top Header — Mobile */}
+      <header className="fixed top-0 right-0 left-0 lg:hidden h-16 grid grid-cols-3 items-center px-6 z-40 bg-background/80 backdrop-blur-md border-b border-white/5">
+        {/* Left: avatar + name */}
+        <div className="flex items-center gap-3">
+          <UserCircle className="size-8 text-on-surface-variant" />
+          <span className="font-headline text-sm font-bold uppercase tracking-[0.05em] text-on-surface">
+            {displayName.split(" ")[0]}
+          </span>
+        </div>
+
+        {/* Center: logo */}
+        <div className="text-xl font-black tracking-tighter text-on-surface font-headline text-center">
+          STATIFY
+        </div>
+
+        {/* Right: controls */}
+        <div className="flex items-center gap-4 justify-end">
+          <ThemeToggle />
+          <LogoutButton />
+        </div>
+      </header>
+
+      {/* Top Header — Desktop */}
+      <header className="fixed top-0 right-0 left-64 h-16 hidden lg:flex justify-between items-center px-12 z-40 bg-background/80 backdrop-blur-md border-b border-white/5">
+        <div className="flex items-center">
+          <span className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant">
+            {getBreadcrumb(pathname)}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-6">
+          <ThemeToggle />
+          <NotificationPanel />
+
+          <div className="flex items-center gap-3">
+            <div className="h-4 w-px bg-white/10" />
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-xs font-bold text-on-surface">
+                  {displayName}
+                </p>
+                <p className="font-label text-[9px] uppercase tracking-tighter text-on-surface-variant">
+                  {profile?.product ?? "Free"} Archivist
+                </p>
+              </div>
+              <UserCircle className="size-8 text-on-surface-variant" />
               <LogoutButton />
             </div>
           </div>
-        ) : null}
-      </div>
+        </div>
+      </header>
 
-      <div className="grid flex-1 gap-5 lg:grid-cols-[290px_minmax(0,1fr)]">
-        <aside className="glass-panel hidden h-fit flex-col gap-4 rounded-[28px] p-4 sm:rounded-[32px] sm:p-5 lg:sticky lg:top-5 lg:flex">
+      {/* Main Content */}
+      <main className="lg:ml-64 pt-16 pb-20 lg:pb-12 min-h-screen">
+        {children}
+      </main>
+
+      {/* Desktop Footer */}
+      <footer className="fixed bottom-0 right-0 left-64 h-12 hidden lg:flex justify-between items-center px-12 bg-background border-t border-white/5 z-40">
+        <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
+          &copy; 2026 STATIFY ARCHIVE
+        </span>
+        <div className="flex gap-8">
           <Link
-            href="/"
-            className="flex items-center gap-3 rounded-2xl transition hover:opacity-90"
+            href="/privacy"
+            className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors"
           >
-            <span className="flex size-11 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-cyan-100">
-              <Disc3 className="size-4.5" />
-            </span>
-            <div>
-              <strong className="animate-shimmer bg-[linear-gradient(90deg,#f8fbff,#c4f1ff,#f8fbff)] bg-clip-text text-base tracking-[-0.04em] text-transparent">
-                Statify
-              </strong>
-              <p className="mt-1 text-sm font-medium tracking-[-0.03em] text-zinc-200">
-                Spotify listening snapshots
-              </p>
-            </div>
+            Privacy
           </Link>
-
-          <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2">
-            <Badge variant="default" className="w-fit">
-              Your recap
-            </Badge>
-            <ThemeToggle />
-          </div>
-
-          <nav className="grid gap-2 sm:grid-cols-4 lg:grid-cols-1">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.href}
-                className={cn(
-                  "group flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50",
-                  pathname === item.href
-                    ? "border-cyan-300/35 bg-cyan-300/12 text-white shadow-[0_0_0_1px_rgba(125,211,252,0.2)]"
-                    : "border-white/10 bg-white/[0.05] text-zinc-300 hover:border-white/18 hover:bg-white/[0.08]",
-                )}
-                aria-current={pathname === item.href ? "page" : undefined}
-                href={item.href}
-              >
-                <item.icon
-                  className={cn(
-                    "size-4",
-                    pathname === item.href ? "text-cyan-100" : "text-cyan-200",
-                  )}
-                />
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <LogoutButton />
-        </aside>
-
-        <div className="min-w-0">{children}</div>
-      </div>
-      <footer className="pb-2 pt-6 text-center text-sm text-zinc-400">
-        Made with ❤️ by Statify team
+          <Link
+            href="/terms"
+            className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors"
+          >
+            Terms
+          </Link>
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+            API
+          </span>
+        </div>
       </footer>
-    </div>
+
+      {/* Mobile Bottom Tab Bar */}
+      <nav className="fixed bottom-0 left-0 w-full lg:hidden flex justify-around items-center py-3 px-2 bg-surface-container-lowest z-50 border-t border-white/5">
+        {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+          const isActive = pathname.startsWith(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                "flex flex-col items-center justify-center gap-1 transition-all",
+                isActive ? "text-primary" : "text-on-surface-variant",
+              )}
+            >
+              <Icon className="size-5" />
+              <span className="font-label text-[10px] uppercase tracking-widest">
+                {label}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+    </>
   );
 }

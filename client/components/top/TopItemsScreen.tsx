@@ -2,18 +2,16 @@
 
 import { startTransition, useDeferredValue, useState } from "react";
 import Image from "next/image";
-import { ArrowUpRight, Disc3 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useTopItems } from "@/client/hooks/use-top-items";
 import { SPOTIFY_TIME_RANGE_LABELS } from "@/client/lib/spotify";
+import { formatDuration } from "@/client/lib/format";
 import type {
   SpotifyArtist,
   SpotifyTimeRange,
   SpotifyTopItemType,
   SpotifyTrack,
 } from "@/types/spotify";
-import { Badge } from "@/client/components/ui/badge";
-import { Button } from "@/client/components/ui/button";
-import { Card } from "@/client/components/ui/card";
 import { Skeleton } from "@/client/components/ui/skeleton";
 import { cn } from "@/client/lib/utils";
 
@@ -23,180 +21,289 @@ const timeRanges: SpotifyTimeRange[] = [
   "long_term",
 ];
 
-function isTrack(item: SpotifyArtist | SpotifyTrack): item is SpotifyTrack {
-  return "album" in item;
+const TIME_RANGE_SHORT_LABELS: Record<SpotifyTimeRange, string> = {
+  short_term: "4 Weeks",
+  medium_term: "6 Months",
+  long_term: "All Time",
+};
+
+function FeaturedSkeleton() {
+  return (
+    <div className="relative w-full h-[300px] lg:h-[500px] bg-surface-container-low ghost-border overflow-hidden">
+      <Skeleton className="w-full h-full" />
+    </div>
+  );
+}
+
+function GridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 lg:gap-y-12 gap-x-8 lg:gap-x-12">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="flex items-center gap-6">
+          <Skeleton className="w-24 h-24 flex-shrink-0" />
+          <div className="flex-grow space-y-2">
+            <Skeleton className="h-5 w-32" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function TopItemsScreen({ type }: { type: SpotifyTopItemType }) {
-  const [timeRange, setTimeRange] = useState<SpotifyTimeRange>("short_term");
+  const [timeRange, setTimeRange] = useState<SpotifyTimeRange>("medium_term");
   const deferredTimeRange = useDeferredValue(timeRange);
-  const { data, isLoading, error } = useTopItems(type, deferredTimeRange);
-  const featuredItem = data?.items[0];
+  const { data, isLoading } = useTopItems(type, deferredTimeRange, 20);
+
+  const items = data?.items ?? [];
+  const featured = items[0];
+  const remaining = items.slice(1);
+  const title = type === "artists" ? "ARTISTS" : "TOP TRACKS";
 
   return (
-    <section className="grid gap-5">
-      <header className="glass-panel rounded-[32px] p-7">
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12 max-w-7xl mx-auto">
+      {/* Header + Time Range */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-12 lg:mb-16">
         <div>
-          <Badge variant="accent" className="mb-4 w-fit">
-            {type === "artists" ? "Artists" : "Tracks"}
-          </Badge>
-          <h1 className="text-4xl font-semibold tracking-[-0.06em] text-white md:text-5xl">
-            Your top {type}
-          </h1>
+          <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tighter text-on-surface leading-none font-headline">
+            {title}
+          </h2>
+          <p className="font-label text-xs text-primary mt-4 tracking-[0.2em] uppercase">
+            {SPOTIFY_TIME_RANGE_LABELS[timeRange]}
+          </p>
         </div>
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="flex bg-surface-container-low p-1 ghost-border">
           {timeRanges.map((range) => (
-            <Button
+            <button
               key={range}
               className={cn(
-                range === timeRange &&
-                  "border-cyan-300/40 bg-cyan-300/14 text-cyan-50 shadow-[0_0_0_1px_rgba(125,211,252,0.25)] hover:bg-cyan-300/18",
+                "px-4 lg:px-6 py-2 text-[10px] font-label tracking-widest uppercase transition-all",
+                timeRange === range
+                  ? "bg-primary text-on-primary"
+                  : "text-on-surface-variant hover:text-on-surface",
               )}
               onClick={() => startTransition(() => setTimeRange(range))}
-              type="button"
-              variant="secondary"
             >
-              {SPOTIFY_TIME_RANGE_LABELS[range]}
-            </Button>
+              {TIME_RANGE_SHORT_LABELS[range]}
+            </button>
           ))}
         </div>
-      </header>
+      </div>
 
-      <div className="grid gap-4">
-        {isLoading ? (
-          <>
-            <Skeleton className="h-[420px] w-full rounded-[32px]" />
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <Skeleton className="aspect-[1.15] w-full rounded-[30px]" />
-              <Skeleton className="aspect-[1.15] w-full rounded-[30px]" />
-              <Skeleton className="aspect-[1.15] w-full rounded-[30px]" />
-            </div>
-          </>
-        ) : null}
-        {error ? (
-          <div className="glass-panel rounded-[28px] p-6">
-            Failed to load data.
-          </div>
-        ) : null}
-        {featuredItem ? (
-          <Card
-            className="overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,rgba(56,189,248,0.16),rgba(255,255,255,0.05))] p-0 animate-fade-up"
-            key={`${type}-${deferredTimeRange}-${featuredItem.id}`}
-          >
-            <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="relative min-h-[280px] overflow-hidden bg-black/20">
-                {"album" in featuredItem ? (
-                  featuredItem.album.images[0]?.url ? (
-                    <Image
-                      src={featuredItem.album.images[0].url}
-                      alt={featuredItem.name}
-                      fill
-                      className="object-cover transition duration-700 hover:scale-105"
-                    />
-                  ) : null
-                ) : featuredItem.images[0]?.url ? (
-                  <Image
-                    src={featuredItem.images[0].url}
-                    alt={featuredItem.name}
-                    fill
-                    className="object-cover transition duration-700 hover:scale-105"
-                  />
-                ) : null}
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(3,7,18,0.5))]" />
-              </div>
-              <div className="flex flex-col justify-between p-6">
-                <div>
-                  <Badge variant="default" className="mb-4 w-fit">
-                    Featured • #1
-                  </Badge>
-                  <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white">
-                    {featuredItem.name}
-                  </h2>
-                  <p className="mt-3 text-base leading-7 text-zinc-300">
-                    {"album" in featuredItem
-                      ? featuredItem.artists
-                          .map((artist) => artist.name)
-                          .join(", ")
-                      : featuredItem.genres.slice(0, 3).join(" • ") ||
-                        "No genre metadata"}
-                  </p>
-                  <p className="mt-6 text-sm text-zinc-400">
-                    {SPOTIFY_TIME_RANGE_LABELS[timeRange]} snapshot
-                  </p>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button asChild>
-                    <a
-                      href={featuredItem.external_urls.spotify}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      Open in Spotify
-                      <ArrowUpRight className="size-4" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Card>
-        ) : null}
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {data?.items.slice(1).map((item, index) => {
-            const artwork = isTrack(item)
-              ? item.album.images[0]?.url
-              : item.images[0]?.url;
-            const meta = isTrack(item)
-              ? item.artists.map((artist) => artist.name).join(", ")
-              : item.genres.slice(0, 2).join(" • ") || "No genre metadata";
+      {isLoading ? (
+        <div className="space-y-16 lg:space-y-20">
+          <FeaturedSkeleton />
+          <GridSkeleton />
+        </div>
+      ) : (
+        <>
+          {/* Featured #1 */}
+          {featured && (
+            <section className="mb-16 lg:mb-20">
+              {type === "artists" ? (
+                <FeaturedArtist artist={featured as SpotifyArtist} />
+              ) : (
+                <FeaturedTrack track={featured as SpotifyTrack} />
+              )}
+            </section>
+          )}
 
-            return (
-              <Card
-                key={item.id}
-                className="group overflow-hidden rounded-[30px] bg-white/[0.05] p-0 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.07]"
-              >
-                <div className="relative aspect-[1.15] overflow-hidden">
-                  {artwork ? (
-                    <Image
-                      src={artwork}
-                      alt={item.name}
-                      fill
-                      className="object-cover transition duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center bg-cyan-300/16 text-cyan-100">
-                      <Disc3 className="size-8" />
-                    </div>
-                  )}
-                  <div
-                    className="absolute left-4 top-4 rounded-full border border-white/12 bg-black/25 px-3 py-1 font-mono text-xs backdrop-blur-xl"
-                    style={{ color: "#f8fbff" }}
+          {/* Remaining Items */}
+          {type === "artists" ? (
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 lg:gap-y-12 gap-x-8 lg:gap-x-12">
+              {remaining.map((item, i) => {
+                const artist = item as SpotifyArtist;
+                return (
+                  <a
+                    key={artist.id}
+                    href={artist.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-6 group cursor-pointer"
                   >
-                    {String(index + 2).padStart(2, "0")}
-                  </div>
-                </div>
-                <div className="space-y-3 p-5">
-                  <div className="min-w-0">
-                    <h2 className="truncate text-lg font-semibold text-white">
-                      {item.name}
-                    </h2>
-                    <p className="mt-1 text-sm text-zinc-400">{meta}</p>
-                  </div>
-                  <Button asChild className="w-full" variant="secondary">
-                    <a
-                      href={item.external_urls.spotify}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open in Spotify
-                      <ArrowUpRight className="size-4" />
-                    </a>
-                  </Button>
-                </div>
-              </Card>
-            );
-          })}
+                    <div className="relative flex-shrink-0">
+                      {artist.images[0] && (
+                        <Image
+                          src={artist.images[0].url}
+                          alt={artist.name}
+                          width={96}
+                          height={96}
+                          className="w-24 h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                        />
+                      )}
+                      <span className="absolute -top-3 -left-3 font-label text-xs font-bold bg-background p-1 text-primary">
+                        {String(i + 2).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="flex-grow min-w-0 border-b border-white/5 pb-4 group-hover:border-primary/30 transition-colors duration-300">
+                      <div className="flex justify-between items-start mb-1">
+                        <h4 className="text-lg font-bold truncate text-on-surface group-hover:text-white transition-colors">
+                          {artist.name}
+                        </h4>
+                        <ArrowUpRight className="size-4 text-outline-variant group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
+                      </div>
+                      <p className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant truncate">
+                        {artist.genres.slice(0, 2).join(" / ") ||
+                          "No genre metadata"}
+                      </p>
+                    </div>
+                  </a>
+                );
+              })}
+            </section>
+          ) : (
+            <section className="space-y-2">
+              {/* Table Header */}
+              <div className="hidden lg:grid grid-cols-12 px-6 py-4 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border-b border-white/5">
+                <div className="col-span-1">Rank</div>
+                <div className="col-span-6">Track Detail</div>
+                <div className="col-span-3">Album</div>
+                <div className="col-span-2 text-right">Time</div>
+              </div>
+              {remaining.map((item, i) => {
+                const track = item as SpotifyTrack;
+                return (
+                  <a
+                    key={track.id}
+                    href={track.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="grid grid-cols-12 items-center px-4 lg:px-6 py-4 group transition-all duration-300 cursor-pointer hover:bg-white/5 track-row-animate"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  >
+                    <div className="col-span-2 lg:col-span-1 font-label text-sm text-on-surface-variant group-hover:text-primary transition-colors">
+                      {String(i + 2).padStart(2, "0")}
+                    </div>
+                    <div className="col-span-10 lg:col-span-6 flex items-center gap-4 lg:gap-6">
+                      {track.album.images[0] && (
+                        <div className="w-12 h-12 bg-surface-container overflow-hidden ghost-border relative flex-shrink-0">
+                          <Image
+                            src={track.album.images[0].url}
+                            alt={track.name}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-sm tracking-tight text-on-surface truncate">
+                          {track.name}
+                        </h4>
+                        <p className="text-xs text-on-surface-variant truncate">
+                          {track.artists.map((a) => a.name).join(", ")}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="hidden lg:block col-span-3 font-label text-[10px] uppercase tracking-widest text-on-surface-variant truncate">
+                      {track.album.name}
+                    </div>
+                    <div className="hidden lg:block col-span-2 text-right font-label text-[10px] text-on-surface-variant">
+                      {formatDuration(track.duration_ms)}
+                    </div>
+                  </a>
+                );
+              })}
+            </section>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
+  return (
+    <div className="relative w-full h-[300px] lg:h-[500px] overflow-hidden bg-surface-container-lowest group cursor-pointer">
+      {artist.images[0] && (
+        <Image
+          src={artist.images[0].url}
+          alt={artist.name}
+          fill
+          className="object-cover opacity-60 grayscale group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+      <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12 flex items-end gap-8 lg:gap-12 w-full pr-16 lg:pr-24">
+        <div className="flex-1">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="font-label text-sm text-primary font-bold">
+              #01
+            </span>
+            <div className="h-px w-12 bg-white/10" />
+            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+              Current Peak
+            </span>
+          </div>
+          <h3 className="text-4xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-none font-headline">
+            {artist.name}
+          </h3>
+          <div className="mt-4 lg:mt-6 flex flex-wrap gap-2 lg:gap-3">
+            {artist.genres.slice(0, 3).map((genre) => (
+              <span
+                key={genre}
+                className="px-3 py-1 text-[10px] font-label tracking-widest uppercase bg-white/5 ghost-border text-on-surface-variant"
+              >
+                {genre}
+              </span>
+            ))}
+          </div>
+        </div>
+        <a
+          href={artist.external_urls.spotify}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-primary flex items-center justify-center hover:scale-110 transition-transform shadow-[0_0_30px_rgba(29,185,84,0.3)] flex-shrink-0"
+        >
+          <ArrowUpRight className="size-6 lg:size-8 text-on-primary" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function FeaturedTrack({ track }: { track: SpotifyTrack }) {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="lg:col-span-5 aspect-square bg-surface-container relative group overflow-hidden">
+        {track.album.images[0] && (
+          <Image
+            src={track.album.images[0].url}
+            alt={track.name}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute top-6 left-6 w-12 h-12 bg-primary flex items-center justify-center rounded-full">
+          <span className="font-label font-bold text-on-primary text-xl">
+            01
+          </span>
         </div>
       </div>
-    </section>
+      <div className="lg:col-span-7 flex flex-col justify-center">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="px-2 py-0.5 border border-primary text-primary font-label text-[10px] tracking-widest uppercase">
+            Peak Performance
+          </span>
+        </div>
+        <h2 className="text-4xl lg:text-7xl font-black tracking-tighter mb-4 leading-[0.9] font-headline uppercase">
+          {track.name}
+        </h2>
+        <p className="text-xl lg:text-2xl text-on-surface-variant font-light tracking-tight mb-8">
+          {track.artists.map((a) => a.name).join(", ")}
+        </p>
+        <div className="flex gap-8 lg:gap-12 font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant">
+          <div>
+            <span className="block text-primary mb-1">Duration</span>
+            {formatDuration(track.duration_ms)}
+          </div>
+          <div>
+            <span className="block text-primary mb-1">Album</span>
+            {track.album.name}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -13,16 +13,28 @@ export async function GET(request: NextRequest) {
   const error = searchParams.get("error");
   const storedState = await getSpotifyAuthState();
 
-  if (error || !code || !state || !storedState || state !== storedState) {
+  if (error) {
     await clearSpotifyAuthState();
-    return NextResponse.redirect(new URL("/", request.url));
+    const reason = error === "access_denied" ? "denied" : "unknown";
+    return NextResponse.redirect(
+      new URL(`/auth-error?reason=${reason}`, request.url),
+    );
+  }
+
+  if (!code || !state || !storedState || state !== storedState) {
+    await clearSpotifyAuthState();
+    return NextResponse.redirect(
+      new URL("/auth-error?reason=state_mismatch", request.url),
+    );
   }
 
   const tokens = await exchangeSpotifyCode(code);
 
   if (!tokens.refresh_token) {
     await clearSpotifyAuthState();
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(
+      new URL("/auth-error?reason=token_error", request.url),
+    );
   }
 
   await setSpotifySession({

@@ -1,43 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { Clock3, ExternalLink } from "lucide-react";
 import { useRecentlyPlayed } from "@/client/hooks/use-recently-played";
-import { Badge } from "@/client/components/ui/badge";
 import { Button } from "@/client/components/ui/button";
-import { Card } from "@/client/components/ui/card";
 import { Skeleton } from "@/client/components/ui/skeleton";
 
 function formatPlayedAt(value: string) {
-  const playedAt = new Date(value);
-  const diffMs = Date.now() - playedAt.getTime();
+  const diffMs = Date.now() - new Date(value).getTime();
   const diffMinutes = Math.round(diffMs / 60_000);
   const diffHours = Math.round(diffMs / 3_600_000);
   const diffDays = Math.round(diffMs / 86_400_000);
-  const formatter = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
 
-  if (diffMinutes < 1) {
-    return "Just now";
-  }
-
-  if (diffMinutes < 60) {
-    return formatter.format(-diffMinutes, "minute");
-  }
-
-  if (diffHours < 24) {
-    return formatter.format(-diffHours, "hour");
-  }
-
-  if (diffDays < 7) {
-    return formatter.format(-diffDays, "day");
-  }
-
-  return new Intl.DateTimeFormat(undefined, {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(playedAt);
+  if (diffMinutes < 1) return "Just now";
+  if (diffMinutes < 60) return `${diffMinutes}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${diffDays}d ago`;
 }
 
 function getDayLabel(value: string) {
@@ -49,13 +26,8 @@ function getDayLabel(value: string) {
     (today.getTime() - target.getTime()) / 86_400_000,
   );
 
-  if (diffDays === 0) {
-    return "Today";
-  }
-
-  if (diffDays === 1) {
-    return "Yesterday";
-  }
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
 
   return new Intl.DateTimeFormat(undefined, {
     weekday: "long",
@@ -81,144 +53,151 @@ function getSectionId(label: string) {
   return `history-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 }
 
+function HistoryLoadingSkeleton() {
+  return (
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
+      <div className="flex gap-8 mb-16 items-end">
+        <div>
+          <Skeleton className="h-14 w-48" />
+          <Skeleton className="h-4 w-32 mt-4" />
+        </div>
+      </div>
+      <div className="space-y-6">
+        <Skeleton className="h-8 w-20" />
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="flex items-center gap-6 py-4">
+            <Skeleton className="w-12 h-12 flex-shrink-0" />
+            <div className="flex-grow space-y-2">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-3 w-24" />
+            </div>
+            <Skeleton className="h-3 w-16" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HistoryScreen() {
   const { data, isLoading, isLoadingMore, hasMore, loadMore, error } =
     useRecentlyPlayed();
 
   if (isLoading) {
-    return (
-      <section className="grid gap-5">
-        <div className="glass-panel rounded-[32px] p-7">
-          <Skeleton className="h-6 w-32" />
-          <Skeleton className="mt-5 h-14 w-full max-w-xl" />
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <Skeleton className="aspect-[1.1] w-full rounded-[30px]" />
-          <Skeleton className="aspect-[1.1] w-full rounded-[30px]" />
-          <Skeleton className="aspect-[1.1] w-full rounded-[30px]" />
-        </div>
-      </section>
-    );
+    return <HistoryLoadingSkeleton />;
   }
 
   if (error || !data) {
     return (
-      <div className="glass-panel rounded-[32px] p-6">
-        Failed to load listening history.
+      <div className="pt-16 px-12 pb-12">
+        <div className="bg-surface-container-low ghost-border p-8">
+          <p className="text-on-surface-variant">
+            Failed to load listening history.
+          </p>
+        </div>
       </div>
     );
   }
 
   if (data.items.length === 0) {
     return (
-      <section className="grid gap-5">
-        <header className="glass-panel rounded-[32px] p-7">
-          <Badge variant="accent" className="mb-4 w-fit">
-            History
-          </Badge>
-          <h1 className="text-4xl font-semibold tracking-[-0.06em] text-white md:text-5xl">
-            Your recently played tracks
-          </h1>
-          <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-300">
+      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
+        <h2 className="text-4xl lg:text-6xl font-black tracking-tighter text-on-surface font-headline">
+          History
+        </h2>
+        <div className="bg-surface-container-low ghost-border p-8 mt-8">
+          <p className="text-on-surface-variant">
             Your listening history will appear here once Spotify has recent
             playback to show.
           </p>
-        </header>
-      </section>
+        </div>
+      </div>
     );
   }
 
   const groups = groupByDay(data.items);
-  const loadedDayLinks = groups.map(([label]) => ({
+  const dayLinks = groups.map(([label]) => ({
     label,
     href: `#${getSectionId(label)}`,
   }));
 
   return (
-    <section className="grid gap-5">
-      <header className="glass-panel rounded-[32px] p-7">
-        <Badge variant="accent" className="mb-4 w-fit">
-          History
-        </Badge>
-        <h1 className="text-4xl font-semibold tracking-[-0.06em] text-white md:text-5xl">
-          Your recently played tracks
-        </h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-300">
-          A visual feed of the songs you have played most recently on Spotify.
-        </p>
-        <div className="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap gap-2">
-            {loadedDayLinks.map((day) => (
-              <Button asChild key={day.label} size="sm" variant="secondary">
-                <a href={day.href}>{day.label}</a>
-              </Button>
-            ))}
-          </div>
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
+      {/* Header + Quick Jump Links */}
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-12 lg:mb-16 lg:items-end">
+        <div>
+          <h2 className="text-4xl lg:text-6xl font-black tracking-tighter text-on-surface font-headline">
+            History
+          </h2>
+          <p className="font-label text-xs text-primary mt-2 uppercase tracking-[0.15em]">
+            {data.items.length} sessions loaded
+          </p>
         </div>
-      </header>
+        <div className="lg:ml-auto flex gap-4 lg:gap-6 flex-wrap lg:pb-2">
+          {dayLinks.map((day) => (
+            <a
+              key={day.label}
+              href={day.href}
+              className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors"
+            >
+              {day.label}
+            </a>
+          ))}
+        </div>
+      </div>
 
-      <div className="grid gap-8">
+      {/* Day Groups */}
+      <div className="space-y-12 lg:space-y-20">
         {groups.map(([label, items]) => (
-          <section
-            id={getSectionId(label)}
-            key={label}
-            className="scroll-mt-28 grid gap-4"
-          >
-            <div className="flex items-center gap-3">
-              <Badge variant="default">{label}</Badge>
-              <div className="h-px flex-1 bg-white/10" />
+          <section key={label} id={getSectionId(label)}>
+            <div className="flex items-baseline justify-between mb-6 lg:mb-8 border-b border-white/5 pb-4">
+              <h3 className="text-2xl lg:text-3xl font-bold tracking-tight font-headline">
+                {label}
+              </h3>
+              <span className="font-label text-xs text-on-surface-variant uppercase tracking-widest">
+                {items.length} Track{items.length !== 1 ? "s" : ""}
+              </span>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-col gap-1">
               {items.map((item, index) => {
                 const artwork = item.track.album.images[0]?.url;
 
                 return (
-                  <Card
+                  <a
                     key={`${item.track.id}-${item.played_at}-${index}`}
-                    className="group overflow-hidden rounded-[30px] bg-white/[0.05] p-0 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.07]"
+                    href={item.track.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between py-3 lg:py-4 px-4 lg:px-6 -mx-4 lg:-mx-6 hover:bg-white/5 transition-all track-row-animate"
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="relative aspect-[1.08] overflow-hidden">
-                      {artwork ? (
-                        <Image
-                          src={artwork}
-                          alt={item.track.name}
-                          fill
-                          className="object-cover transition duration-700 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full items-center justify-center bg-cyan-300/16 text-cyan-100" />
-                      )}
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(3,7,18,0.64))]" />
-                    </div>
-                    <div className="space-y-4 p-5">
-                      <div>
-                        <h2 className="line-clamp-2 text-lg font-semibold text-white">
+                    <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+                      <div className="w-12 h-12 bg-surface-container overflow-hidden ghost-border flex-shrink-0">
+                        {artwork && (
+                          <Image
+                            src={artwork}
+                            alt={item.track.name}
+                            width={48}
+                            height={48}
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                          />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-bold text-on-surface tracking-tight truncate group-hover:text-primary transition-colors">
                           {item.track.name}
-                        </h2>
-                        <p className="mt-1 text-sm text-zinc-400">
-                          {item.track.artists
-                            .map((artist) => artist.name)
-                            .join(", ")}
+                        </p>
+                        <p className="text-xs text-on-surface-variant mt-0.5 truncate">
+                          {item.track.artists.map((a) => a.name).join(", ")}
                         </p>
                       </div>
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 text-sm text-zinc-400">
-                          <Clock3 className="size-4 text-cyan-200" />
-                          {formatPlayedAt(item.played_at)}
-                        </div>
-                        <Button asChild size="sm" variant="secondary">
-                          <a
-                            href={item.track.external_urls.spotify}
-                            rel="noreferrer"
-                            target="_blank"
-                          >
-                            Open
-                            <ExternalLink className="size-4" />
-                          </a>
-                        </Button>
-                      </div>
                     </div>
-                  </Card>
+                    <div className="flex items-center gap-6 lg:gap-12 flex-shrink-0">
+                      <span className="font-label text-xs text-on-surface-variant group-hover:text-primary transition-colors">
+                        {formatPlayedAt(item.played_at)}
+                      </span>
+                    </div>
+                  </a>
                 );
               })}
             </div>
@@ -226,24 +205,18 @@ export function HistoryScreen() {
         ))}
       </div>
 
-      {hasMore ? (
-        <div className="flex flex-col items-center gap-4">
-          {isLoadingMore ? (
-            <div className="grid w-full gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <Skeleton className="aspect-[1.08] w-full rounded-[30px]" />
-              <Skeleton className="aspect-[1.08] w-full rounded-[30px]" />
-              <Skeleton className="aspect-[1.08] w-full rounded-[30px]" />
-            </div>
-          ) : null}
+      {/* Load More */}
+      {hasMore && (
+        <div className="flex justify-center mt-12">
           <Button
-            disabled={isLoadingMore}
+            variant="outline"
             onClick={() => loadMore()}
-            variant="secondary"
+            disabled={isLoadingMore}
           >
-            {isLoadingMore ? "Loading more..." : "Load more history"}
+            {isLoadingMore ? "Loading..." : "Load More Archive"}
           </Button>
         </div>
-      ) : null}
-    </section>
+      )}
+    </div>
   );
 }

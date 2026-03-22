@@ -1,398 +1,506 @@
 import Link from "next/link";
-import {
-  BarChart3,
-  Clock3,
-  Disc3,
-  Headphones,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Clock, TrendingUp, User } from "lucide-react";
 import { LoginButton } from "@/client/components/auth/LoginButton";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
-import { Badge } from "@/client/components/ui/badge";
 import { Button } from "@/client/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/client/components/ui/card";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/client/components/ui/accordion";
 
-interface LandingPageProps {
-  isAuthenticated: boolean;
-}
-
-const benefits = [
+const features = [
   {
-    icon: Headphones,
-    title: "See your listening personality",
+    icon: TrendingUp,
+    title: "Real-time Stats",
     description:
-      "Find the artists, tracks, and moods you actually return to, not just what was trending for a week.",
+      "Live monitoring of your current stream. Every second processed, every decibel archived as it happens.",
+    module: "Module 01 // Live",
   },
   {
-    icon: Clock3,
-    title: "Compare your eras",
+    icon: User,
+    title: "Artist Insights",
     description:
-      "Flip between recent favorites, six-month habits, longer-term patterns, and your latest listening history.",
+      "Deep-core analysis of your favorite curators. Discover hidden patterns in genre affinity and release cycle loyalty.",
+    module: "Module 02 // Analytics",
   },
   {
-    icon: ShieldCheck,
-    title: "Built for repeat visits",
+    icon: Clock,
+    title: "Historical Trends",
     description:
-      "Come back anytime to pick up where you left off, compare phases, and revisit the songs shaping your taste.",
+      "Your entire listening history, reconstructed. From your first stream to your latest obsession, a high-fidelity timeline of your sonic evolution.",
+    module: "Module 03 // Archive",
   },
 ];
 
-const demos = [
+const steps = [
   {
-    label: "Now playing",
-    title: "Catch what is on repeat in real time",
+    number: "01",
+    title: "Authorization",
     description:
-      "A live panel for your current session, so the dashboard still feels active after the first login.",
+      "Log in with your Spotify account securely. We never see or store your password.",
   },
   {
-    label: "Top artists",
-    title: "Surface the names behind your year",
+    number: "02",
+    title: "Ingestion",
     description:
-      "Clean rankings, genres, and quick links make it easy to revisit who shaped your listening.",
+      "Massive-scale data fetching of your play history, saved tracks, and custom playlists.",
   },
   {
-    label: "History",
-    title: "Scroll back through what you just played",
+    number: "03",
+    title: "Visualization",
     description:
-      "Recently played history adds recency to your stats so the app feels alive every time you come back.",
+      "Rendering of complex data clusters into a readable, editorial-grade interface.",
   },
 ];
 
 const faqs = [
   {
-    question: "What can Statify show me?",
+    id: "security",
+    question: "Is my Spotify account secure?",
     answer:
-      "Right now it shows your top artists, top tracks, recently played listening history, and what you are currently listening to. The dashboard is built around quick summaries first, then deeper drill-down pages.",
+      "Statify only requests 'Read' permissions. We never have access to your password or payment details. Your data is your own.",
   },
   {
-    question: "Does it post anything to Spotify?",
+    id: "refresh",
+    question: "How often does the data refresh?",
     answer:
-      "No. The app currently uses read-only Spotify scopes for profile details, current playback, and top items.",
+      "Statify pulls real-time data from the Spotify API. Your dashboard reflects your listening habits with minimal latency.",
   },
   {
-    question: "Why are there different time ranges?",
+    id: "export",
+    question: "Can I export my archival data?",
     answer:
-      "Spotify exposes short-term, medium-term, and long-term listening windows. Statify uses those directly so you can compare your recent phase against your more stable taste.",
-  },
-  {
-    question: "Do I need to reconnect every time?",
-    answer:
-      "No. After sign-in, the app stores the Spotify session in secure HTTP-only cookies and refreshes access tokens on the services when needed.",
+      "Export functionality is coming soon. You'll be able to export your historical data as structured files for external analysis.",
   },
 ];
 
-export function LandingPage({ isAuthenticated }: LandingPageProps) {
+/* ── Decorative SVG Diagrams for Feature Cards ── */
+
+function RealtimeDiagram() {
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-20 pt-5 sm:px-6 lg:px-8">
-      <section className="animate-fade-up relative overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.05] px-3 py-3 shadow-[0_30px_100px_rgba(2,6,23,0.48)] backdrop-blur-2xl sm:rounded-[32px] sm:px-4 sm:py-4">
-        <div className="aurora absolute inset-0 opacity-80" />
-        <div className="absolute left-6 top-8 h-28 w-28 rounded-full bg-cyan-300/20 blur-3xl" />
-        <div className="absolute bottom-4 right-8 h-32 w-32 rounded-full bg-emerald-300/10 blur-3xl" />
+    <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
+      {/* Waveform bars */}
+      {[0, 16, 32, 48, 64, 80, 96, 112, 128].map((x, i) => {
+        const heights = [30, 55, 40, 70, 25, 60, 45, 35, 50];
+        const h = heights[i];
+        return (
+          <rect
+            key={x}
+            x={x}
+            y={60 - h / 2}
+            width="8"
+            height={h}
+            rx="2"
+            fill="#1db954"
+            opacity={0.15 + i * 0.08}
+          />
+        );
+      })}
+      {/* Baseline */}
+      <line x1="0" y1="90" x2="140" y2="90" stroke="#474747" strokeWidth="1" />
+      {/* Live dot */}
+      <circle cx="136" cy="20" r="4" fill="#1db954" />
+      <circle
+        cx="136"
+        cy="20"
+        r="7"
+        stroke="#1db954"
+        strokeWidth="1"
+        opacity="0.3"
+      />
+      <text
+        x="118"
+        y="12"
+        fill="#919191"
+        fontSize="8"
+        fontFamily="Space Grotesk"
+      >
+        LIVE
+      </text>
+    </svg>
+  );
+}
 
-        <div className="relative rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-4 py-4 sm:rounded-[28px] sm:px-8 sm:py-7">
-          <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
-            <Link href="/" className="flex min-w-0 items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-cyan-100">
-                <Disc3 className="size-4" />
-              </div>
-              <div className="min-w-0">
-                <p className="animate-shimmer truncate bg-[linear-gradient(90deg,#f8fbff,#c4f1ff,#f8fbff)] bg-clip-text text-sm font-semibold tracking-[-0.04em] text-transparent">
-                  Statify
-                </p>
-                <p className="truncate text-xs font-medium tracking-[-0.03em] text-zinc-200">
-                  Spotify listening snapshots
-                </p>
-              </div>
-            </Link>
-            <div className="hidden items-center gap-2 sm:flex">
-              <ThemeToggle />
-              <Button asChild size="sm" variant="ghost">
-                <a href="#faq">FAQ</a>
-              </Button>
-              <Button asChild size="sm">
-                <a href={isAuthenticated ? "/dashboard" : "/api/auth/login"}>
-                  {isAuthenticated ? "Open dashboard" : "Connect Spotify"}
-                </a>
-              </Button>
-            </div>
-            <div className="sm:hidden">
-              <ThemeToggle />
-            </div>
-          </div>
-
-          <div className="grid gap-10 px-1 py-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div className="max-w-2xl">
-              <Badge variant="accent" className="mb-5">
-                <Sparkles className="size-3.5" />
-                Music stats made simple
-              </Badge>
-              <h1 className="max-w-[14ch] text-[3.25rem] font-semibold leading-[1.08] tracking-[-0.02em] text-white sm:text-[5rem] lg:text-[6.5rem]">
-                <span className="animate-shimmer bg-[linear-gradient(90deg,#f8fbff,#c4f1ff,#f8fbff)] bg-clip-text text-transparent">
-                  Statify
-                </span>
-              </h1>
-              <p className="mt-5 max-w-2xl text-balance text-base leading-8 text-zinc-300 sm:text-xl">
-                Statify turns your Spotify data into a clean snapshot of what
-                you have been obsessed with lately, what has stuck over time,
-                and what is playing right now.
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <LoginButton
-                  href={isAuthenticated ? "/dashboard" : "/api/auth/login"}
-                  label={isAuthenticated ? "Open dashboard" : "Connect Spotify"}
-                />
-                <Button asChild size="lg" variant="secondary">
-                  <a href="#why-statify">Learn more</a>
-                </Button>
-              </div>
-            </div>
-
-            <div className="relative min-h-[360px] lg:min-h-[420px]" id="demo">
-              <Card className="glass-strong surface-outline mx-auto w-full max-w-lg overflow-hidden bg-[linear-gradient(135deg,rgba(10,18,32,0.92),rgba(17,24,39,0.78))] p-0">
-                <div className="preview-divider px-5 py-4 sm:px-6">
-                  <div className="flex items-center justify-between">
-                    <Badge variant="default">Preview</Badge>
-                    <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">
-                      Your dashboard
-                    </p>
-                  </div>
-                </div>
-                <CardContent className="grid gap-4 p-5 sm:p-6">
-                  <div className="rounded-[26px] border border-cyan-200/10 bg-[linear-gradient(135deg,rgba(56,189,248,0.18),rgba(14,165,233,0.02))] p-5">
-                    <p className="text-xs uppercase tracking-[0.18em] text-cyan-100/70">
-                      Now playing
-                    </p>
-                    <div className="mt-4 flex items-center gap-4">
-                      <div className="animate-cover-glow size-16 rounded-2xl bg-[linear-gradient(135deg,#fb7185,#22d3ee)] shadow-[0_10px_35px_rgba(34,211,238,0.28)]" />
-                      <div>
-                        <p className="text-lg font-semibold text-white">
-                          Saturn
-                        </p>
-                        <p className="text-sm text-zinc-300">SZA</p>
-                        <p className="mt-2 text-xs text-zinc-400">
-                          Playing right now
-                        </p>
-                        <div className="mt-3 flex items-center gap-1.5">
-                          <span className="animate-meter h-1.5 w-10 origin-left rounded-full bg-cyan-200/80" />
-                          <span className="animate-meter-delayed h-1.5 w-6 origin-left rounded-full bg-white/60" />
-                          <span className="animate-meter-late h-1.5 w-8 origin-left rounded-full bg-emerald-200/70" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {[
-                      ["Top artist", "Fred again..", "Genre: electronic"],
-                      ["Top track", "Good Luck, Babe!", "6 month favorite"],
-                    ].map(([label, title, meta]) => (
-                      <div
-                        key={label}
-                        className="rounded-[24px] border border-white/10 bg-white/[0.05] px-4 py-4"
-                      >
-                        <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                          {label}
-                        </p>
-                        <p className="mt-2 font-medium text-white">{title}</p>
-                        <p className="mt-1 text-sm text-zinc-400">{meta}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          {
-            icon: Users,
-            value: "Less clutter",
-            label: "Dashboard first, deep dives second",
-          },
-          {
-            icon: BarChart3,
-            value: "Top songs",
-            label: "Fast access to your repeat-heavy picks",
-          },
-          {
-            icon: Headphones,
-            value: "Top artists",
-            label: "Genre context and direct Spotify links",
-          },
-          {
-            icon: ShieldCheck,
-            value: "Secure auth",
-            label: "Spotify tokens stay on the services",
-          },
-        ].map((item) => (
-          <Card key={item.label} className="rounded-[26px] bg-white/[0.05]">
-            <CardContent className="flex items-center gap-4 p-1">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-cyan-200">
-                <item.icon className="size-5" />
-              </div>
-              <div>
-                <p className="text-lg font-semibold text-white">{item.value}</p>
-                <p className="text-sm leading-6 text-zinc-400">{item.label}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
-
-      <section className="grid gap-5" id="why-statify">
-        <div className="max-w-2xl">
-          <Badge variant="default" className="mb-4 w-fit">
-            Why people use it
-          </Badge>
-          <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white sm:text-4xl">
-            A calmer way to understand your listening habits.
-          </h2>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {benefits.map((benefit, index) => (
-            <Card
-              key={benefit.title}
-              className="animate-fade-up rounded-[30px] bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.05))]"
-              style={{ animationDelay: `${index * 120}ms` }}
+function ArtistDiagram() {
+  const genres = [
+    { label: "POP", width: 180 },
+    { label: "ROCK", width: 140 },
+    { label: "R&B", width: 110 },
+    { label: "ELECTRONIC", width: 90 },
+    { label: "JAZZ", width: 60 },
+  ];
+  return (
+    <svg width="240" height="160" viewBox="0 0 240 160" fill="none">
+      {genres.map((g, i) => {
+        const y = 10 + i * 30;
+        return (
+          <g key={g.label}>
+            <text
+              x="0"
+              y={y + 4}
+              fill="#919191"
+              fontSize="8"
+              fontFamily="Space Grotesk"
             >
-              <CardHeader className="gap-4">
-                <div className="flex size-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.08] text-cyan-200">
-                  <benefit.icon className="size-5" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">{benefit.title}</CardTitle>
-                  <CardDescription className="mt-2 text-base">
-                    {benefit.description}
-                  </CardDescription>
-                </div>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
+              {g.label}
+            </text>
+            <rect
+              x="80"
+              y={y - 5}
+              width={g.width * 0.8}
+              height="12"
+              rx="1"
+              fill="#1db954"
+              opacity={0.15 + i * 0.05}
+            />
+            <rect
+              x="80"
+              y={y - 5}
+              width={g.width * 0.8}
+              height="12"
+              rx="1"
+              stroke="#1db954"
+              strokeWidth="0.5"
+              fill="none"
+              opacity="0.3"
+            />
+            <text
+              x={86 + g.width * 0.8}
+              y={y + 4}
+              fill="#1db954"
+              fontSize="8"
+              fontFamily="Space Grotesk"
+            >
+              {Math.round((g.width / 180) * 100)}%
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
 
-      <section className="grid gap-5">
-        <Card className="rounded-[32px] bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))]">
-          <CardHeader>
-            <Badge variant="default" className="w-fit">
-              How it feels
-            </Badge>
-            <CardTitle className="text-3xl tracking-[-0.04em]">
-              A softer, more colorful take on the familiar Next.js product
-              style.
-            </CardTitle>
-            <CardDescription className="max-w-xl text-base">
-              The visual system keeps the glass and clarity of a modern SaaS
-              app, then adds more color separation and motion so the product
-              feels less generic and more alive.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-3">
-            {[
-              [
-                "01",
-                "Sign in",
-                "Connect Spotify and land straight in your personal summary.",
-              ],
-              [
-                "02",
-                "Scan the snapshot",
-                "See artists, tracks, and your live playback in one place.",
-              ],
-              [
-                "03",
-                "Dig deeper",
-                "Open dedicated views for the songs and artists behind the trend.",
-              ],
-            ].map(([step, title, body]) => (
-              <div
-                key={step}
-                className="rounded-[24px] border border-white/10 bg-black/[0.1] p-4"
+function TimelineDiagram() {
+  return (
+    <svg width="400" height="100" viewBox="0 0 400 100" fill="none">
+      {/* Timeline axis */}
+      <line x1="20" y1="70" x2="380" y2="70" stroke="#474747" strokeWidth="1" />
+      {/* Month markers */}
+      {["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG"].map((m, i) => {
+        const x = 30 + i * 48;
+        return (
+          <g key={m}>
+            <line
+              x1={x}
+              y1="67"
+              x2={x}
+              y2="73"
+              stroke="#474747"
+              strokeWidth="1"
+            />
+            <text
+              x={x}
+              y="85"
+              fill="#919191"
+              fontSize="7"
+              fontFamily="Space Grotesk"
+              textAnchor="middle"
+            >
+              {m}
+            </text>
+          </g>
+        );
+      })}
+      {/* Area chart path */}
+      <path
+        d="M30,55 Q78,30 126,42 T222,25 T318,38 T366,20"
+        stroke="#1db954"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      <path
+        d="M30,55 Q78,30 126,42 T222,25 T318,38 T366,20 L366,70 L30,70 Z"
+        fill="#1db954"
+        fillOpacity="0.06"
+      />
+      {/* Data dots */}
+      {[
+        [30, 55],
+        [126, 42],
+        [222, 25],
+        [318, 38],
+        [366, 20],
+      ].map(([cx, cy], i) => (
+        <circle key={i} cx={cx} cy={cy} r="3" fill="#1db954" />
+      ))}
+      {/* Label */}
+      <text
+        x="20"
+        y="14"
+        fill="#919191"
+        fontSize="8"
+        fontFamily="Space Grotesk"
+      >
+        LISTENING ACTIVITY
+      </text>
+      <text
+        x="330"
+        y="14"
+        fill="#1db954"
+        fontSize="8"
+        fontFamily="Space Grotesk"
+      >
+        +24%
+      </text>
+    </svg>
+  );
+}
+
+export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
+  return (
+    <div className="bg-surface-container-lowest text-on-surface font-body">
+      {/* Top Navigation */}
+      <header className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-white/5">
+        <div className="flex items-center gap-2">
+          <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
+            Statify
+          </span>
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5 ml-2 hidden sm:inline-flex">
+            v2.0
+          </span>
+        </div>
+        <nav className="hidden md:flex gap-10">
+          <a
+            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
+            href="#features"
+          >
+            Features
+          </a>
+          <a
+            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
+            href="#process"
+          >
+            Process
+          </a>
+          <a
+            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
+            href="#faq"
+          >
+            FAQ
+          </a>
+        </nav>
+        <div className="flex items-center gap-6">
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <main className="pt-16">
+        {/* Hero Section */}
+        <section className="relative min-h-[90vh] flex flex-col justify-center px-6 lg:px-16 dot-grid overflow-hidden">
+          <div className="max-w-5xl">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="h-px w-12 bg-primary" />
+              <span className="font-label text-xs uppercase tracking-[0.2em] text-primary">
+                The Digital Archivist
+              </span>
+            </div>
+            <h1 className="text-5xl sm:text-7xl lg:text-[7rem] leading-[0.9] font-extrabold tracking-tighter font-headline mb-8 text-on-surface">
+              STATIFY YOUR
+              <br />
+              <span
+                className="text-transparent"
+                style={{
+                  WebkitTextStroke: "2px var(--on-surface)",
+                  color: "transparent",
+                }}
               >
-                <p className="text-sm font-mono text-cyan-200">{step}</p>
-                <p className="mt-3 text-lg font-semibold text-white">{title}</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-400">{body}</p>
+                LISTENING.
+              </span>
+            </h1>
+            <p className="text-lg lg:text-xl text-on-surface-variant max-w-xl mb-12 leading-relaxed">
+              A clinical deep-dive into your auditory behavior. We treat your
+              data as a gallery exhibit, mapping every frequency and rhythm into
+              a living digital archive.
+            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+              {isAuthenticated ? (
+                <Button asChild size="lg">
+                  <Link href="/dashboard" className="flex items-center gap-3">
+                    Open Dashboard
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <LoginButton />
+              )}
+            </div>
+          </div>
+
+          {/* Decorative metric */}
+          <div className="absolute right-16 bottom-16 text-right hidden xl:block">
+            <div className="font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant mb-2">
+              System Status
+            </div>
+            <div className="text-5xl font-extrabold font-headline text-primary">
+              OPERATIONAL
+            </div>
+            <div className="flex justify-end gap-1 mt-4">
+              <div className="w-1 h-8 bg-primary/20" />
+              <div className="w-1 h-12 bg-primary/40" />
+              <div className="w-1 h-6 bg-primary/60" />
+              <div className="w-1 h-16 bg-primary" />
+              <div className="w-1 h-10 bg-primary/80" />
+            </div>
+          </div>
+        </section>
+
+        {/* Features Bento Grid */}
+        <section id="features" className="px-6 lg:px-16 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {features.map((feature, i) => (
+              <div
+                key={feature.title}
+                className={`${
+                  i === 0
+                    ? "lg:col-span-4"
+                    : i === 1
+                      ? "lg:col-span-8"
+                      : "lg:col-span-12"
+                } p-8 lg:p-12 bg-surface-container-low ghost-border flex flex-col justify-between min-h-[220px] lg:min-h-[400px] overflow-hidden`}
+              >
+                <div className="flex flex-col lg:flex-row lg:justify-between gap-8">
+                  <div className="min-w-0">
+                    <feature.icon className="size-8 text-primary mb-6" />
+                    <h3 className="text-2xl font-bold font-headline mb-4 uppercase tracking-tight">
+                      {feature.title}
+                    </h3>
+                    <p className="text-on-surface-variant leading-relaxed max-w-md">
+                      {feature.description}
+                    </p>
+                  </div>
+                  {/* Decorative Diagram */}
+                  <div className="hidden lg:flex items-center justify-center flex-shrink-0">
+                    {i === 0 && <RealtimeDiagram />}
+                    {i === 1 && <ArtistDiagram />}
+                    {i === 2 && <TimelineDiagram />}
+                  </div>
+                </div>
+                <div className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/50 mt-8">
+                  {feature.module}
+                </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </section>
 
-        <div className="grid gap-5">
-          {demos.map((demo) => (
-            <Card key={demo.title} className="rounded-[30px] bg-white/[0.05]">
-              <CardHeader>
-                <Badge variant="accent" className="w-fit">
-                  {demo.label}
-                </Badge>
-                <CardTitle className="text-2xl tracking-[-0.04em]">
-                  {demo.title}
-                </CardTitle>
-                <CardDescription className="text-base">
-                  {demo.description}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-5" id="faq">
-        <Card className="rounded-[32px] bg-[linear-gradient(150deg,rgba(16,185,129,0.1),rgba(255,255,255,0.04))]">
-          <CardHeader>
-            <Badge variant="success" className="w-fit">
-              FAQ
-            </Badge>
-            <CardTitle className="text-3xl tracking-[-0.05em]">
-              Built for people who just want to understand their taste quickly.
-            </CardTitle>
-            <CardDescription className="text-base">
-              No spreadsheets, no confusing charts, no overbuilt setup flow.
-              Just connect Spotify and start exploring what you actually listen
-              to.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
-        <div className="grid gap-4">
-          {faqs.map((faq, index) => (
-            <details
-              key={faq.question}
-              className="group rounded-[28px] border border-white/12 bg-white/[0.08] px-6 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition duration-300 hover:border-white/20 hover:bg-white/[0.1] open:bg-white/[0.12]"
-              style={{ animationDelay: `${index * 90}ms` }}
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-medium text-white marker:hidden">
-                <span>{faq.question}</span>
-                <span className="text-xl leading-none text-zinc-500 transition duration-300 group-open:rotate-45 group-open:text-cyan-200">
-                  +
-                </span>
-              </summary>
-              <div className="grid transition-all duration-300 group-open:grid-rows-[1fr] [grid-template-rows:0fr]">
-                <div className="overflow-hidden">
-                  <div className="border-t border-white/10 pb-5 pt-4 text-sm leading-7 text-zinc-300">
-                    {faq.answer}
+        {/* How It Works */}
+        <section
+          id="process"
+          className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5"
+        >
+          <div className="flex flex-col lg:flex-row gap-16 lg:gap-20">
+            <div className="lg:w-1/3">
+              <h2 className="text-4xl lg:text-5xl font-extrabold font-headline tracking-tighter mb-8 text-on-surface">
+                THE
+                <br />
+                PROCESS.
+              </h2>
+              <p className="text-on-surface-variant leading-relaxed">
+                A three-stage protocol designed to extract maximum value from
+                your Spotify metadata without compromising security.
+              </p>
+            </div>
+            <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-12">
+              {steps.map((step) => (
+                <div key={step.number} className="relative pt-12">
+                  <div className="text-[4rem] font-extrabold font-headline text-on-surface/10 absolute top-0 left-0 leading-none">
+                    {step.number}
                   </div>
+                  <h4 className="text-lg font-bold font-headline mb-4 uppercase tracking-tight relative z-10">
+                    {step.title}
+                  </h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-              </div>
-            </details>
-          ))}
-        </div>
-      </section>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <footer className="pb-2 pt-2 text-center text-sm text-zinc-400">
-        Made with ❤️ by Statify team
+        {/* FAQ Section */}
+        <section
+          id="faq"
+          className="px-6 lg:px-16 py-24 lg:py-32 bg-surface-container-lowest"
+        >
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-16 lg:mb-20">
+              <span className="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">
+                Information Desk
+              </span>
+              <h2 className="text-3xl lg:text-4xl font-extrabold font-headline tracking-tight uppercase">
+                Common Queries
+              </h2>
+            </div>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem key={faq.id} value={faq.id}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="px-6 lg:px-16 py-24 lg:py-40 text-center relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 dot-grid pointer-events-none" />
+          <div className="relative z-10">
+            <h2 className="text-4xl lg:text-6xl font-extrabold font-headline tracking-tighter mb-10 max-w-2xl mx-auto">
+              READY TO ARCHIVE YOUR JOURNEY?
+            </h2>
+            {isAuthenticated ? (
+              <Button asChild size="lg">
+                <Link href="/dashboard">Open Dashboard</Link>
+              </Button>
+            ) : (
+              <LoginButton label="Start Exploration Now" />
+            )}
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full py-8 border-t border-white/5 bg-background px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex items-center gap-8">
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant font-bold">
+            &copy; 2026 STATIFY ARCHIVE
+          </span>
+          <div className="flex gap-4">
+            <Link
+              href="/privacy"
+              className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              Terms
+            </Link>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 text-on-surface-variant">
+          <span className="font-label text-[9px] uppercase tracking-widest">
+            System: Active
+          </span>
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        </div>
       </footer>
-    </main>
+    </div>
   );
 }

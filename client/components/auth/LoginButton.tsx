@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Disc3 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/client/components/ui/button";
 
 interface LoginButtonProps {
@@ -9,13 +9,13 @@ interface LoginButtonProps {
 
 export function LoginButton({
   href = "/api/auth/login",
-  label = "Continue with Spotify",
+  label = "Connect with Spotify",
 }: LoginButtonProps) {
   return (
     <Button asChild size="lg">
       <Link href={href}>
-        <Disc3 className="size-4" />
         {label}
+        <ArrowRight className="size-4" />
       </Link>
     </Button>
   );

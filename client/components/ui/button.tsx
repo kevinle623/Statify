@@ -4,24 +4,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/client/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-label text-xs font-bold uppercase tracking-widest transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
   {
     variants: {
       variant: {
-        default:
-          "bg-[linear-gradient(135deg,rgba(29,185,84,0.9),rgba(69,104,220,0.85))] text-white shadow-[0_20px_60px_rgba(29,185,84,0.24)] hover:scale-[1.01]",
-        secondary:
-          "border bg-[color:var(--button-secondary-bg)] text-[color:var(--button-secondary-text)] [border-color:var(--button-secondary-border)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-[color:var(--button-secondary-hover-bg)]",
-        ghost:
-          "border bg-[color:var(--button-ghost-bg)] text-[color:var(--button-ghost-text)] [border-color:var(--button-ghost-border)] hover:bg-[color:var(--button-ghost-hover-bg)]",
+        default: "bg-primary text-on-primary hover:opacity-90 active:scale-95",
+        secondary: "ghost-border bg-white/5 text-on-surface hover:bg-white/10",
+        ghost: "text-on-surface-variant hover:bg-white/5 hover:text-on-surface",
         outline:
-          "border bg-[color:var(--button-outline-bg)] text-[color:var(--button-outline-text)] [border-color:var(--button-outline-border)] hover:bg-[color:var(--button-outline-hover-bg)]",
+          "border border-primary/40 text-primary hover:bg-primary/5 hover:border-primary",
       },
       size: {
-        default: "h-11 px-5",
-        sm: "h-9 px-4 text-xs",
-        lg: "h-12 px-6 text-base",
-        icon: "size-10 rounded-full",
+        default: "h-11 px-8 py-3",
+        sm: "h-9 px-4 py-2 text-[10px]",
+        lg: "h-12 px-10 py-4",
+        icon: "size-10",
       },
     },
     defaultVariants: {
