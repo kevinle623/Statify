@@ -60,8 +60,15 @@ export async function GET(
           );
 
     return NextResponse.json(response);
-  } catch {
+  } catch (error) {
     await clearSpotifySession();
+    const statusCode = (error as Error & { statusCode?: number }).statusCode;
+    if (statusCode === 401 || statusCode === 403) {
+      return NextResponse.json(
+        { message: "Not whitelisted", code: "not_whitelisted" },
+        { status: 403 },
+      );
+    }
     return NextResponse.json(
       { message: "Failed to load top items" },
       { status: 500 },

@@ -4,7 +4,16 @@ import {
   getSpotifyAuthState,
   setSpotifySession,
 } from "@/server/lib/spotify-cookies";
+import { SPOTIFY_API_BASE_URL } from "@/server/lib/spotify";
 import { exchangeSpotifyCode } from "@/server/services/spotify-auth-service";
+
+async function verifySpotifyAccess(accessToken: string): Promise<boolean> {
+  const response = await fetch(`${SPOTIFY_API_BASE_URL}/me`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+    cache: "no-store",
+  });
+  return response.ok;
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -28,12 +37,34 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const tokens = await exchangeSpotifyCode(code);
+  let tokens;
+  try {
+    tokens = await exchangeSpotifyCode(code);
+  } catch (error) {
+    const spotifyError = (error as Error & { spotifyError?: string })
+      .spotifyError;
+    await clearSpotifyAuthState();
+    const reason =
+      spotifyError === "invalid_grant" ? "not_whitelisted" : "token_error";
+    return NextResponse.redirect(
+      new URL(`/auth-error?reason=${reason}`, request.url),
+    );
+  }
 
   if (!tokens.refresh_token) {
     await clearSpotifyAuthState();
     return NextResponse.redirect(
       new URL("/auth-error?reason=token_error", request.url),
+    );
+  }
+
+  // Verify the token actually works before persisting the session.
+  // Non-whitelisted users in dev mode get tokens but Spotify's API rejects them.
+  const hasAccess = await verifySpotifyAccess(tokens.access_token);
+  if (!hasAccess) {
+    await clearSpotifyAuthState();
+    return NextResponse.redirect(
+      new URL("/auth-error?reason=not_whitelisted", request.url),
     );
   }
 

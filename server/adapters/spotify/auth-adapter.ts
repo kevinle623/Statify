@@ -26,8 +26,20 @@ async function requestSpotifyToken(body: URLSearchParams) {
   });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`Spotify token request failed: ${message}`);
+    const text = await response.text();
+    let errorBody: { error?: string; error_description?: string } = {};
+    try {
+      errorBody = JSON.parse(text);
+    } catch {
+      // not JSON
+    }
+
+    const err = new Error(
+      `Spotify token request failed: ${errorBody.error_description ?? text}`,
+    );
+    (err as Error & { spotifyError?: string }).spotifyError =
+      errorBody.error ?? "unknown";
+    throw err;
   }
 
   return (await response.json()) as SpotifyTokenResponse;

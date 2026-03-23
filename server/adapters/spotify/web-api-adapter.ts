@@ -26,7 +26,9 @@ export async function spotifyWebApiFetch<T>(
 
   if (!response.ok) {
     const message = await response.text();
-    throw new Error(`Spotify API request failed: ${message}`);
+    const err = new Error(`Spotify API request failed: ${message}`);
+    (err as Error & { statusCode?: number }).statusCode = response.status;
+    throw err;
   }
 
   return (await response.json()) as T;
