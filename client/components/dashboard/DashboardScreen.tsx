@@ -186,15 +186,28 @@ export function DashboardScreen() {
           </div>
         </section>
       ) : (
-        <section className="bg-surface-container-low ghost-border p-8 lg:p-12">
-          <span className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant">
+        <section className="bg-surface-container-low ghost-border p-8 lg:p-12 flex flex-col items-center text-center py-16 lg:py-24">
+          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-6">
             Now Playing
           </span>
-          <p className="text-on-surface-variant mt-4 text-lg">
+          <h2 className="text-3xl lg:text-5xl font-black font-headline tracking-tighter text-on-surface mb-4">
+            {cpError ? "SIGNAL LOST." : "SILENCE DETECTED."}
+          </h2>
+          <p className="text-on-surface-variant text-lg max-w-md leading-relaxed mb-8">
             {cpError
-              ? "Current playback unavailable"
-              : "Nothing is currently playing"}
+              ? "We can\u2019t reach your playback right now. Check if Spotify is open and try again."
+              : "Your archive is waiting. Fire up Spotify and give us something to work with."}
           </p>
+          {!cpError && (
+            <a
+              href="https://open.spotify.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 font-headline font-bold text-sm tracking-wide transition-all active:scale-95"
+            >
+              OPEN SPOTIFY
+            </a>
+          )}
         </section>
       )}
 
