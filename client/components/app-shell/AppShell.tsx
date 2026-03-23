@@ -15,6 +15,7 @@ import {
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { LogoutButton } from "@/client/components/auth/LogoutButton";
 import { useProfile } from "@/client/hooks/use-profile";
+import { Skeleton } from "@/client/components/ui/skeleton";
 import { cn } from "@/client/lib/utils";
 
 const NAV_ITEMS = [
@@ -82,7 +83,7 @@ function NotificationPanel() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { data: profile } = useProfile();
+  const { data: profile, isLoading: profileLoading } = useProfile();
 
   const displayName = profile?.display_name ?? "User";
 
@@ -139,10 +140,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="fixed top-0 right-0 left-0 lg:hidden h-16 grid grid-cols-3 items-center px-6 z-40 bg-background/80 backdrop-blur-md border-b border-white/5">
         {/* Left: avatar + name */}
         <div className="flex items-center gap-3">
-          <UserCircle className="size-8 text-on-surface-variant" />
-          <span className="font-headline text-sm font-bold uppercase tracking-[0.05em] text-on-surface">
-            {displayName.split(" ")[0]}
-          </span>
+          {profileLoading ? (
+            <>
+              <Skeleton className="size-8 rounded-full" />
+              <Skeleton className="h-4 w-16" />
+            </>
+          ) : (
+            <>
+              <UserCircle className="size-8 text-on-surface-variant" />
+              <span className="font-headline text-sm font-bold uppercase tracking-[0.05em] text-on-surface">
+                {displayName.split(" ")[0]}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Center: logo */}
@@ -175,15 +185,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             <div className="h-4 w-px bg-white/10" />
             <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-xs font-bold text-on-surface">
-                  {displayName}
-                </p>
-                <p className="font-label text-[9px] uppercase tracking-tighter text-on-surface-variant">
-                  {profile?.product ?? "Free"} Archivist
-                </p>
-              </div>
-              <UserCircle className="size-8 text-on-surface-variant" />
+              {profileLoading ? (
+                <>
+                  <div className="text-right space-y-1.5">
+                    <Skeleton className="h-3 w-24 ml-auto" />
+                    <Skeleton className="h-2.5 w-20 ml-auto" />
+                  </div>
+                  <Skeleton className="size-8 rounded-full" />
+                </>
+              ) : (
+                <>
+                  <div className="text-right">
+                    <p className="text-xs font-bold text-on-surface">
+                      {displayName}
+                    </p>
+                    <p className="font-label text-[9px] uppercase tracking-tighter text-on-surface-variant">
+                      {profile?.product ?? "Free"} Archivist
+                    </p>
+                  </div>
+                  <UserCircle className="size-8 text-on-surface-variant" />
+                </>
+              )}
               <LogoutButton />
             </div>
           </div>

@@ -67,7 +67,7 @@ function RecentSkeleton() {
 }
 
 export function DashboardScreen() {
-  const { data: profile } = useProfile();
+  const { data: profile, isLoading: profileLoading } = useProfile();
   const {
     data: currentlyPlaying,
     isLoading: cpLoading,
@@ -95,12 +95,22 @@ export function DashboardScreen() {
     <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-6 lg:pb-12 space-y-12 lg:space-y-16">
       {/* Welcome + Now Playing Hero */}
       <section>
-        <h1 className="text-4xl lg:text-6xl font-black font-headline tracking-tighter mb-2 uppercase">
-          Welcome back, {profile?.display_name?.split(" ")[0] ?? "Archivist"}.
-        </h1>
-        <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
-          Here&apos;s what your ears have been telling us
-        </span>
+        {profileLoading ? (
+          <div className="space-y-3">
+            <Skeleton className="h-10 lg:h-16 w-96 max-w-full" />
+            <Skeleton className="h-3 w-64" />
+          </div>
+        ) : (
+          <>
+            <h1 className="text-4xl lg:text-6xl font-black font-headline tracking-tighter mb-2 uppercase">
+              Welcome back,{" "}
+              {profile?.display_name?.split(" ")[0] ?? "Archivist"}.
+            </h1>
+            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
+              Here&apos;s what your ears have been telling us
+            </span>
+          </>
+        )}
       </section>
 
       {cpLoading ? (
