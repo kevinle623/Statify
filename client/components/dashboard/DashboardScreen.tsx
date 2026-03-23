@@ -191,12 +191,12 @@ export function DashboardScreen() {
             Now Playing
           </span>
           <h2 className="text-3xl lg:text-5xl font-black font-headline tracking-tighter text-on-surface mb-4">
-            {cpError ? "SIGNAL LOST." : "SILENCE DETECTED."}
+            {cpError ? "SIGNAL LOST." : "IT\u2019S TOO QUIET IN HERE."}
           </h2>
           <p className="text-on-surface-variant text-lg max-w-md leading-relaxed mb-8">
             {cpError
               ? "We can\u2019t reach your playback right now. Check if Spotify is open and try again."
-              : "Your archive is waiting. Fire up Spotify and give us something to work with."}
+              : "Play something on Spotify and watch this space come alive."}
           </p>
           {!cpError && (
             <a
