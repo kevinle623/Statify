@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { useCurrentlyPlaying } from "@/client/hooks/use-currently-playing";
 import { useProfile } from "@/client/hooks/use-profile";
 import { useRecentHistoryPreview } from "@/client/hooks/use-recent-history-preview";
@@ -218,6 +218,19 @@ export function DashboardScreen() {
               OPEN SPOTIFY
             </a>
           )}
+          <button
+            onClick={() =>
+              document
+                .getElementById("stats")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="mt-8 flex flex-col items-center gap-1 text-on-surface-variant/50 hover:text-on-surface-variant transition-colors cursor-pointer"
+          >
+            <span className="font-label text-[10px] uppercase tracking-widest">
+              Explore your stats
+            </span>
+            <ChevronDown className="size-4 animate-bounce" />
+          </button>
         </section>
       )}
 
@@ -225,7 +238,10 @@ export function DashboardScreen() {
       {artistsLoading || tracksLoading ? (
         <StatsSkeleton />
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section
+          id="stats"
+          className="scroll-mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {/* Top Artist */}
           <Link
             href="/artists"
