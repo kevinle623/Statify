@@ -15,7 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Statify",
-  description: "A refined Spotify stats dashboard built on Next.js.",
+  description: "Your music. Your stats. See what you really listen to.",
 };
 
 export default function RootLayout({
