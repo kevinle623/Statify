@@ -146,7 +146,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Center: logo */}
-        <Link href="/dashboard" className="text-xl font-black tracking-tighter text-on-surface font-headline text-center">
+        <Link
+          href="/dashboard"
+          className="text-xl font-black tracking-tighter text-on-surface font-headline text-center"
+        >
           STATIFY
         </Link>
 
