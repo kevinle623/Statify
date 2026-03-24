@@ -55,7 +55,7 @@ export function NowPlayingHero({
             <div className="space-y-3">
               <div className="w-full h-[2px] bg-white/5 relative">
                 <div
-                  className="absolute top-0 left-0 h-full bg-primary shadow-[0_0_15px_rgba(29,185,84,0.4)]"
+                  className="absolute top-0 left-0 h-full bg-primary shadow-[0_0_15px_rgba(29,185,84,0.4)] transition-[width] duration-1000 ease-linear"
                   style={{
                     width: `${(currentlyPlaying.progress_ms / nowPlayingTrack.duration_ms) * 100}%`,
                   }}
