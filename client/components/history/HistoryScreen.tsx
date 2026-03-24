@@ -184,11 +184,11 @@ export function HistoryScreen() {
 
       {/* Load More Skeleton */}
       {isLoadingMore && (
-        <div className="space-y-1 mt-8">
+        <div className="space-y-1 mt-2">
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex items-center gap-4 lg:gap-6 py-3 lg:py-4 px-4 lg:px-6"
+              className="flex items-center gap-4 lg:gap-6 py-3 lg:py-4 px-4 lg:px-6 -mx-4 lg:-mx-6"
             >
               <Skeleton className="w-12 h-12 flex-shrink-0" />
               <div className="flex-grow space-y-2">
