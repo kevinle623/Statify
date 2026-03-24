@@ -1,48 +1,28 @@
 import Link from "next/link";
-import { UserCircle } from "lucide-react";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { LogoutButton } from "@/client/components/auth/LogoutButton";
-import { Skeleton } from "@/client/components/ui/skeleton";
+import { NotificationPanel } from "./NotificationPanel";
 
-interface MobileHeaderProps {
-  profileLoading: boolean;
-  displayName: string;
-}
-
-export function MobileHeader({
-  profileLoading,
-  displayName,
-}: MobileHeaderProps) {
+export function MobileHeader() {
   return (
-    <header className="fixed top-0 right-0 left-0 lg:hidden h-16 grid grid-cols-3 items-center px-6 z-40 bg-background/80 backdrop-blur-md border-b border-divider">
-      {/* Left: avatar + name */}
-      <div className="flex items-center gap-3">
-        {profileLoading ? (
-          <>
-            <Skeleton className="size-8 rounded-full" />
-            <Skeleton className="h-4 w-16" />
-          </>
-        ) : (
-          <>
-            <UserCircle className="size-8 text-on-surface-variant" />
-            <span className="font-headline text-sm font-bold uppercase tracking-[0.05em] text-on-surface">
-              {displayName.split(" ")[0]}
-            </span>
-          </>
-        )}
+    <header className="fixed top-0 right-0 left-0 lg:hidden h-16 flex items-center justify-between px-6 z-40 bg-background/80 backdrop-blur-md border-b border-divider">
+      {/* Left: logo */}
+      <div className="flex items-center gap-2">
+        <Link
+          href="/dashboard"
+          className="text-xl font-black tracking-tighter text-on-surface font-headline"
+        >
+          STATIFY
+        </Link>
+        <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5">
+          v2.0
+        </span>
       </div>
 
-      {/* Center: logo */}
-      <Link
-        href="/dashboard"
-        className="text-xl font-black tracking-tighter text-on-surface font-headline text-center"
-      >
-        STATIFY
-      </Link>
-
       {/* Right: controls */}
-      <div className="flex items-center gap-4 justify-end">
+      <div className="flex items-center gap-4">
         <ThemeToggle />
+        <NotificationPanel />
         <LogoutButton />
       </div>
     </header>

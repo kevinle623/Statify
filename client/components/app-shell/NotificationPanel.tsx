@@ -27,7 +27,7 @@ export function NotificationPanel() {
         <Bell className="size-5 text-on-surface-variant hover:text-primary transition-colors" />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-3 w-80 bg-surface-container ghost-border shadow-xl z-50">
+        <div className="fixed right-4 top-[calc(4rem+0.75rem)] w-[calc(100vw-2rem)] sm:w-80 sm:absolute sm:right-0 sm:top-full sm:mt-3 bg-surface-container ghost-border shadow-xl z-50">
           <div className="flex items-center justify-between px-5 py-4 border-b border-divider">
             <span className="font-label text-xs uppercase tracking-widest text-on-surface font-bold">
               Notifications

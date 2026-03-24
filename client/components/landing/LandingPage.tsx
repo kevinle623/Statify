@@ -18,7 +18,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
           <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
             STATIFY
           </span>
-          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5 ml-2 hidden sm:inline-flex">
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5 ml-2">
             v2.0
           </span>
         </div>

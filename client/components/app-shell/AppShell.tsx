@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       />
 
       {/* Top Header — Mobile */}
-      <MobileHeader profileLoading={profileLoading} displayName={displayName} />
+      <MobileHeader />
 
       {/* Top Header — Desktop */}
       <DesktopHeader
