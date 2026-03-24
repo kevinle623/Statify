@@ -68,3 +68,7 @@ Copy `.env.example` for required Spotify OAuth credentials. Server-only env vars
 - Prettier: semicolons, double quotes, trailing commas
 - Strict TypeScript (`noEmit: true`)
 - Remote images from `i.scdn.co` and `mosaic.scdn.co` are configured in `next.config.ts`
+
+## Workflow
+
+- Do not use preview tools for testing unless explicitly asked. The user will handle testing themselves.

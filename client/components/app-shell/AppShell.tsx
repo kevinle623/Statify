@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="mb-12">
           <Link href="/dashboard">
             <h1 className="text-xl font-bold tracking-tighter text-on-surface font-headline">
-              Statify
+              STATIFY
             </h1>
           </Link>
           <p className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant mt-1">
@@ -110,7 +110,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-4 px-4 py-3 font-medium text-sm transition-all duration-200",
+                  "flex items-center gap-4 px-4 py-3 font-medium text-sm uppercase tracking-wide transition-all duration-200",
                   isActive
                     ? "text-primary border-r-2 border-primary bg-primary/5"
                     : "text-on-surface-variant hover:text-on-surface hover:bg-white/5",

@@ -166,6 +166,6 @@ html.light {
 }
 
 .track-row-animate {
-  animation: fadeInUp 0.5s ease forwards;
+  animation: fadeInUp 0.3s ease forwards;
   opacity: 0;
 }

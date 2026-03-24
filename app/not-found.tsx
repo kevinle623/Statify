@@ -63,7 +63,7 @@ export default async function NotFound() {
       <div className="fixed bottom-12 left-6 right-6 lg:left-16 lg:right-16 flex justify-between items-end border-t border-white/5 pt-8">
         <div className="flex flex-col gap-1">
           <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
-            Statify
+            STATIFY
           </span>
           <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
             The Digital Archivist

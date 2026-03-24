@@ -133,7 +133,7 @@ export function DashboardScreen() {
               <span className="font-label text-xs uppercase tracking-[0.2em] text-primary">
                 Now Playing
               </span>
-              <h2 className="text-4xl lg:text-7xl font-bold tracking-tighter leading-none text-on-surface font-headline line-clamp-2">
+              <h2 className="text-3xl lg:text-5xl font-bold tracking-tighter leading-none text-on-surface font-headline line-clamp-2">
                 {nowPlayingTrack.name}
               </h2>
               <p className="text-xl lg:text-2xl font-light text-on-surface-variant tracking-wide truncate">
@@ -305,8 +305,8 @@ export function DashboardScreen() {
       {/* Recent Listens */}
       <section className="space-y-6 lg:space-y-8">
         <div className="flex justify-between items-end">
-          <h2 className="text-2xl lg:text-3xl font-bold tracking-tighter font-headline">
-            Temporal Log
+          <h2 className="text-2xl lg:text-3xl font-bold tracking-tighter font-headline uppercase">
+            Recently Played
           </h2>
           <Link
             href="/history"

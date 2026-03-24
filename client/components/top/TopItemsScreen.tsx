@@ -235,7 +235,7 @@ function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
               Current Peak
             </span>
           </div>
-          <h3 className="text-4xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-none font-headline">
+          <h3 className="text-3xl lg:text-5xl font-black tracking-tighter text-white uppercase leading-none font-headline">
             {artist.name}
           </h3>
           <div className="mt-4 lg:mt-6 flex flex-wrap gap-2 lg:gap-3">
@@ -287,7 +287,7 @@ function FeaturedTrack({ track }: { track: SpotifyTrack }) {
             Peak Performance
           </span>
         </div>
-        <h2 className="text-4xl lg:text-7xl font-black tracking-tighter mb-4 leading-[0.9] font-headline uppercase">
+        <h2 className="text-3xl lg:text-5xl font-black tracking-tighter mb-4 leading-[0.9] font-headline uppercase line-clamp-2">
           {track.name}
         </h2>
         <p className="text-xl lg:text-2xl text-on-surface-variant font-light tracking-tight mb-8">

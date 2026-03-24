@@ -3,6 +3,8 @@ import { ArrowRight, Clock, TrendingUp, User } from "lucide-react";
 import { LoginButton } from "@/client/components/auth/LoginButton";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { MobileNav } from "@/client/components/landing/MobileNav";
+import { LandingNav } from "@/client/components/landing/LandingNav";
+import { StatusPulse } from "@/client/components/landing/StatusPulse";
 import { Button } from "@/client/components/ui/button";
 import {
   Accordion,
@@ -126,60 +128,28 @@ function RealtimeDiagram() {
 
 function ArtistDiagram() {
   const genres = [
-    { label: "POP", width: 180 },
-    { label: "ROCK", width: 140 },
-    { label: "R&B", width: 110 },
-    { label: "ELECTRONIC", width: 90 },
-    { label: "JAZZ", width: 60 },
+    { label: "POP", pct: 100 },
+    { label: "ROCK", pct: 78 },
+    { label: "R&B", pct: 61 },
+    { label: "ELECTRONIC", pct: 50 },
+    { label: "JAZZ", pct: 33 },
   ];
   return (
-    <svg width="240" height="160" viewBox="0 0 240 160" fill="none">
-      {genres.map((g, i) => {
-        const y = 10 + i * 30;
-        return (
-          <g key={g.label}>
-            <text
-              x="0"
-              y={y + 4}
-              fill="#919191"
-              fontSize="8"
-              fontFamily="Space Grotesk"
-            >
-              {g.label}
-            </text>
-            <rect
-              x="80"
-              y={y - 5}
-              width={g.width * 0.8}
-              height="12"
-              rx="1"
-              fill="#1db954"
-              opacity={0.15 + i * 0.05}
-            />
-            <rect
-              x="80"
-              y={y - 5}
-              width={g.width * 0.8}
-              height="12"
-              rx="1"
-              stroke="#1db954"
-              strokeWidth="0.5"
-              fill="none"
-              opacity="0.3"
-            />
-            <text
-              x={86 + g.width * 0.8}
-              y={y + 4}
-              fill="#1db954"
-              fontSize="8"
-              fontFamily="Space Grotesk"
-            >
-              {Math.round((g.width / 180) * 100)}%
-            </text>
-          </g>
-        );
-      })}
-    </svg>
+    <div className="flex flex-col gap-3 w-56">
+      {genres.map((g) => (
+        <div key={g.label} className="flex items-center gap-3">
+          <span className="font-label text-[10px] tracking-widest text-on-surface-variant w-24 text-right shrink-0">
+            {g.label}
+          </span>
+          <div className="flex-1 h-2 bg-white/5 overflow-hidden">
+            <div className="h-full bg-primary" style={{ width: `${g.pct}%` }} />
+          </div>
+          <span className="font-label text-[10px] text-primary w-8 tabular-nums">
+            {g.pct}%
+          </span>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -266,38 +236,13 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
       <header className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-white/5">
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
-            Statify
+            STATIFY
           </span>
           <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5 ml-2 hidden sm:inline-flex">
             v2.0
           </span>
         </div>
-        <nav className="hidden md:flex gap-10">
-          <a
-            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#features"
-          >
-            Features
-          </a>
-          <a
-            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#process"
-          >
-            Process
-          </a>
-          <a
-            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#pricing"
-          >
-            Pricing
-          </a>
-          <a
-            className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#faq"
-          >
-            FAQ
-          </a>
-        </nav>
+        <LandingNav />
         <div className="flex items-center gap-6">
           <ThemeToggle />
           <MobileNav />
@@ -354,18 +299,15 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
             <div className="text-5xl font-extrabold font-headline text-primary">
               OPERATIONAL
             </div>
-            <div className="flex justify-end gap-1 mt-4">
-              <div className="w-1 h-8 bg-primary/20" />
-              <div className="w-1 h-12 bg-primary/40" />
-              <div className="w-1 h-6 bg-primary/60" />
-              <div className="w-1 h-16 bg-primary" />
-              <div className="w-1 h-10 bg-primary/80" />
-            </div>
+            <StatusPulse />
           </div>
         </section>
 
         {/* Features Bento Grid */}
-        <section id="features" className="px-6 lg:px-16 py-24 lg:py-32">
+        <section
+          id="features"
+          className="px-6 lg:px-16 py-24 lg:py-32 scroll-mt-16"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {features.map((feature, i) => (
               <div
@@ -406,7 +348,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         {/* How It Works */}
         <section
           id="process"
-          className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5"
+          className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5 scroll-mt-16"
         >
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-20">
             <div className="lg:w-1/3">
@@ -441,7 +383,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         {/* Pricing Section */}
         <section
           id="pricing"
-          className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5"
+          className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5 scroll-mt-16"
         >
           <div className="text-center mb-16 lg:mb-20">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">
@@ -538,7 +480,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         {/* FAQ Section */}
         <section
           id="faq"
-          className="px-6 lg:px-16 py-24 lg:py-32 bg-surface-container-lowest"
+          className="px-6 lg:px-16 py-24 lg:py-32 bg-surface-container-lowest scroll-mt-16"
         >
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-16 lg:mb-20">
