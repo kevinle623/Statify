@@ -20,7 +20,7 @@ export function DesktopSidebar({ pathname }: DesktopSidebarProps) {
         </p>
       </div>
 
-      <nav className="flex-1 space-y-1">
+      <nav className="flex-1 space-y-1 -mx-6">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const isActive = pathname.startsWith(href);
           return (
@@ -28,7 +28,7 @@ export function DesktopSidebar({ pathname }: DesktopSidebarProps) {
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-4 px-4 py-3 font-medium text-sm uppercase tracking-wide transition-all duration-200",
+                "flex items-center gap-4 px-6 py-3 font-medium text-sm uppercase tracking-wide transition-all duration-200",
                 isActive
                   ? "text-primary border-r-2 border-primary bg-primary/5"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-white/5",

@@ -48,6 +48,7 @@ types/        → Shared TypeScript types for Spotify data models
 **Auth:** Server-side OAuth authorization code flow. Tokens stored in HTTP-only cookies. Session validation via `requireSpotifySession()` in server services. Auth errors redirect to `/auth-error` with a `reason` query param (`denied`, `state_mismatch`, `token_error`, `unknown`). Logged-in users visiting `/` are redirected to `/dashboard`.
 
 **Server patterns:**
+
 - All authenticated API routes use `withSpotifyAuth()` from `server/lib/route-handler.ts` — handles token validation, 401/403/500 responses, and session cleanup in one place.
 - Typed error classes in `server/lib/errors.ts`: `SpotifyApiError` (web API failures with status codes) and `SpotifyAuthError` (token exchange/refresh failures with Spotify error codes). Never use ad-hoc error casts.
 - Magic numbers (token buffer, cookie TTLs, default limits) live in `server/lib/spotify.ts` as named constants.
