@@ -84,7 +84,7 @@ The app is organized around a client/server split:
 5. `app/` — Next.js App Router pages, layouts, loading states, and API route handlers.
 6. `server/services/` — Server-side application logic for Spotify auth and data fetching.
 7. `server/adapters/` — Low-level Spotify API integrations.
-8. `server/lib/` — Server-only env access, cookie helpers, session helpers, and Spotify auth constants.
+8. `server/lib/` — Server-only env access, cookie helpers, session helpers, Spotify constants, typed error classes (`SpotifyApiError`, `SpotifyAuthError`), and the `withSpotifyAuth()` route handler wrapper.
 9. `types/` — Shared TypeScript contracts for Spotify data and app-facing response shapes.
 
 The runtime request flow is:

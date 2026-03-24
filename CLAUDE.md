@@ -47,6 +47,11 @@ types/        → Shared TypeScript types for Spotify data models
 
 **Auth:** Server-side OAuth authorization code flow. Tokens stored in HTTP-only cookies. Session validation via `requireSpotifySession()` in server services. Auth errors redirect to `/auth-error` with a `reason` query param (`denied`, `state_mismatch`, `token_error`, `unknown`). Logged-in users visiting `/` are redirected to `/dashboard`.
 
+**Server patterns:**
+- All authenticated API routes use `withSpotifyAuth()` from `server/lib/route-handler.ts` — handles token validation, 401/403/500 responses, and session cleanup in one place.
+- Typed error classes in `server/lib/errors.ts`: `SpotifyApiError` (web API failures with status codes) and `SpotifyAuthError` (token exchange/refresh failures with Spotify error codes). Never use ad-hoc error casts.
+- Magic numbers (token buffer, cookie TTLs, default limits) live in `server/lib/spotify.ts` as named constants.
+
 **Styling:** Tailwind CSS v4 with CSS custom properties for dark/light theming (`data-theme` attribute on `<html>`). Design system uses Material Design 3 surface hierarchy tokens (#0A0A0A → #353534), ghost borders (`border: 1px solid rgba(255,255,255,0.05)`), and Inter + Space Grotesk typography. UI components from shadcn/ui (new-york style). Path alias `@/*` maps to project root.
 
 **Navigation:** Desktop uses a fixed left sidebar (w-64) + top header + bottom footer. Mobile uses a top header (3-col grid layout) + bottom tab bar. No hamburger menu.

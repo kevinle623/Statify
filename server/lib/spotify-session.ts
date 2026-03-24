@@ -4,6 +4,7 @@ import {
   getSpotifySession,
   setSpotifySession,
 } from "@/server/lib/spotify-cookies";
+import { TOKEN_REFRESH_BUFFER_MS } from "@/server/lib/spotify";
 import { refreshSpotifyAccessToken } from "@/server/services/spotify-auth-service";
 
 export async function hasSpotifySession() {
@@ -27,7 +28,8 @@ export async function getValidSpotifyAccessToken() {
   }
 
   const isAccessTokenValid =
-    session.accessToken && session.expiresAt > Date.now() + 30_000;
+    session.accessToken &&
+    session.expiresAt > Date.now() + TOKEN_REFRESH_BUFFER_MS;
 
   if (isAccessTokenValid) {
     return session.accessToken;

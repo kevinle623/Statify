@@ -1,6 +1,10 @@
 import { cookies } from "next/headers";
 import { env } from "@/server/lib/env";
-import { SPOTIFY_COOKIE_KEYS } from "@/server/lib/spotify";
+import {
+  AUTH_STATE_MAX_AGE,
+  SESSION_MAX_AGE,
+  SPOTIFY_COOKIE_KEYS,
+} from "@/server/lib/spotify";
 
 interface SpotifyTokenPair {
   accessToken: string;
@@ -24,7 +28,7 @@ export async function setSpotifyAuthState(state: string) {
   cookieStore.set(
     SPOTIFY_COOKIE_KEYS.authState,
     state,
-    baseCookieOptions(60 * 10),
+    baseCookieOptions(AUTH_STATE_MAX_AGE),
   );
 }
 
@@ -50,12 +54,12 @@ export async function setSpotifySession(tokens: SpotifyTokenPair) {
   cookieStore.set(
     SPOTIFY_COOKIE_KEYS.refreshToken,
     tokens.refreshToken,
-    baseCookieOptions(60 * 60 * 24 * 30),
+    baseCookieOptions(SESSION_MAX_AGE),
   );
   cookieStore.set(
     SPOTIFY_COOKIE_KEYS.expiresAt,
     String(expiresAt),
-    baseCookieOptions(60 * 60 * 24 * 30),
+    baseCookieOptions(SESSION_MAX_AGE),
   );
 }
 

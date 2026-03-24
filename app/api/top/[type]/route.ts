@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { clearSpotifySession } from "@/server/lib/spotify-cookies";
-import { getValidSpotifyAccessToken } from "@/server/lib/spotify-session";
+import { NextResponse } from "next/server";
+import { withSpotifyAuth } from "@/server/lib/route-handler";
+import { DEFAULT_LIMITS } from "@/server/lib/spotify";
 import { getSpotifyTopItems } from "@/server/services/spotify-data-service";
 import type { SpotifyTimeRange, SpotifyTopItemType } from "@/types/spotify";
 
@@ -11,67 +11,43 @@ const validTimeRanges: SpotifyTimeRange[] = [
   "long_term",
 ];
 
-export async function GET(
-  request: NextRequest,
-  context: { params: Promise<{ type: string }> },
-) {
-  try {
-    const accessToken = await getValidSpotifyAccessToken();
+export const GET = withSpotifyAuth(async (accessToken, request, context) => {
+  const { type } = await context.params;
+  const timeRange =
+    request.nextUrl.searchParams.get("timeRange") ?? "short_term";
+  const limitParam = request.nextUrl.searchParams.get("limit");
+  const limit = limitParam ? Number(limitParam) : DEFAULT_LIMITS.topItems;
 
-    if (!accessToken) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
-    const { type } = await context.params;
-    const timeRange =
-      request.nextUrl.searchParams.get("timeRange") ?? "short_term";
-    const limitParam = request.nextUrl.searchParams.get("limit");
-    const limit = limitParam ? Number(limitParam) : 20;
-
-    if (!validTypes.includes(type as SpotifyTopItemType)) {
-      return NextResponse.json(
-        { message: "Invalid top item type" },
-        { status: 400 },
-      );
-    }
-
-    if (!validTimeRanges.includes(timeRange as SpotifyTimeRange)) {
-      return NextResponse.json(
-        { message: "Invalid time range" },
-        { status: 400 },
-      );
-    }
-
-    const narrowedTimeRange = timeRange as SpotifyTimeRange;
-    const narrowedType = type as SpotifyTopItemType;
-    const response =
-      narrowedType === "artists"
-        ? await getSpotifyTopItems(
-            accessToken,
-            "artists",
-            narrowedTimeRange,
-            limit,
-          )
-        : await getSpotifyTopItems(
-            accessToken,
-            "tracks",
-            narrowedTimeRange,
-            limit,
-          );
-
-    return NextResponse.json(response);
-  } catch (error) {
-    await clearSpotifySession();
-    const statusCode = (error as Error & { statusCode?: number }).statusCode;
-    if (statusCode === 401 || statusCode === 403) {
-      return NextResponse.json(
-        { message: "Not whitelisted", code: "not_whitelisted" },
-        { status: 403 },
-      );
-    }
+  if (!validTypes.includes(type as SpotifyTopItemType)) {
     return NextResponse.json(
-      { message: "Failed to load top items" },
-      { status: 500 },
+      { message: "Invalid top item type" },
+      { status: 400 },
     );
   }
-}
+
+  if (!validTimeRanges.includes(timeRange as SpotifyTimeRange)) {
+    return NextResponse.json(
+      { message: "Invalid time range" },
+      { status: 400 },
+    );
+  }
+
+  const narrowedTimeRange = timeRange as SpotifyTimeRange;
+  const narrowedType = type as SpotifyTopItemType;
+  const response =
+    narrowedType === "artists"
+      ? await getSpotifyTopItems(
+          accessToken,
+          "artists",
+          narrowedTimeRange,
+          limit,
+        )
+      : await getSpotifyTopItems(
+          accessToken,
+          "tracks",
+          narrowedTimeRange,
+          limit,
+        );
+
+  return NextResponse.json(response);
+}, "Failed to load top items");

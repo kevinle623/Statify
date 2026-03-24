@@ -1,4 +1,5 @@
 import { env } from "@/server/lib/env";
+import { SpotifyAuthError } from "@/server/lib/errors";
 import { SPOTIFY_ACCOUNTS_BASE_URL } from "@/server/lib/spotify";
 
 interface SpotifyTokenResponse {
@@ -34,12 +35,10 @@ async function requestSpotifyToken(body: URLSearchParams) {
       // not JSON
     }
 
-    const err = new Error(
+    throw new SpotifyAuthError(
       `Spotify token request failed: ${errorBody.error_description ?? text}`,
+      errorBody.error ?? "unknown",
     );
-    (err as Error & { spotifyError?: string }).spotifyError =
-      errorBody.error ?? "unknown";
-    throw err;
   }
 
   return (await response.json()) as SpotifyTokenResponse;

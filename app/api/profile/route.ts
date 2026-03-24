@@ -1,30 +1,8 @@
 import { NextResponse } from "next/server";
-import { clearSpotifySession } from "@/server/lib/spotify-cookies";
-import { getValidSpotifyAccessToken } from "@/server/lib/spotify-session";
+import { withSpotifyAuth } from "@/server/lib/route-handler";
 import { getSpotifyProfile } from "@/server/services/spotify-data-service";
 
-export async function GET() {
-  try {
-    const accessToken = await getValidSpotifyAccessToken();
-
-    if (!accessToken) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
-    const profile = await getSpotifyProfile(accessToken);
-    return NextResponse.json(profile);
-  } catch (error) {
-    await clearSpotifySession();
-    const statusCode = (error as Error & { statusCode?: number }).statusCode;
-    if (statusCode === 401 || statusCode === 403) {
-      return NextResponse.json(
-        { message: "Not whitelisted", code: "not_whitelisted" },
-        { status: 403 },
-      );
-    }
-    return NextResponse.json(
-      { message: "Failed to load profile" },
-      { status: 500 },
-    );
-  }
-}
+export const GET = withSpotifyAuth(async (accessToken) => {
+  const profile = await getSpotifyProfile(accessToken);
+  return NextResponse.json(profile);
+}, "Failed to load profile");

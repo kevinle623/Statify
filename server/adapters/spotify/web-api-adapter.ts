@@ -1,3 +1,4 @@
+import { SpotifyApiError } from "@/server/lib/errors";
 import { SPOTIFY_API_BASE_URL } from "@/server/lib/spotify";
 
 export async function spotifyWebApiFetch<T>(
@@ -26,9 +27,10 @@ export async function spotifyWebApiFetch<T>(
 
   if (!response.ok) {
     const message = await response.text();
-    const err = new Error(`Spotify API request failed: ${message}`);
-    (err as Error & { statusCode?: number }).statusCode = response.status;
-    throw err;
+    throw new SpotifyApiError(
+      `Spotify API request failed: ${message}`,
+      response.status,
+    );
   }
 
   return (await response.json()) as T;

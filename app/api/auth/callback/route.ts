@@ -4,6 +4,7 @@ import {
   getSpotifyAuthState,
   setSpotifySession,
 } from "@/server/lib/spotify-cookies";
+import { SpotifyAuthError } from "@/server/lib/errors";
 import { SPOTIFY_API_BASE_URL } from "@/server/lib/spotify";
 import { exchangeSpotifyCode } from "@/server/services/spotify-auth-service";
 
@@ -41,9 +42,9 @@ export async function GET(request: NextRequest) {
   try {
     tokens = await exchangeSpotifyCode(code);
   } catch (error) {
-    const spotifyError = (error as Error & { spotifyError?: string })
-      .spotifyError;
     await clearSpotifyAuthState();
+    const spotifyError =
+      error instanceof SpotifyAuthError ? error.spotifyError : "unknown";
     const reason =
       spotifyError === "invalid_grant" ? "not_whitelisted" : "token_error";
     return NextResponse.redirect(
