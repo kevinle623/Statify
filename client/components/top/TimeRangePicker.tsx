@@ -26,7 +26,7 @@ export function TimeRangePicker({
         <button
           key={range}
           className={cn(
-            "px-4 lg:px-6 py-2 text-[10px] font-label tracking-widest uppercase transition-all",
+            "px-4 lg:px-6 py-2 text-[10px] font-label tracking-widest uppercase transition-all cursor-pointer",
             timeRange === range
               ? "bg-primary text-on-primary"
               : "text-on-surface-variant hover:text-on-surface",
