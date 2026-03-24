@@ -11,6 +11,7 @@ interface DesktopHeaderProps {
   profile: SpotifyUserProfile | null | undefined;
   profileLoading: boolean;
   displayName: string;
+  sidebarWidth: string;
 }
 
 export function DesktopHeader({
@@ -18,9 +19,13 @@ export function DesktopHeader({
   profile,
   profileLoading,
   displayName,
+  sidebarWidth,
 }: DesktopHeaderProps) {
   return (
-    <header className="fixed top-0 right-0 left-64 h-16 hidden lg:flex justify-between items-center px-12 z-40 bg-background/80 backdrop-blur-md border-b border-divider">
+    <header
+      className="fixed top-0 right-0 h-16 hidden lg:flex justify-between items-center px-12 z-40 bg-background/80 backdrop-blur-md border-b border-divider transition-all duration-300"
+      style={{ left: sidebarWidth }}
+    >
       <div className="flex items-center">
         <span className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant">
           {getBreadcrumb(pathname)}

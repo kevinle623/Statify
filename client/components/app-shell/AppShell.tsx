@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useProfile } from "@/client/hooks/use-profile";
 import { DesktopSidebar } from "./DesktopSidebar";
@@ -11,13 +12,19 @@ import { MobileTabBar } from "./MobileTabBar";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { data: profile, isLoading: profileLoading } = useProfile();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const displayName = profile?.display_name ?? "User";
+  const sidebarWidth = sidebarCollapsed ? "66px" : "16rem";
 
   return (
     <>
       {/* Desktop Sidebar */}
-      <DesktopSidebar pathname={pathname} />
+      <DesktopSidebar
+        pathname={pathname}
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed((prev) => !prev)}
+      />
 
       {/* Top Header — Mobile */}
       <MobileHeader profileLoading={profileLoading} displayName={displayName} />
@@ -28,15 +35,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         profile={profile}
         profileLoading={profileLoading}
         displayName={displayName}
+        sidebarWidth={sidebarWidth}
       />
 
       {/* Main Content */}
-      <main className="lg:ml-64 pt-16 pb-20 lg:pb-12 min-h-screen">
+      <main
+        className="max-lg:!ml-0 pt-16 pb-20 lg:pb-12 min-h-screen transition-[margin-left] duration-300"
+        style={{ marginLeft: sidebarWidth }}
+      >
         {children}
       </main>
 
       {/* Desktop Footer */}
-      <DesktopFooter />
+      <DesktopFooter sidebarWidth={sidebarWidth} />
 
       {/* Mobile Bottom Tab Bar */}
       <MobileTabBar pathname={pathname} />
