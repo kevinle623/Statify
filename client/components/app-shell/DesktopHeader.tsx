@@ -20,7 +20,7 @@ export function DesktopHeader({
   displayName,
 }: DesktopHeaderProps) {
   return (
-    <header className="fixed top-0 right-0 left-64 h-16 hidden lg:flex justify-between items-center px-12 z-40 bg-background/80 backdrop-blur-md border-b border-white/5">
+    <header className="fixed top-0 right-0 left-64 h-16 hidden lg:flex justify-between items-center px-12 z-40 bg-background/80 backdrop-blur-md border-b border-divider">
       <div className="flex items-center">
         <span className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant">
           {getBreadcrumb(pathname)}

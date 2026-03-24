@@ -8,7 +8,7 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-on-surface font-body">
-      <header className="border-b border-white/5">
+      <header className="border-b border-divider">
         <div className="max-w-3xl mx-auto px-6 py-8 flex items-center gap-4">
           <Link
             href="/dashboard"
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <div className="pt-8 border-t border-white/5">
+        <div className="pt-8 border-t border-divider">
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-primary transition-colors font-label uppercase tracking-widest"

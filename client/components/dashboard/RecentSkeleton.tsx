@@ -6,7 +6,7 @@ export function RecentSkeleton() {
       {[1, 2, 3, 4].map((i) => (
         <div
           key={i}
-          className="flex items-center justify-between p-6 border-t border-white/5 first:border-t-0"
+          className="flex items-center justify-between p-6 border-t border-divider first:border-t-0"
         >
           <div className="flex items-center gap-6">
             <Skeleton className="w-4 h-4" />

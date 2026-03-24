@@ -28,7 +28,7 @@ export function NotificationPanel() {
       </button>
       {open && (
         <div className="absolute right-0 top-full mt-3 w-80 bg-surface-container ghost-border shadow-xl z-50">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-divider">
             <span className="font-label text-xs uppercase tracking-widest text-on-surface font-bold">
               Notifications
             </span>

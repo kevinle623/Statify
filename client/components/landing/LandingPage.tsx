@@ -13,7 +13,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <div className="bg-surface-container-lowest text-on-surface font-body">
       {/* Top Navigation */}
-      <header className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-white/5">
+      <header className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-divider">
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
             STATIFY

@@ -2,7 +2,7 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5 scroll-mt-16"
+      className="px-6 lg:px-16 py-24 lg:py-32 border-t border-divider scroll-mt-16"
     >
       <div className="text-center mb-16 lg:mb-20">
         <span className="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">
@@ -55,7 +55,7 @@ export function PricingSection() {
         {/* Pro Tier */}
         <div className="relative bg-surface-container-low ghost-border p-8 lg:p-10 flex flex-col opacity-60">
           <div className="flex items-center gap-3 mb-8">
-            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border border-white/10 px-2 py-0.5">
+            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border border-divider px-2 py-0.5">
               Upcoming
             </span>
           </div>

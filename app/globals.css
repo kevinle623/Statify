@@ -101,6 +101,15 @@ html.light {
     border-color: rgba(0, 0, 0, 0.08);
   }
 
+  .border-divider {
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  html[data-theme="light"] .border-divider,
+  html.light .border-divider {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
   .dot-grid {
     background-image: radial-gradient(
       circle,

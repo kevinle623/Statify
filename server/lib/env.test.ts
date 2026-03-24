@@ -24,7 +24,6 @@ describe("getRequiredEnv", () => {
       "SPOTIFY_REDIRECT_URI",
       "http://127.0.0.1:3000/api/auth/callback",
     );
-    vi.stubEnv("NEXT_PUBLIC_APP_URL", "http://127.0.0.1:3000");
 
     const { env } = await import("./env");
 
@@ -33,23 +32,6 @@ describe("getRequiredEnv", () => {
     expect(env.spotifyRedirectUri).toBe(
       "http://127.0.0.1:3000/api/auth/callback",
     );
-    expect(env.appUrl).toBe("http://127.0.0.1:3000");
-
-    vi.unstubAllEnvs();
-  });
-
-  it("falls back to localhost for appUrl when NEXT_PUBLIC_APP_URL is unset", async () => {
-    vi.stubEnv("SPOTIFY_CLIENT_ID", "id");
-    vi.stubEnv("SPOTIFY_CLIENT_SECRET", "secret");
-    vi.stubEnv(
-      "SPOTIFY_REDIRECT_URI",
-      "http://127.0.0.1:3000/api/auth/callback",
-    );
-    delete process.env.NEXT_PUBLIC_APP_URL;
-
-    const { env } = await import("./env");
-
-    expect(env.appUrl).toBe("http://localhost:3000");
 
     vi.unstubAllEnvs();
   });

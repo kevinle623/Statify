@@ -8,7 +8,7 @@ interface DesktopSidebarProps {
 
 export function DesktopSidebar({ pathname }: DesktopSidebarProps) {
   return (
-    <aside className="fixed left-0 top-0 h-full hidden lg:flex flex-col py-8 px-6 bg-background w-64 border-r border-white/5 z-50">
+    <aside className="fixed left-0 top-0 h-full hidden lg:flex flex-col py-8 px-6 bg-background w-64 border-r border-divider z-50">
       <div className="mb-12">
         <Link href="/dashboard">
           <h1 className="text-xl font-bold tracking-tighter text-on-surface font-headline">
@@ -41,7 +41,7 @@ export function DesktopSidebar({ pathname }: DesktopSidebarProps) {
         })}
       </nav>
 
-      <div className="mt-auto pt-8 border-t border-white/5">
+      <div className="mt-auto pt-8 border-t border-divider">
         <button
           disabled
           className="w-full ghost-border bg-white/5 text-on-surface-variant/50 py-3 text-xs font-label uppercase tracking-widest cursor-not-allowed"

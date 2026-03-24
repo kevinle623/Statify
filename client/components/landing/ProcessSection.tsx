@@ -4,7 +4,7 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="px-6 lg:px-16 py-24 lg:py-32 border-t border-white/5 scroll-mt-16"
+      className="px-6 lg:px-16 py-24 lg:py-32 border-t border-divider scroll-mt-16"
     >
       <div className="flex flex-col lg:flex-row gap-16 lg:gap-20">
         <div className="lg:w-1/3">

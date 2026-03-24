@@ -43,7 +43,7 @@ export function RecentListensSection({
               href={item.track.external_urls.spotify}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between p-4 lg:p-6 transition-colors duration-200 hover:bg-white/5 border-t border-white/5 first:border-t-0 track-row-animate"
+              className="group flex items-center justify-between p-4 lg:p-6 transition-colors duration-200 hover:bg-white/5 border-t border-divider first:border-t-0 track-row-animate"
               style={{ animationDelay: `${(index + 1) * 100}ms` }}
             >
               <div className="flex items-center gap-4 lg:gap-6 min-w-0">

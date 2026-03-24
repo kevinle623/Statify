@@ -6,7 +6,7 @@ export function TrackTable({ tracks }: { tracks: SpotifyTrack[] }) {
   return (
     <section className="space-y-2">
       {/* Table Header */}
-      <div className="hidden lg:grid grid-cols-12 px-6 py-4 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border-b border-white/5">
+      <div className="hidden lg:grid grid-cols-12 px-6 py-4 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border-b border-divider">
         <div className="col-span-1">Rank</div>
         <div className="col-span-6">Track Detail</div>
         <div className="col-span-3">Album</div>

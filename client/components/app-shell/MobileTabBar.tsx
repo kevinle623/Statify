@@ -8,7 +8,7 @@ interface MobileTabBarProps {
 
 export function MobileTabBar({ pathname }: MobileTabBarProps) {
   return (
-    <nav className="fixed bottom-0 left-0 w-full lg:hidden flex justify-around items-center py-3 px-2 bg-surface-container-lowest z-50 border-t border-white/5">
+    <nav className="fixed bottom-0 left-0 w-full lg:hidden flex justify-around items-center py-3 px-2 bg-surface-container-lowest z-50 border-t border-divider">
       {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
         const isActive = pathname.startsWith(href);
         return (

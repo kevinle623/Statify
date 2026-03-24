@@ -56,7 +56,7 @@ function AccordionContent({
     <AccordionPrimitive.Content className="overflow-hidden" {...props}>
       <div
         className={cn(
-          "pt-4 mt-4 border-t border-white/5 text-sm leading-relaxed text-on-surface-variant",
+          "pt-4 mt-4 border-t border-divider text-sm leading-relaxed text-on-surface-variant",
           className,
         )}
       >

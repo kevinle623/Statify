@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function LandingFooter() {
   return (
-    <footer className="w-full py-8 border-t border-white/5 bg-background px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="w-full py-8 border-t border-divider bg-background px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
       <div className="flex items-center gap-8">
         <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant font-bold">
           &copy; 2026 STATIFY ARCHIVE

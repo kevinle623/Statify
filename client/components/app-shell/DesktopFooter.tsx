@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function DesktopFooter() {
   return (
-    <footer className="fixed bottom-0 right-0 left-64 h-12 hidden lg:flex justify-between items-center px-12 bg-background border-t border-white/5 z-40">
+    <footer className="fixed bottom-0 right-0 left-64 h-12 hidden lg:flex justify-between items-center px-12 bg-background border-t border-divider z-40">
       <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant">
         &copy; 2026 STATIFY ARCHIVE
       </span>

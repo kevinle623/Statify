@@ -1,6 +1,6 @@
 import type { SpotifyRecentlyPlayedItem } from "@/types/spotify";
 
-export function getDayLabel(value: string) {
+function getDayLabel(value: string) {
   const date = new Date(value);
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());

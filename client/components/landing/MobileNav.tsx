@@ -133,7 +133,7 @@ export function MobileNav() {
             </nav>
 
             <div
-              className="px-6 py-10 border-t border-white/5 flex-shrink-0"
+              className="px-6 py-10 border-t border-divider flex-shrink-0"
               style={{
                 opacity: overlayVisible ? 1 : 0,
                 transform: overlayVisible

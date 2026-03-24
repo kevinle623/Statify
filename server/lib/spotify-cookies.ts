@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { env } from "@/server/lib/env";
 import { SPOTIFY_COOKIE_KEYS } from "@/server/lib/spotify";
 
-export interface SpotifyTokenPair {
+interface SpotifyTokenPair {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;

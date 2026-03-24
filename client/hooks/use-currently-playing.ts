@@ -12,8 +12,8 @@ export function useCurrentlyPlaying(
     fetchCurrentlyPlaying,
     {
       fallbackData: initialData,
-      refreshInterval: 10_000,
-      dedupingInterval: 5_000,
+      refreshInterval: 5_000,
+      dedupingInterval: 2_500,
       revalidateOnFocus: false,
     },
   );

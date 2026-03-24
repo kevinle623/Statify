@@ -2,7 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 
-export type Theme = "light" | "dark";
+type Theme = "light" | "dark";
 
 const STORAGE_KEY = "statify-theme";
 

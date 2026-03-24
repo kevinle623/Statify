@@ -119,7 +119,7 @@ export function HistoryScreen() {
               id={getSectionId(label)}
               className="scroll-mt-24 lg:scroll-mt-28"
             >
-              <div className="flex items-baseline justify-between mb-6 lg:mb-8 border-b border-white/5 pb-4">
+              <div className="flex items-baseline justify-between mb-6 lg:mb-8 border-b border-divider pb-4">
                 <h3 className="text-2xl lg:text-3xl font-bold tracking-tight font-headline uppercase">
                   {label}
                 </h3>
