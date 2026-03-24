@@ -17,6 +17,7 @@
   --color-primary-container: var(--primary-container);
   --color-background: var(--background);
   --color-on-background: var(--on-background);
+  --color-divider: var(--clr-divider);
   --color-error: var(--clr-error);
 
   --font-headline: var(--font-inter);
@@ -41,6 +42,7 @@
   --clr-primary: #1db954;
   --on-primary: #002108;
   --primary-container: #63ef82;
+  --clr-divider: rgba(255, 255, 255, 0.05);
   --clr-error: #ffb4ab;
 }
 
@@ -62,6 +64,7 @@ html.light {
   --clr-primary: #1db954;
   --on-primary: #ffffff;
   --primary-container: #006e2d;
+  --clr-divider: rgba(0, 0, 0, 0.08);
   --clr-error: #ba1a1a;
 }
 
@@ -98,15 +101,6 @@ html.light {
 
   html[data-theme="light"] .ghost-border,
   html.light .ghost-border {
-    border-color: rgba(0, 0, 0, 0.08);
-  }
-
-  .border-divider {
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-
-  html[data-theme="light"] .border-divider,
-  html.light .border-divider {
     border-color: rgba(0, 0, 0, 0.08);
   }
 
