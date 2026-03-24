@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { LogoutButton } from "@/client/components/auth/LogoutButton";
-import { NotificationPanel } from "./NotificationPanel";
 
 export function MobileHeader() {
   return (
@@ -22,7 +21,6 @@ export function MobileHeader() {
       {/* Right: controls */}
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <NotificationPanel />
         <LogoutButton />
       </div>
     </header>

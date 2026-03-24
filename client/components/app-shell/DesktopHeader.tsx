@@ -2,7 +2,6 @@ import { CircleUser } from "lucide-react";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { LogoutButton } from "@/client/components/auth/LogoutButton";
 import { Skeleton } from "@/client/components/ui/skeleton";
-import { NotificationPanel } from "./NotificationPanel";
 import { getBreadcrumb } from "./nav-config";
 import type { SpotifyUserProfile } from "@/types/spotify";
 
@@ -61,7 +60,6 @@ export function DesktopHeader({
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <NotificationPanel />
           <LogoutButton />
         </div>
       </div>
