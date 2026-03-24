@@ -15,7 +15,7 @@ export function RecentListensSection({
 }: RecentListensSectionProps) {
   return (
     <section className="space-y-6 lg:space-y-8">
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-baseline">
         <h2 className="text-2xl lg:text-3xl font-bold tracking-tighter font-headline uppercase">
           Recently Played
         </h2>
