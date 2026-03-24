@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import {
+  clearSpotifySession,
   getSpotifySession,
   setSpotifySession,
 } from "@/server/lib/spotify-cookies";
@@ -32,13 +33,18 @@ export async function getValidSpotifyAccessToken() {
     return session.accessToken;
   }
 
-  const refreshed = await refreshSpotifyAccessToken(session.refreshToken);
+  try {
+    const refreshed = await refreshSpotifyAccessToken(session.refreshToken);
 
-  await setSpotifySession({
-    accessToken: refreshed.access_token,
-    refreshToken: refreshed.refresh_token ?? session.refreshToken,
-    expiresIn: refreshed.expires_in,
-  });
+    await setSpotifySession({
+      accessToken: refreshed.access_token,
+      refreshToken: refreshed.refresh_token ?? session.refreshToken,
+      expiresIn: refreshed.expires_in,
+    });
 
-  return refreshed.access_token;
+    return refreshed.access_token;
+  } catch {
+    await clearSpotifySession();
+    return null;
+  }
 }
