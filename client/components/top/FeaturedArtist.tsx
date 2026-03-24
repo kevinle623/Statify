@@ -25,7 +25,7 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
               Current Peak
             </span>
           </div>
-          <h3 className="text-3xl lg:text-5xl font-black tracking-tighter text-white uppercase leading-none font-headline">
+          <h3 className="text-3xl lg:text-5xl font-black tracking-tighter text-on-surface uppercase leading-none font-headline">
             {artist.name}
           </h3>
           <div className="mt-4 lg:mt-6 flex flex-wrap gap-2 lg:gap-3">
