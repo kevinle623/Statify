@@ -5,54 +5,8 @@ import Image from "next/image";
 import { useRecentlyPlayed } from "@/client/hooks/use-recently-played";
 import { Button } from "@/client/components/ui/button";
 import { Skeleton } from "@/client/components/ui/skeleton";
-
-function formatPlayedAt(value: string) {
-  const diffMs = Date.now() - new Date(value).getTime();
-  const diffMinutes = Math.round(diffMs / 60_000);
-  const diffHours = Math.round(diffMs / 3_600_000);
-  const diffDays = Math.round(diffMs / 86_400_000);
-
-  if (diffMinutes < 1) return "Just now";
-  if (diffMinutes < 60) return `${diffMinutes}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  return `${diffDays}d ago`;
-}
-
-function getDayLabel(value: string) {
-  const date = new Date(value);
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const diffDays = Math.round(
-    (today.getTime() - target.getTime()) / 86_400_000,
-  );
-
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-
-  return new Intl.DateTimeFormat(undefined, {
-    weekday: "long",
-    month: "short",
-    day: "numeric",
-  }).format(date);
-}
-
-function groupByDay(
-  items: NonNullable<ReturnType<typeof useRecentlyPlayed>["data"]>["items"],
-) {
-  const groups = new Map<string, typeof items>();
-
-  items.forEach((item) => {
-    const label = getDayLabel(item.played_at);
-    groups.set(label, [...(groups.get(label) ?? []), item]);
-  });
-
-  return [...groups.entries()];
-}
-
-function getSectionId(label: string) {
-  return `history-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-}
+import { formatPlayedAt } from "@/client/lib/format";
+import { groupByDay, getSectionId } from "@/client/lib/history-utils";
 
 function HistoryLoadingSkeleton() {
   return (

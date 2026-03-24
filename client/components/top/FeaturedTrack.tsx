@@ -1,0 +1,49 @@
+import Image from "next/image";
+import { formatDuration } from "@/client/lib/format";
+import type { SpotifyTrack } from "@/types/spotify";
+
+export function FeaturedTrack({ track }: { track: SpotifyTrack }) {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="lg:col-span-5 aspect-square bg-surface-container relative group overflow-hidden">
+        {track.album.images[0] && (
+          <Image
+            src={track.album.images[0].url}
+            alt={track.name}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute top-6 left-6 w-12 h-12 bg-primary flex items-center justify-center rounded-full">
+          <span className="font-label font-bold text-on-primary text-xl">
+            01
+          </span>
+        </div>
+      </div>
+      <div className="lg:col-span-7 flex flex-col justify-center">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="px-2 py-0.5 border border-primary text-primary font-label text-[10px] tracking-widest uppercase">
+            Peak Performance
+          </span>
+        </div>
+        <h2 className="text-3xl lg:text-5xl font-black tracking-tighter mb-4 leading-[0.9] font-headline uppercase line-clamp-2">
+          {track.name}
+        </h2>
+        <p className="text-xl lg:text-2xl text-on-surface-variant font-light tracking-tight mb-8">
+          {track.artists.map((a) => a.name).join(", ")}
+        </p>
+        <div className="flex gap-8 lg:gap-12 font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant">
+          <div>
+            <span className="block text-primary mb-1">Duration</span>
+            {formatDuration(track.duration_ms)}
+          </div>
+          <div>
+            <span className="block text-primary mb-1">Album</span>
+            {track.album.name}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

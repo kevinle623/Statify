@@ -1,0 +1,35 @@
+import { faqs } from "@/client/components/landing/landing-data";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/client/components/ui/accordion";
+
+export function FaqSection() {
+  return (
+    <section
+      id="faq"
+      className="px-6 lg:px-16 py-24 lg:py-32 bg-surface-container-lowest scroll-mt-16"
+    >
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-16 lg:mb-20">
+          <span className="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">
+            Information Desk
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-extrabold font-headline tracking-tight uppercase">
+            Common Queries
+          </h2>
+        </div>
+        <Accordion type="single" collapsible className="space-y-4">
+          {faqs.map((faq) => (
+            <AccordionItem key={faq.id} value={faq.id}>
+              <AccordionTrigger>{faq.question}</AccordionTrigger>
+              <AccordionContent>{faq.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+}
