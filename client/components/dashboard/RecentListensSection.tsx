@@ -60,7 +60,7 @@ export function RecentListensSection({
                   />
                 )}
                 <div className="min-w-0">
-                  <h4 className="text-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">
+                  <h4 className="text-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors font-headline">
                     {item.track.name}
                   </h4>
                   <p className="text-xs text-on-surface-variant truncate">
