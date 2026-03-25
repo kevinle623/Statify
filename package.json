@@ -19,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
-    "lucide-react": "^0.575.0",
+    "lucide-react": "^1.6.0",
     "next": "^16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -28,14 +28,14 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.19.37",
+    "@types/node": "^25.5.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.39.4",
+    "eslint": "^9",
     "eslint-config-next": "^16.2.1",
     "prettier": "^3.6.2",
-    "typescript": "^5",
-    "vitest": "^3.2.4"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1"
   },
   "ignoreScripts": [
     "sharp",
