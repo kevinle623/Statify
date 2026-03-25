@@ -16,7 +16,7 @@ export function MobileTabBar({ pathname }: MobileTabBarProps) {
             key={href}
             href={href}
             className={cn(
-              "flex flex-1 flex-col items-center justify-center gap-1 py-3 px-2 min-h-[56px] transition-all",
+              "flex flex-1 flex-col items-center justify-center gap-1 py-3 px-2 min-h-[56px] touch-manipulation transition-colors",
               isActive ? "text-primary" : "text-on-surface-variant",
             )}
           >
