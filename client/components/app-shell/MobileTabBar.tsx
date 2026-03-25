@@ -15,13 +15,14 @@ export function MobileTabBar({ pathname }: MobileTabBarProps) {
           <Link
             key={href}
             href={href}
+            prefetch={true}
             className={cn(
-              "flex flex-1 flex-col items-center justify-center gap-1 py-3 px-2 min-h-[56px] transition-all",
+              "flex flex-1 flex-col items-center justify-center gap-1 py-3 px-2 min-h-[56px] touch-manipulation select-none transition-colors active:opacity-60",
               isActive ? "text-primary" : "text-on-surface-variant",
             )}
           >
-            <Icon className="size-6" />
-            <span className="font-label text-[10px] uppercase tracking-widest">
+            <Icon className="size-6 pointer-events-none" />
+            <span className="font-label text-[10px] uppercase tracking-widest pointer-events-none">
               {label}
             </span>
           </Link>
