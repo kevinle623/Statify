@@ -119,7 +119,7 @@ export function DesktopSidebar({
                   disabled
                   subtitle="Coming Soon"
                   className={cn(
-                    "w-full cursor-not-allowed",
+                    "w-full",
                     collapsed ? "opacity-0" : "opacity-100",
                   )}
                 >
