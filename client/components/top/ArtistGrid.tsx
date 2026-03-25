@@ -11,7 +11,7 @@ export function ArtistGrid({ artists }: { artists: SpotifyArtist[] }) {
           href={artist.external_urls.spotify}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-6 group cursor-pointer"
+          className="flex items-center gap-4 sm:gap-6 group cursor-pointer"
         >
           <div className="relative flex-shrink-0">
             {artist.images[0] && (
