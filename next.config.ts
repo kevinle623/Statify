@@ -9,10 +9,14 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i.scdn.co",
+        pathname: "/image/**",
+        search: "",
       },
       {
         protocol: "https",
         hostname: "mosaic.scdn.co",
+        pathname: "/image/**",
+        search: "",
       },
     ],
   },

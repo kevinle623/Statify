@@ -3,12 +3,10 @@ import { clearSpotifySession } from "@/server/lib/spotify-cookies";
 import { getValidSpotifyAccessToken } from "@/server/lib/spotify-session";
 import { SpotifyApiError } from "@/server/lib/errors";
 
-type RouteContext = { params: Promise<Record<string, string>> };
-
 type AuthenticatedHandler = (
   accessToken: string,
   request: NextRequest,
-  context: RouteContext,
+  context: { params: Promise<Record<string, string>> },
 ) => Promise<NextResponse>;
 
 /**
@@ -19,7 +17,10 @@ export function withSpotifyAuth(
   handler: AuthenticatedHandler,
   errorMessage: string,
 ) {
-  return async (request: NextRequest, context: RouteContext) => {
+  return async (
+    request: NextRequest,
+    context: { params: Promise<Record<string, string>> },
+  ) => {
     try {
       const accessToken = await getValidSpotifyAccessToken();
 

@@ -18,7 +18,6 @@ export async function spotifyWebApiFetch<T>(
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    cache: "no-store",
   });
 
   if (response.status === 204) {

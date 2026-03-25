@@ -23,7 +23,6 @@ async function requestSpotifyToken(body: URLSearchParams) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body,
-    cache: "no-store",
   });
 
   if (!response.ok) {

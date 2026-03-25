@@ -11,7 +11,6 @@ import { exchangeSpotifyCode } from "@/server/services/spotify-auth-service";
 async function verifySpotifyAccess(accessToken: string): Promise<boolean> {
   const response = await fetch(`${SPOTIFY_API_BASE_URL}/me`, {
     headers: { Authorization: `Bearer ${accessToken}` },
-    cache: "no-store",
   });
   return response.ok;
 }
