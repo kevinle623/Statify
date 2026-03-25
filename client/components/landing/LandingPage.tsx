@@ -1,3 +1,4 @@
+import { Logo } from "@/client/components/ui/logo";
 import { ThemeToggle } from "@/client/components/theme/ThemeToggle";
 import { MobileNav } from "@/client/components/landing/MobileNav";
 import { LandingNav } from "@/client/components/landing/LandingNav";
@@ -14,14 +15,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
     <div className="bg-surface-container-lowest text-on-surface font-body">
       {/* Top Navigation */}
       <header className="fixed top-0 right-0 left-0 flex items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-divider">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-black tracking-tighter text-on-surface font-headline">
-            STATIFY
-          </span>
-          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5">
-            v2.0
-          </span>
-        </div>
+        <Logo />
         <div className="absolute left-1/2 -translate-x-1/2">
           <LandingNav />
         </div>

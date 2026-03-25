@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Download, PanelLeft } from "lucide-react";
 import { cn } from "@/client/lib/utils";
+import { Logo } from "@/client/components/ui/logo";
 import { NAV_ITEMS } from "./nav-config";
 import {
   Tooltip,
@@ -37,14 +38,7 @@ export function DesktopSidebar({
               collapsed ? "flex-none w-0 opacity-0" : "flex-1 opacity-100",
             )}
           >
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-black tracking-tighter text-on-surface font-headline whitespace-nowrap">
-                STATIFY
-              </h1>
-              <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5">
-                v2.0
-              </span>
-            </div>
+            <Logo className="whitespace-nowrap" />
           </Link>
           <Tooltip>
             <TooltipTrigger asChild>
