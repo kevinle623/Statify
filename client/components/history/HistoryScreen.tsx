@@ -33,7 +33,7 @@ export function HistoryScreen() {
 
   if (isLoading) {
     return (
-      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12 max-w-7xl mx-auto">
+      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
         <div className="mb-12 lg:mb-16">
           <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tighter text-on-surface leading-none font-headline uppercase">
             History
@@ -61,7 +61,7 @@ export function HistoryScreen() {
 
   if (data.items.length === 0) {
     return (
-      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12 max-w-7xl mx-auto">
+      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
         <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tighter text-on-surface leading-none font-headline uppercase">
           History
         </h2>
@@ -85,7 +85,7 @@ export function HistoryScreen() {
   }));
 
   return (
-    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12 max-w-7xl mx-auto">
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
       {/* Header + Quick Jump Links */}
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-12 lg:mb-16 lg:items-end">
         <div>

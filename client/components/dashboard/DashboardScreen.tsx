@@ -51,7 +51,7 @@ export function DashboardScreen() {
               Welcome back,{" "}
               {profile?.display_name?.split(" ")[0] ?? "Archivist"}.
             </h1>
-            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
+            <span className="font-label text-xs uppercase tracking-[0.2em] text-primary mt-4 block">
               Here&apos;s what your ears have been telling us
             </span>
           </>

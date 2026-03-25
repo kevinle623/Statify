@@ -8,7 +8,7 @@ export const NAV_ITEMS = [
 ] as const;
 
 export function getBreadcrumb(pathname: string): string {
-  if (pathname.startsWith("/dashboard")) return "Status: Synchronized";
+  if (pathname.startsWith("/dashboard")) return "Archive / Dashboard";
   if (pathname.startsWith("/artists")) return "Archive / Top Artists";
   if (pathname.startsWith("/tracks")) return "Archive / Top Tracks";
   if (pathname.startsWith("/history")) return "Archive / History";
