@@ -33,20 +33,41 @@ export interface ButtonProps
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  subtitle?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { className, variant, size, asChild = false, ...props },
+  { className, variant, size, asChild = false, subtitle, children, ...props },
   ref,
 ) {
-  const Comp = asChild ? Slot : "button";
+  if (asChild) {
+    return (
+      <Slot
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Slot>
+    );
+  }
 
   return (
-    <Comp
-      className={cn(buttonVariants({ variant, size, className }))}
+    <button
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        subtitle && "h-auto flex-col py-3",
+      )}
       ref={ref}
       {...props}
-    />
+    >
+      {children}
+      {subtitle && (
+        <span className="block text-[9px] font-normal normal-case tracking-normal opacity-50">
+          {subtitle}
+        </span>
+      )}
+    </button>
   );
 });
 

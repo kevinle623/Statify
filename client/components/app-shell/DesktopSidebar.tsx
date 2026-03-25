@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { Download, PanelLeft } from "lucide-react";
 import { cn } from "@/client/lib/utils";
+import { Button } from "@/client/components/ui/button";
 import { Logo } from "@/client/components/ui/logo";
 import { NAV_ITEMS } from "./nav-config";
 import {
@@ -113,18 +114,17 @@ export function DesktopSidebar({
           <Tooltip open={showTooltips ? undefined : false}>
             <TooltipTrigger asChild>
               <div className="relative">
-                <button
+                <Button
+                  variant="secondary"
                   disabled
+                  subtitle="Coming Soon"
                   className={cn(
-                    "w-full ghost-border bg-white/5 text-on-surface-variant/50 py-3 text-xs font-label uppercase tracking-widest cursor-not-allowed whitespace-nowrap transition-opacity duration-300",
+                    "w-full cursor-not-allowed",
                     collapsed ? "opacity-0" : "opacity-100",
                   )}
                 >
                   Export Data
-                  <span className="block text-[9px] tracking-normal text-on-surface-variant/30 mt-1">
-                    Coming Soon
-                  </span>
-                </button>
+                </Button>
                 <div
                   className={cn(
                     "absolute inset-0 flex items-center justify-start transition-opacity duration-300 pointer-events-none",
