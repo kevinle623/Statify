@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { formatDuration } from "@/client/lib/format";
@@ -14,6 +15,7 @@ export function NowPlayingHero({
   currentlyPlaying,
   hasError,
 }: NowPlayingHeroProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const nowPlayingTrack = currentlyPlaying.item;
 
   if (nowPlayingTrack) {
@@ -21,12 +23,18 @@ export function NowPlayingHero({
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
         <div className="lg:col-span-5 aspect-square relative group">
           <div className="absolute inset-0 bg-primary/10 opacity-100 blur-3xl" />
+          {!imageLoaded && (
+            <div className="absolute inset-0 z-10 bg-surface-container animate-pulse ghost-border" />
+          )}
           {nowPlayingTrack.album.images[0] && (
             <Image
               src={nowPlayingTrack.album.images[0].url}
               alt={nowPlayingTrack.name}
               fill
-              className="object-cover transition-all duration-700 ghost-border relative z-10"
+              className={`object-cover transition-all duration-700 ghost-border relative z-10 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setImageLoaded(true)}
             />
           )}
         </div>
