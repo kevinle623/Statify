@@ -29,7 +29,7 @@ export function ArtistGrid({ artists }: { artists: SpotifyArtist[] }) {
           </div>
           <div className="flex-grow min-w-0 border-b border-divider pb-4 group-hover:border-primary transition-colors duration-300">
             <div className="flex justify-between items-start mb-1">
-              <h4 className="text-lg font-bold truncate text-on-surface group-hover:text-primary transition-colors">
+              <h4 className="text-lg font-bold truncate text-on-surface group-hover:text-primary transition-colors font-headline">
                 {artist.name}
               </h4>
               <ArrowUpRight className="size-4 text-outline-variant group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
