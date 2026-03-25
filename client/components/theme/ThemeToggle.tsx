@@ -14,7 +14,7 @@ export function ThemeToggle() {
           ? "Switch to light mode"
           : "Switch to dark mode"
       }
-      className="text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+      className="text-on-surface-variant cursor-pointer hover:text-primary transition-colors p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
       onClick={toggleTheme}
       type="button"
     >
