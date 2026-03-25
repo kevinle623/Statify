@@ -128,42 +128,42 @@ export function DesktopSidebar({
 
         {/* Footer */}
         <div className="mt-auto pt-8 pb-8 border-t border-divider px-6 w-64 shrink-0">
-          <SidebarTooltip
-            enabled={showTooltips}
-            content="Export Data — Coming Soon"
-          >
-            <div className="relative overflow-hidden">
-              <Button
-                variant="secondary"
-                disabled
-                subtitle="Coming Soon"
-                className="w-full shrink-0 transition-[opacity,visibility] duration-300"
-                style={
-                  collapsed
-                    ? {
-                        opacity: 0,
-                        visibility: "hidden",
-                        transitionDelay: "0ms, 300ms",
-                      }
-                    : {
-                        opacity: 1,
-                        visibility: "visible",
-                        transitionDelay: "0ms, 0ms",
-                      }
-                }
-              >
-                Export Data
-              </Button>
+          <div className="relative overflow-hidden">
+            <Button
+              variant="secondary"
+              disabled
+              subtitle="Coming Soon"
+              className="w-full shrink-0 transition-[opacity,visibility] duration-300"
+              style={
+                collapsed
+                  ? {
+                      opacity: 0,
+                      visibility: "hidden",
+                      transitionDelay: "0ms, 300ms",
+                    }
+                  : {
+                      opacity: 1,
+                      visibility: "visible",
+                      transitionDelay: "0ms, 0ms",
+                    }
+              }
+            >
+              Export Data
+            </Button>
+            <SidebarTooltip
+              enabled={showTooltips}
+              content="Export Data — Coming Soon"
+            >
               <div
                 className={cn(
-                  "absolute inset-0 flex items-center transition-opacity duration-300",
+                  "absolute inset-y-0 left-0 flex items-center transition-opacity duration-300",
                   collapsed ? "opacity-50" : "opacity-0 pointer-events-none",
                 )}
               >
                 <Download className="size-[18px] flex-shrink-0 text-on-surface-variant" />
               </div>
-            </div>
-          </SidebarTooltip>
+            </SidebarTooltip>
+          </div>
         </div>
       </aside>
     </TooltipProvider>
