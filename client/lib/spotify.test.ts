@@ -11,6 +11,6 @@ describe("SPOTIFY_TIME_RANGE_LABELS", () => {
   });
 
   it("exposes the expected long-term label", () => {
-    expect(SPOTIFY_TIME_RANGE_LABELS.long_term).toBe("Last year");
+    expect(SPOTIFY_TIME_RANGE_LABELS.long_term).toBe("All time");
   });
 });
