@@ -16,7 +16,7 @@ export function LogoutButton() {
 
   return (
     <button
-      className="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-50 cursor-pointer hover:cursor-pointer"
+      className="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-50 cursor-pointer hover:cursor-pointer p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
       disabled={isMutating}
       onClick={handleLogout}
       type="button"
