@@ -127,7 +127,7 @@ export function DesktopSidebar({
         </nav>
 
         {/* Footer */}
-        <div className="mt-auto pt-8 pb-8 border-t border-divider px-6 w-64 shrink-0">
+        <div className="mt-auto pt-8 pb-8 border-t border-divider px-6 shrink-0">
           <div className="relative overflow-hidden">
             <Button
               variant="secondary"
@@ -156,7 +156,7 @@ export function DesktopSidebar({
             >
               <div
                 className={cn(
-                  "absolute inset-y-0 left-0 flex items-center transition-opacity duration-300",
+                  "absolute inset-0 flex items-center transition-opacity duration-300",
                   collapsed ? "opacity-50" : "opacity-0 pointer-events-none",
                 )}
               >
