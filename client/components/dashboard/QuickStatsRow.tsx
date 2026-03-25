@@ -39,7 +39,9 @@ export function QuickStatsRow({
             />
           )}
           <div>
-            <h3 className="text-lg font-bold font-headline">{topArtist?.name ?? "—"}</h3>
+            <h3 className="text-lg font-bold font-headline">
+              {topArtist?.name ?? "—"}
+            </h3>
             <p className="text-[10px] text-primary font-label uppercase">
               {topArtist?.genres?.[0] ?? "Artist"}
             </p>
@@ -56,7 +58,9 @@ export function QuickStatsRow({
           Peak Resonance
         </p>
         <div>
-          <h3 className="text-lg font-bold font-headline">{topTrack?.name ?? "—"}</h3>
+          <h3 className="text-lg font-bold font-headline">
+            {topTrack?.name ?? "—"}
+          </h3>
           <p className="text-[10px] text-primary font-label uppercase">
             {topTrack?.artists.map((a) => a.name).join(", ") ?? "Track"}
           </p>

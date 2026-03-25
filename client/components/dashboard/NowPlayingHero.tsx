@@ -126,7 +126,7 @@ export function NowPlayingHero({
           href="https://open.spotify.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 font-headline font-bold text-sm tracking-wide transition-all active:scale-95"
+          className="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 font-label font-bold text-xs uppercase tracking-widest transition-all active:scale-95"
         >
           OPEN SPOTIFY
         </a>
