@@ -13,17 +13,19 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <div className="bg-surface-container-lowest text-on-surface font-body">
       {/* Top Navigation */}
-      <header className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-divider">
+      <header className="fixed top-0 right-0 left-0 flex items-center px-6 lg:px-12 z-40 bg-background/80 backdrop-blur-md w-full h-16 border-b border-divider">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tighter text-on-surface font-headline">
+          <span className="text-xl font-black tracking-tighter text-on-surface font-headline">
             STATIFY
           </span>
-          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5 ml-2">
+          <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5">
             v2.0
           </span>
         </div>
-        <LandingNav />
-        <div className="flex items-center gap-6">
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <LandingNav />
+        </div>
+        <div className="ml-auto flex items-center gap-6">
           <ThemeToggle />
           <MobileNav />
         </div>

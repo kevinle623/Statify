@@ -38,16 +38,13 @@ export function DesktopSidebar({
             )}
           >
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold tracking-tighter text-on-surface font-headline whitespace-nowrap">
+              <h1 className="text-xl font-black tracking-tighter text-on-surface font-headline whitespace-nowrap">
                 STATIFY
               </h1>
               <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant border border-on-surface/15 px-1.5 py-0.5">
                 v2.0
               </span>
             </div>
-            <p className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant mt-0.5 whitespace-nowrap">
-              The Digital Archivist
-            </p>
           </Link>
           <Tooltip>
             <TooltipTrigger asChild>
