@@ -53,7 +53,10 @@ function AccordionContent({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
-    <AccordionPrimitive.Content className="overflow-hidden" {...props}>
+    <AccordionPrimitive.Content
+      className="overflow-hidden data-[state=open]:animate-[accordion-down_250ms_cubic-bezier(0.33,1,0.68,1)_forwards] data-[state=closed]:animate-[accordion-up_200ms_cubic-bezier(0.33,1,0.68,1)_forwards]"
+      {...props}
+    >
       <div
         className={cn(
           "pt-4 mt-4 border-t border-divider text-sm leading-relaxed text-on-surface-variant",

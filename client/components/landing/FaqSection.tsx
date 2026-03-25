@@ -35,7 +35,11 @@ export function FaqSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion
+            type="single"
+            collapsible
+            className="space-y-4 min-h-[320px]"
+          >
             {faqs.map((faq) => (
               <motion.div key={faq.id} variants={staggerItem}>
                 <AccordionItem value={faq.id}>
