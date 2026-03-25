@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { preferences } from "@/client/lib/preferences";
 
 type Theme = "light" | "dark";
-
-const STORAGE_KEY = "statify-theme";
 
 function getSystemTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -35,13 +34,13 @@ export function useTheme() {
       }
     }
 
+    const storedTheme = preferences.get<Theme>("theme");
+
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+
     if (typeof window !== "undefined") {
-      const storedTheme = window.localStorage.getItem(STORAGE_KEY);
-
-      if (storedTheme === "light" || storedTheme === "dark") {
-        return storedTheme;
-      }
-
       return getSystemTheme();
     }
 
@@ -49,7 +48,7 @@ export function useTheme() {
   });
 
   function setTheme(nextTheme: Theme) {
-    window.localStorage.setItem(STORAGE_KEY, nextTheme);
+    preferences.set("theme", nextTheme);
     applyTheme(nextTheme);
     setThemeState(nextTheme);
   }

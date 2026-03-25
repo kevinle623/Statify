@@ -1,6 +1,6 @@
 const themeScript = `
 (() => {
-  const storageKey = "statify-theme";
+  const storageKey = "statify:theme";
   const root = document.documentElement;
   const storedTheme = window.localStorage.getItem(storageKey);
   const resolvedTheme =

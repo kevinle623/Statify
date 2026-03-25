@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useProfile } from "@/client/hooks/use-profile";
+import { preferences } from "@/client/lib/preferences";
 import { DesktopSidebar } from "./DesktopSidebar";
 import { DesktopHeader } from "./DesktopHeader";
 import { DesktopFooter } from "./DesktopFooter";
@@ -12,7 +13,17 @@ import { MobileTabBar } from "./MobileTabBar";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { data: profile, isLoading: profileLoading } = useProfile();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    () => preferences.get("sidebar-collapsed") === "true",
+  );
+
+  const handleToggle = useCallback(() => {
+    setSidebarCollapsed((prev) => {
+      const next = !prev;
+      preferences.set("sidebar-collapsed", String(next));
+      return next;
+    });
+  }, []);
 
   const displayName = profile?.display_name ?? "User";
   const sidebarWidth = sidebarCollapsed ? "66px" : "16rem";
@@ -23,7 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <DesktopSidebar
         pathname={pathname}
         collapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed((prev) => !prev)}
+        onToggle={handleToggle}
       />
 
       {/* Top Header — Mobile */}
