@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import { Download, PanelLeft } from "lucide-react";
 import { cn } from "@/client/lib/utils";
@@ -23,11 +24,23 @@ export function DesktopSidebar({
   collapsed,
   onToggle,
 }: DesktopSidebarProps) {
+  const [showTooltips, setShowTooltips] = useState(collapsed);
+
+  const handleToggle = useCallback(() => {
+    setShowTooltips(false);
+    onToggle();
+  }, [onToggle]);
+
+  const handleTransitionEnd = useCallback(() => {
+    setShowTooltips(collapsed);
+  }, [collapsed]);
+
   return (
     <TooltipProvider delayDuration={0}>
       <aside
         className="fixed left-0 top-0 h-full hidden lg:flex flex-col bg-background border-r border-divider z-50 overflow-hidden transition-[width] duration-300 ease-in-out w-64"
         style={{ width: collapsed ? COLLAPSED_WIDTH : undefined }}
+        onTransitionEnd={handleTransitionEnd}
       >
         {/* Header: Logo + Toggle — aligned with top bar */}
         <div className="h-16 flex items-center px-6 border-b border-divider">
@@ -40,10 +53,10 @@ export function DesktopSidebar({
           >
             <Logo className="whitespace-nowrap" />
           </Link>
-          <Tooltip>
+          <Tooltip open={showTooltips ? undefined : false}>
             <TooltipTrigger asChild>
               <button
-                onClick={onToggle}
+                onClick={handleToggle}
                 className="flex-shrink-0 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer"
               >
                 <PanelLeft
@@ -54,7 +67,7 @@ export function DesktopSidebar({
                 />
               </button>
             </TooltipTrigger>
-            {collapsed && (
+            {showTooltips && (
               <TooltipContent side="right">Expand sidebar</TooltipContent>
             )}
           </Tooltip>
@@ -65,7 +78,7 @@ export function DesktopSidebar({
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
-              <Tooltip key={href}>
+              <Tooltip key={href} open={showTooltips ? undefined : false}>
                 <TooltipTrigger asChild>
                   <Link
                     href={href}
@@ -87,7 +100,7 @@ export function DesktopSidebar({
                     </span>
                   </Link>
                 </TooltipTrigger>
-                {collapsed && (
+                {showTooltips && (
                   <TooltipContent side="right">{label}</TooltipContent>
                 )}
               </Tooltip>
@@ -97,7 +110,7 @@ export function DesktopSidebar({
 
         {/* Footer */}
         <div className="mt-auto pt-8 pb-8 border-t border-divider px-6">
-          <Tooltip>
+          <Tooltip open={showTooltips ? undefined : false}>
             <TooltipTrigger asChild>
               <div className="relative">
                 <button
@@ -122,7 +135,7 @@ export function DesktopSidebar({
                 </div>
               </div>
             </TooltipTrigger>
-            {collapsed && (
+            {showTooltips && (
               <TooltipContent side="right">
                 Export Data — Coming Soon
               </TooltipContent>
