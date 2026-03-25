@@ -20,7 +20,7 @@ export default function PrivacyPage() {
             <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary block mb-1">
               Legal
             </span>
-            <h1 className="text-2xl font-bold font-headline tracking-tight">
+            <h1 className="text-2xl font-bold font-headline tracking-tight uppercase">
               Privacy Policy
             </h1>
           </div>

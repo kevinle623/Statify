@@ -9,6 +9,12 @@ export async function fetchJson<T>(
   });
 
   if (!response.ok) {
+    // Auth expired or invalid — redirect to re-authenticate
+    if (response.status === 401) {
+      window.location.href = "/auth-error?reason=token_error";
+      throw new Error("unauthorized");
+    }
+
     // If the server tells us the user isn't whitelisted, redirect immediately
     if (response.status === 403) {
       try {
