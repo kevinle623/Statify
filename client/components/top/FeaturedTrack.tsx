@@ -5,7 +5,7 @@ import type { SpotifyTrack } from "@/types/spotify";
 export function FeaturedTrack({ track }: { track: SpotifyTrack }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      <div className="lg:col-span-5 aspect-square bg-surface-container relative group overflow-hidden">
+      <div className="w-full max-w-sm mx-auto lg:max-w-none lg:mx-0 lg:col-span-4 aspect-square bg-surface-container relative group overflow-hidden">
         {track.album.images[0] && (
           <Image
             src={track.album.images[0].url}
@@ -21,7 +21,7 @@ export function FeaturedTrack({ track }: { track: SpotifyTrack }) {
           </span>
         </div>
       </div>
-      <div className="lg:col-span-7 flex flex-col justify-center">
+      <div className="lg:col-span-8 flex flex-col justify-center">
         <div className="flex items-center gap-3 mb-6">
           <span className="px-2 py-0.5 border border-primary text-primary font-label text-[10px] tracking-widest uppercase">
             Peak Performance
