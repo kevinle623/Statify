@@ -110,28 +110,38 @@ export function DesktopSidebar({
         </nav>
 
         {/* Footer */}
-        <div className="mt-auto pt-8 pb-8 border-t border-divider px-6">
+        <div className="mt-auto pt-8 pb-8 border-t border-divider px-6 w-64 shrink-0">
           <Tooltip open={showTooltips ? undefined : false}>
             <TooltipTrigger asChild>
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 <Button
                   variant="secondary"
                   disabled
                   subtitle="Coming Soon"
-                  className={cn(
-                    "w-full",
-                    collapsed ? "opacity-0" : "opacity-100",
-                  )}
+                  className="w-full shrink-0 transition-[opacity,visibility] duration-300"
+                  style={
+                    collapsed
+                      ? {
+                          opacity: 0,
+                          visibility: "hidden",
+                          transitionDelay: "0ms, 300ms",
+                        }
+                      : {
+                          opacity: 1,
+                          visibility: "visible",
+                          transitionDelay: "0ms, 0ms",
+                        }
+                  }
                 >
                   Export Data
                 </Button>
                 <div
                   className={cn(
-                    "absolute inset-0 flex items-center justify-start transition-opacity duration-300 pointer-events-none",
-                    collapsed ? "opacity-100" : "opacity-0",
+                    "absolute inset-0 flex items-center transition-opacity duration-300",
+                    collapsed ? "opacity-50" : "opacity-0 pointer-events-none",
                   )}
                 >
-                  <Download className="size-[18px] text-on-surface-variant/50" />
+                  <Download className="size-[18px] flex-shrink-0 text-on-surface-variant" />
                 </div>
               </div>
             </TooltipTrigger>
