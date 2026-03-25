@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { formatDuration } from "@/client/lib/format";
+import { Button } from "@/client/components/ui/button";
 import type { SpotifyCurrentlyPlaying } from "@/types/spotify";
 
 interface NowPlayingHeroProps {
@@ -122,14 +123,15 @@ export function NowPlayingHero({
           : "Play something on Spotify and watch this space come alive."}
       </p>
       {!hasError && (
-        <a
-          href="https://open.spotify.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 font-label font-bold text-xs uppercase tracking-widest transition-all active:scale-95"
-        >
-          OPEN SPOTIFY
-        </a>
+        <Button asChild size="lg">
+          <a
+            href="https://open.spotify.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OPEN SPOTIFY
+          </a>
+        </Button>
       )}
       <button
         onClick={() =>
