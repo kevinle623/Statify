@@ -77,6 +77,10 @@ Copy `.env.example` for required Spotify OAuth credentials. Server-only env vars
 - Strict TypeScript (`noEmit: true`)
 - Remote images from `i.scdn.co` and `mosaic.scdn.co` are configured in `next.config.ts`
 
+## Next.js Docs
+
+Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
+
 ## Workflow
 
 - Do not use preview tools for testing unless explicitly asked. The user will handle testing themselves.
