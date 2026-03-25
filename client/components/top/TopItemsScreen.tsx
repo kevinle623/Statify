@@ -28,7 +28,7 @@ export function TopItemsScreen({ type }: { type: SpotifyTopItemType }) {
   const title = type === "artists" ? "ARTISTS" : "TOP TRACKS";
 
   return (
-    <div className="pt-8 lg:pt-16 px-4 sm:px-6 lg:px-12 pb-12">
+    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
       {/* Header + Time Range */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-12 lg:mb-16">
         <div>
