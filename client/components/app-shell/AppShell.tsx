@@ -10,11 +10,19 @@ import { DesktopFooter } from "./DesktopFooter";
 import { MobileHeader } from "./MobileHeader";
 import { MobileTabBar } from "./MobileTabBar";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+interface AppShellProps {
+  children: React.ReactNode;
+  initialSidebarCollapsed?: boolean;
+}
+
+export function AppShell({
+  children,
+  initialSidebarCollapsed = false,
+}: AppShellProps) {
   const pathname = usePathname();
   const { data: profile, isLoading: profileLoading } = useProfile();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(
-    () => preferences.get("sidebar-collapsed") === "true",
+    initialSidebarCollapsed,
   );
 
   const handleToggle = useCallback(() => {
