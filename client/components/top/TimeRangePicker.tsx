@@ -10,7 +10,7 @@ const timeRanges: SpotifyTimeRange[] = [
 const TIME_RANGE_SHORT_LABELS: Record<SpotifyTimeRange, string> = {
   short_term: "4 Weeks",
   medium_term: "6 Months",
-  long_term: "All Time",
+  long_term: "1 Year",
 };
 
 export function TimeRangePicker({
