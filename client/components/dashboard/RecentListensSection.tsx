@@ -56,7 +56,7 @@ export function RecentListensSection({
                     alt={item.track.name}
                     width={40}
                     height={40}
-                    className="grayscale ghost-border group-hover:grayscale-0 transition-all flex-shrink-0"
+                    className="ghost-border transition-all flex-shrink-0"
                   />
                 )}
                 <div className="min-w-0">

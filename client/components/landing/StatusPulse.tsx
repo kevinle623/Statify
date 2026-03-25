@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 
 const BAR_COUNT = 12;
+const INITIAL_HEIGHTS = Array.from(
+  { length: BAR_COUNT },
+  (_, i) => 5 + ((i * 7 + 3) % 13),
+);
 
 function generateHeights(prev: number[]): number[] {
   return prev.map((h) => {
@@ -11,14 +15,11 @@ function generateHeights(prev: number[]): number[] {
   });
 }
 
-function initHeights(): number[] {
-  return Array.from({ length: BAR_COUNT }, () => 5 + Math.random() * 12);
-}
-
 export function StatusPulse() {
-  const [heights, setHeights] = useState<number[]>(initHeights);
+  const [heights, setHeights] = useState<number[]>(INITIAL_HEIGHTS);
 
   useEffect(() => {
+    setHeights((prev) => generateHeights(prev));
     const id = setInterval(
       () => setHeights((prev) => generateHeights(prev)),
       800,

@@ -10,7 +10,7 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
           src={artist.images[0].url}
           alt={artist.name}
           fill
-          className="object-cover opacity-60 grayscale group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
+          className="object-cover opacity-60 group-hover:scale-105 transition-all duration-700"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />

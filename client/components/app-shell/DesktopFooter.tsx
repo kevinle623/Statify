@@ -26,9 +26,14 @@ export function DesktopFooter({ sidebarWidth }: DesktopFooterProps) {
         >
           Terms
         </Link>
-        <span className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+        <a
+          href="https://developer.spotify.com/documentation/web-api"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-label text-[10px] uppercase tracking-[0.1em] text-on-surface-variant hover:text-on-surface transition-colors"
+        >
           API
-        </span>
+        </a>
       </div>
     </footer>
   );

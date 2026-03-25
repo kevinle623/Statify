@@ -35,7 +35,7 @@ export function QuickStatsRow({
               alt={topArtist.name}
               width={48}
               height={48}
-              className="rounded-full grayscale ghost-border"
+              className="rounded-full ghost-border"
             />
           )}
           <div>

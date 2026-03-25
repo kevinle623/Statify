@@ -8,7 +8,7 @@ export function LandingNav() {
       {NAV_LINKS.map((id) => (
         <button
           key={id}
-          className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors"
+          className="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
           onClick={() =>
             document
               .querySelector(`#${id}`)

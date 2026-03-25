@@ -8,28 +8,20 @@ import { Skeleton } from "@/client/components/ui/skeleton";
 import { formatPlayedAt } from "@/client/lib/format";
 import { groupByDay, getSectionId } from "@/client/lib/history-utils";
 
-function HistoryLoadingSkeleton() {
+function HistoryContentSkeleton() {
   return (
-    <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12">
-      <div className="flex gap-8 mb-16 items-end">
-        <div>
-          <Skeleton className="h-14 w-48" />
-          <Skeleton className="h-4 w-32 mt-4" />
-        </div>
-      </div>
-      <div className="space-y-6">
-        <Skeleton className="h-8 w-20" />
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="flex items-center gap-6 py-4">
-            <Skeleton className="w-12 h-12 flex-shrink-0" />
-            <div className="flex-grow space-y-2">
-              <Skeleton className="h-4 w-40" />
-              <Skeleton className="h-3 w-24" />
-            </div>
-            <Skeleton className="h-3 w-16" />
+    <div className="space-y-6">
+      <Skeleton className="h-8 w-20" />
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="flex items-center gap-6 py-4">
+          <Skeleton className="w-12 h-12 flex-shrink-0" />
+          <div className="flex-grow space-y-2">
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-3 w-24" />
           </div>
-        ))}
-      </div>
+          <Skeleton className="h-3 w-16" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -40,7 +32,19 @@ export function HistoryScreen() {
   const prevCountRef = useRef(0);
 
   if (isLoading) {
-    return <HistoryLoadingSkeleton />;
+    return (
+      <div className="pt-8 lg:pt-16 px-6 lg:px-12 pb-12 max-w-7xl mx-auto">
+        <div className="mb-12 lg:mb-16">
+          <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tighter text-on-surface leading-none font-headline uppercase">
+            History
+          </h2>
+          <p className="font-label text-xs text-primary mt-4 tracking-[0.2em] uppercase">
+            Loading sessions...
+          </p>
+        </div>
+        <HistoryContentSkeleton />
+      </div>
+    );
   }
 
   if (error || !data) {
@@ -155,7 +159,7 @@ export function HistoryScreen() {
                               alt={item.track.name}
                               width={48}
                               height={48}
-                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                              className="w-full h-full object-cover transition-all"
                             />
                           )}
                         </div>

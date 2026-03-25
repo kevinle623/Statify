@@ -18,7 +18,7 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       className={cn(
-        "bg-surface-container-low ghost-border p-6 hover:bg-surface-container transition-colors",
+        "bg-surface-container-low ghost-border p-6 hover:bg-surface-container transition-colors cursor-pointer",
         className,
       )}
       {...props}
@@ -35,7 +35,7 @@ function AccordionTrigger({
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          "group flex flex-1 items-center justify-between gap-4 font-headline text-sm font-bold uppercase tracking-wide text-on-surface",
+          "group flex flex-1 items-center justify-between gap-4 font-headline text-sm font-bold uppercase tracking-wide text-on-surface cursor-pointer",
           className,
         )}
         {...props}

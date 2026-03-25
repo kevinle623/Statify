@@ -20,7 +20,7 @@ export function ArtistGrid({ artists }: { artists: SpotifyArtist[] }) {
                 alt={artist.name}
                 width={96}
                 height={96}
-                className="w-24 h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="w-24 h-24 object-cover transition-all duration-300"
               />
             )}
             <span className="absolute -top-3 -left-3 font-label text-xs font-bold bg-background p-1 text-primary">

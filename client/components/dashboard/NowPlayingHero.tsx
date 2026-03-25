@@ -20,13 +20,13 @@ export function NowPlayingHero({
     return (
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
         <div className="lg:col-span-5 aspect-square relative group">
-          <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl" />
+          <div className="absolute inset-0 bg-primary/10 opacity-100 blur-3xl" />
           {nowPlayingTrack.album.images[0] && (
             <Image
               src={nowPlayingTrack.album.images[0].url}
               alt={nowPlayingTrack.name}
               fill
-              className="object-cover grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700 ghost-border relative z-10"
+              className="object-cover transition-all duration-700 ghost-border relative z-10"
             />
           )}
         </div>

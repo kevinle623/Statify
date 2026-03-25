@@ -42,8 +42,8 @@ export function DashboardScreen() {
       <section>
         {profileLoading ? (
           <div className="space-y-3">
-            <Skeleton className="h-10 lg:h-16 w-96 max-w-full" />
-            <Skeleton className="h-3 w-64" />
+            <Skeleton className="h-10 lg:h-14 w-[36rem] max-w-full" />
+            <Skeleton className="h-3 w-96 max-w-full" />
           </div>
         ) : (
           <>

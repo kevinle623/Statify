@@ -49,8 +49,8 @@ export function TopItemsScreen({ type }: { type: SpotifyTopItemType }) {
 
       {isLoading ? (
         <div className="space-y-16 lg:space-y-20">
-          <FeaturedSkeleton />
-          <GridSkeleton />
+          <FeaturedSkeleton type={type} />
+          <GridSkeleton type={type} />
         </div>
       ) : (
         <>
