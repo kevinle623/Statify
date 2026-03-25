@@ -105,7 +105,7 @@ export function HistoryScreen() {
                   .querySelector(day.href)
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors"
+              className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
             >
               {day.label}
             </button>
