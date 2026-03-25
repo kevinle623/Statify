@@ -1,21 +1,39 @@
+"use client";
+
+import {
+  motion,
+  staggerContainer,
+  staggerItem,
+  Reveal,
+} from "@/client/components/landing/motion";
+
 export function PricingSection() {
   return (
     <section
       id="pricing"
       className="px-6 lg:px-16 py-24 lg:py-32 border-t border-divider scroll-mt-16"
     >
-      <div className="text-center mb-16 lg:mb-20">
+      <Reveal direction="none" className="text-center mb-16 lg:mb-20">
         <span className="font-label text-xs uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">
           Access Tiers
         </span>
         <h2 className="text-4xl lg:text-5xl font-extrabold font-headline tracking-tighter uppercase">
           Pricing
         </h2>
-      </div>
+      </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {/* Free Tier */}
-        <div className="relative bg-surface-container-low ghost-border p-8 lg:p-10 flex flex-col">
+        <motion.div
+          className="relative bg-surface-container-low ghost-border p-8 lg:p-10 flex flex-col"
+          variants={staggerItem}
+        >
           <div className="flex items-center gap-3 mb-8">
             <span className="font-label text-[10px] uppercase tracking-[0.2em] text-primary border border-primary/30 px-2 py-0.5">
               Current
@@ -50,10 +68,13 @@ export function PricingSection() {
           <div className="ghost-border bg-white/5 text-on-surface-variant py-3 text-xs font-label uppercase tracking-widest text-center cursor-not-allowed">
             Signups Closed
           </div>
-        </div>
+        </motion.div>
 
         {/* Pro Tier */}
-        <div className="relative bg-surface-container-low ghost-border p-8 lg:p-10 flex flex-col opacity-60">
+        <motion.div
+          className="relative bg-surface-container-low ghost-border p-8 lg:p-10 flex flex-col opacity-60"
+          variants={staggerItem}
+        >
           <div className="flex items-center gap-3 mb-8">
             <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant border border-divider px-2 py-0.5">
               Upcoming
@@ -87,13 +108,15 @@ export function PricingSection() {
           <div className="ghost-border bg-white/5 text-on-surface-variant/50 py-3 text-xs font-label uppercase tracking-widest text-center cursor-not-allowed">
             Coming Soon
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <p className="text-center mt-12 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
-        Early access is invite-only. All features are free during the closed
-        beta.
-      </p>
+      <Reveal delay={0.3} direction="none">
+        <p className="text-center mt-12 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+          Early access is invite-only. All features are free during the closed
+          beta.
+        </p>
+      </Reveal>
     </section>
   );
 }
