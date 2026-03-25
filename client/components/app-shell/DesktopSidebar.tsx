@@ -54,7 +54,7 @@ export function DesktopSidebar({
           >
             <Logo className="whitespace-nowrap" />
           </Link>
-          <Tooltip open={showTooltips ? undefined : false}>
+          <Tooltip>
             <TooltipTrigger asChild>
               <button
                 onClick={handleToggle}
@@ -79,7 +79,7 @@ export function DesktopSidebar({
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
-              <Tooltip key={href} open={showTooltips ? undefined : false}>
+              <Tooltip key={href}>
                 <TooltipTrigger asChild>
                   <Link
                     href={href}
@@ -111,7 +111,7 @@ export function DesktopSidebar({
 
         {/* Footer */}
         <div className="mt-auto pt-8 pb-8 border-t border-divider px-6 w-64 shrink-0">
-          <Tooltip open={showTooltips ? undefined : false}>
+          <Tooltip>
             <TooltipTrigger asChild>
               <div className="relative overflow-hidden">
                 <Button
