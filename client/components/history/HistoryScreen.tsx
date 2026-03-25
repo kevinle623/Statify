@@ -164,7 +164,7 @@ export function HistoryScreen() {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-bold text-on-surface tracking-tight truncate group-hover:text-primary transition-colors">
+                          <p className="font-bold text-on-surface tracking-tight truncate group-hover:text-primary transition-colors font-headline">
                             {item.track.name}
                           </p>
                           <p className="text-xs text-on-surface-variant mt-0.5 truncate">

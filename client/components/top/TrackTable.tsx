@@ -36,7 +36,7 @@ export function TrackTable({ tracks }: { tracks: SpotifyTrack[] }) {
               </div>
             )}
             <div className="min-w-0">
-              <h4 className="font-bold text-sm tracking-tight text-on-surface truncate">
+              <h4 className="font-bold text-sm tracking-tight text-on-surface truncate font-headline">
                 {track.name}
               </h4>
               <p className="text-xs text-on-surface-variant truncate">
