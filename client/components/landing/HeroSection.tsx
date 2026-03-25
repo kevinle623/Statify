@@ -18,10 +18,10 @@ export function HeroSection({ isAuthenticated }: { isAuthenticated: boolean }) {
           STATIFY YOUR
           <br />
           <span
-            className="text-transparent"
             style={{
               WebkitTextStroke: "2px var(--on-surface)",
-              color: "transparent",
+              color: "var(--background)",
+              paintOrder: "stroke fill",
             }}
           >
             LISTENING.

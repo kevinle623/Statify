@@ -19,7 +19,6 @@ export function StatusPulse() {
   const [heights, setHeights] = useState<number[]>(INITIAL_HEIGHTS);
 
   useEffect(() => {
-    setHeights((prev) => generateHeights(prev));
     const id = setInterval(
       () => setHeights((prev) => generateHeights(prev)),
       800,
