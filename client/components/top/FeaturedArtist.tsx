@@ -15,25 +15,15 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
             className="object-cover opacity-40 blur-2xl scale-125"
             aria-hidden
           />
-          {/* Main image — vintage film look */}
+          {/* Main image */}
           <Image
             src={artist.images[0].url}
             alt={artist.name}
             fill
-            className="object-cover opacity-60 contrast-[1.1] saturate-[0.6] sepia-[0.15] brightness-[0.9] group-hover:scale-105 transition-all duration-700"
+            className="object-cover group-hover:scale-105 transition-all duration-700"
           />
         </>
       )}
-      {/* Warm film tint */}
-      <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay pointer-events-none" />
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%)",
-        }}
-      />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/10" />
       <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12 flex items-end gap-8 lg:gap-12 w-full pr-16 lg:pr-24">
         <div className="flex-1">
