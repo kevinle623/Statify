@@ -71,7 +71,7 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
                 href={topTrack.external_urls.spotify}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2 hover:bg-white/5 transition-colors group/track"
+                className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2 hover:bg-white/5 transition-colors group/track max-w-full overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {topTrack.album.images[0] && (
@@ -83,11 +83,11 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
                     className="rounded object-cover flex-shrink-0"
                   />
                 )}
-                <div className="min-w-0">
-                  <p className="text-[9px] font-label uppercase tracking-widest text-on-surface-variant">
+                <div className="flex-1 min-w-0 overflow-hidden">
+                  <p className="text-[9px] font-label uppercase tracking-widest text-on-surface-variant truncate">
                     Top Track
                   </p>
-                  <p className="text-sm font-semibold text-on-surface truncate max-w-[160px] lg:max-w-[260px]">
+                  <p className="text-sm font-semibold text-on-surface truncate">
                     {topTrack.name}
                   </p>
                 </div>
