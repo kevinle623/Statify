@@ -58,7 +58,7 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
           {/* Always reserve space for the top track strip to prevent layout shift */}
           <div className="mt-4 lg:mt-5">
             {isLoading ? (
-              <div className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2 max-w-full overflow-hidden">
+              <div className="inline-flex items-center gap-3 bg-surface-container/80 backdrop-blur-sm ghost-border px-3 py-2 max-w-full overflow-hidden">
                 <Skeleton className="w-9 h-9 rounded flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-1.5">
                   <Skeleton className="h-2 w-14" />
@@ -71,7 +71,7 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
                 href={topTrack.external_urls.spotify}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2 hover:bg-white/5 transition-colors group/track"
+                className="inline-flex items-center gap-3 bg-surface-container/80 backdrop-blur-sm ghost-border px-3 py-2 hover:bg-surface-container-high/60 transition-colors group/track max-w-full overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {topTrack.album.images[0] && (
@@ -83,11 +83,11 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
                     className="rounded object-cover flex-shrink-0"
                   />
                 )}
-                <div className="min-w-0">
-                  <p className="text-[9px] font-label uppercase tracking-widest text-on-surface-variant">
+                <div className="flex-1 min-w-0 overflow-hidden">
+                  <p className="text-[9px] font-label uppercase tracking-widest text-on-surface-variant truncate">
                     Top Track
                   </p>
-                  <p className="text-sm font-semibold text-on-surface truncate max-w-[160px] lg:max-w-[260px]">
+                  <p className="text-sm font-semibold text-on-surface truncate">
                     {topTrack.name}
                   </p>
                 </div>
