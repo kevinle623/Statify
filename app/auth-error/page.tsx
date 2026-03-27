@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Lock } from "lucide-react";
-import { ErrorPageFooter } from "@/client/components/app-shell/ErrorPageFooter";
+import { LandingFooter } from "@/client/components/landing/LandingFooter";
 
 export const metadata = {
   title: "Authentication Error — Statify",
@@ -125,7 +125,7 @@ export default async function AuthErrorPage({
         </div>
       </main>
 
-      <ErrorPageFooter />
+      <LandingFooter />
     </div>
   );
 }

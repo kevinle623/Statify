@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/client/components/ui/button";
-import { ErrorPageFooter } from "@/client/components/app-shell/ErrorPageFooter";
+import { LandingFooter } from "@/client/components/landing/LandingFooter";
 import { SPOTIFY_COOKIE_KEYS } from "@/server/lib/spotify";
 
 export default async function NotFound() {
@@ -63,7 +63,7 @@ export default async function NotFound() {
         </div>
       </main>
 
-      <ErrorPageFooter />
+      <LandingFooter />
     </div>
   );
 }
