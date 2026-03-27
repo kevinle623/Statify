@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Lock } from "lucide-react";
+import { Logo } from "@/client/components/ui/logo";
 
 export const metadata = {
   title: "Authentication Error — Statify",
@@ -44,7 +45,7 @@ export default async function AuthErrorPage({
   const isClosedBeta = reason === "not_whitelisted";
 
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center justify-center px-6 lg:px-16 relative overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
         <div
@@ -52,7 +53,8 @@ export default async function AuthErrorPage({
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-2xl text-center">
+      <main className="relative z-10 flex-1 flex items-center justify-center px-6 lg:px-16 py-16">
+        <div className="w-full max-w-2xl text-center">
         {isClosedBeta ? (
           <>
             <div className="inline-flex items-center gap-2 ghost-border bg-white/5 px-4 py-2 mb-8">
@@ -120,7 +122,12 @@ export default async function AuthErrorPage({
             </p>
           </>
         )}
-      </div>
-    </main>
+        </div>
+      </main>
+
+      <footer className="relative z-10 w-full border-t border-divider px-6 lg:px-12 py-4 flex items-center justify-center">
+        <Logo />
+      </footer>
+    </div>
   );
 }
