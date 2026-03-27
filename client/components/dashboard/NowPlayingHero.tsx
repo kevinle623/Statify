@@ -44,7 +44,7 @@ export function NowPlayingHero({
             <span className="font-label text-xs uppercase tracking-[0.2em] text-primary">
               Now Playing
             </span>
-            <h2 className="text-3xl lg:text-5xl font-bold tracking-tighter leading-none text-on-surface font-headline line-clamp-2">
+            <h2 className="text-3xl lg:text-5xl font-bold tracking-tighter leading-tight text-on-surface font-headline line-clamp-2">
               {nowPlayingTrack.name}
             </h2>
             <p className="text-xl lg:text-2xl font-light text-on-surface-variant tracking-wide truncate">
