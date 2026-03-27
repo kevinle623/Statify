@@ -58,11 +58,11 @@ export function FeaturedArtist({ artist }: { artist: SpotifyArtist }) {
           {/* Always reserve space for the top track strip to prevent layout shift */}
           <div className="mt-4 lg:mt-5">
             {isLoading ? (
-              <div className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2">
+              <div className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm ghost-border px-3 py-2 max-w-full overflow-hidden">
                 <Skeleton className="w-9 h-9 rounded flex-shrink-0" />
-                <div className="space-y-1.5">
+                <div className="flex-1 min-w-0 space-y-1.5">
                   <Skeleton className="h-2 w-14" />
-                  <Skeleton className="h-3 w-36" />
+                  <Skeleton className="h-3 w-24 lg:w-36" />
                 </div>
                 <Skeleton className="w-7 h-7 rounded-full flex-shrink-0 ml-1" />
               </div>
