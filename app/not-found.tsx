@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/client/components/ui/button";
-import { Logo } from "@/client/components/ui/logo";
+import { ErrorPageFooter } from "@/client/components/app-shell/ErrorPageFooter";
 import { SPOTIFY_COOKIE_KEYS } from "@/server/lib/spotify";
 
 export default async function NotFound() {
@@ -63,9 +63,7 @@ export default async function NotFound() {
         </div>
       </main>
 
-      <footer className="relative z-10 w-full border-t border-divider px-6 lg:px-12 py-4 flex items-center justify-center">
-        <Logo />
-      </footer>
+      <ErrorPageFooter />
     </div>
   );
 }
