@@ -6,7 +6,10 @@ export const GET = withSpotifyAuth(async (accessToken, _request, context) => {
   const { id } = await context.params;
 
   if (!id) {
-    return NextResponse.json({ message: "Artist ID required" }, { status: 400 });
+    return NextResponse.json(
+      { message: "Artist ID required" },
+      { status: 400 },
+    );
   }
 
   const response = await getArtistTopTracks(accessToken, id);
