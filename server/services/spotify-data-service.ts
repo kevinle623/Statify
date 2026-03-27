@@ -1,6 +1,7 @@
 import { spotifyWebApiFetch } from "@/server/adapters/spotify/web-api-adapter";
 import type {
   SpotifyArtist,
+  SpotifyArtistTopTracksResponse,
   SpotifyCurrentlyPlaying,
   SpotifyRecentlyPlayedResponse,
   SpotifyTimeRange,
@@ -59,6 +60,16 @@ export async function getSpotifyTopItems(
       time_range: timeRange,
       limit,
     },
+  );
+}
+
+export async function getArtistTopTracks(
+  accessToken: string,
+  artistId: string,
+) {
+  return spotifyWebApiFetch<SpotifyArtistTopTracksResponse>(
+    `/artists/${artistId}/top-tracks`,
+    accessToken,
   );
 }
 

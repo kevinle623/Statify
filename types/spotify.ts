@@ -75,3 +75,7 @@ export interface SpotifyTopResponse<T> {
   limit: number;
   offset: number;
 }
+
+export interface SpotifyArtistTopTracksResponse {
+  tracks: SpotifyTrack[];
+}
