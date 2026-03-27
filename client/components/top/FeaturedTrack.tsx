@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Play } from "lucide-react";
 import { formatDuration } from "@/client/lib/format";
 import type { SpotifyTrack } from "@/types/spotify";
 
@@ -33,7 +34,7 @@ export function FeaturedTrack({ track }: { track: SpotifyTrack }) {
         <p className="text-xl lg:text-2xl text-on-surface-variant font-light tracking-tight mb-8">
           {track.artists.map((a) => a.name).join(", ")}
         </p>
-        <div className="flex gap-8 lg:gap-12 font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant">
+        <div className="flex gap-8 lg:gap-12 font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant mb-8">
           <div>
             <span className="block text-primary mb-1">Duration</span>
             {formatDuration(track.duration_ms)}
@@ -43,6 +44,19 @@ export function FeaturedTrack({ track }: { track: SpotifyTrack }) {
             {track.album.name}
           </div>
         </div>
+        <a
+          href={track.external_urls.spotify}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 w-fit"
+        >
+          <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-primary flex items-center justify-center hover:scale-110 transition-transform shadow-[0_0_30px_rgba(29,185,84,0.3)]">
+            <Play className="size-5 lg:size-6 text-on-primary fill-current ml-0.5" />
+          </div>
+          <span className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors">
+            Play on Spotify
+          </span>
+        </a>
       </div>
     </div>
   );
