@@ -12,7 +12,7 @@ export function FeaturedSkeleton({ type }: { type: SpotifyTopItemType }) {
           <Skeleton className="h-4 w-28" />
           <Skeleton className="h-12 w-3/4" />
           <Skeleton className="h-6 w-1/2" />
-          <div className="flex gap-8 pt-4">
+          <div className="flex gap-8 pt-4 pb-2">
             <div className="space-y-2">
               <Skeleton className="h-3 w-16" />
               <Skeleton className="h-3 w-12" />
@@ -21,6 +21,11 @@ export function FeaturedSkeleton({ type }: { type: SpotifyTopItemType }) {
               <Skeleton className="h-3 w-16" />
               <Skeleton className="h-3 w-24" />
             </div>
+          </div>
+          {/* Play button */}
+          <div className="flex items-center gap-3">
+            <Skeleton className="w-12 h-12 lg:w-14 lg:h-14 rounded-full flex-shrink-0" />
+            <Skeleton className="h-3 w-24" />
           </div>
         </div>
       </div>
@@ -41,6 +46,15 @@ export function FeaturedSkeleton({ type }: { type: SpotifyTopItemType }) {
           <Skeleton className="h-6 w-16" />
           <Skeleton className="h-6 w-20" />
           <Skeleton className="h-6 w-14" />
+        </div>
+        {/* Top track strip */}
+        <div className="flex items-center gap-3 mt-2">
+          <Skeleton className="w-9 h-9 rounded flex-shrink-0" />
+          <div className="space-y-1.5">
+            <Skeleton className="h-2 w-14" />
+            <Skeleton className="h-3 w-36" />
+          </div>
+          <Skeleton className="w-7 h-7 rounded-full flex-shrink-0 ml-1" />
         </div>
       </div>
     </div>
