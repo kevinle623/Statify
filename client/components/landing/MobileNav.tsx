@@ -65,10 +65,11 @@ export function MobileNav() {
     <>
       <button
         ref={buttonRef}
-        className="md:hidden relative w-6 h-5 cursor-pointer group"
+        className="md:hidden relative min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer group"
         onClick={iconActive ? handleClose : handleOpen}
         aria-label={iconActive ? "Close menu" : "Open menu"}
       >
+        <span className="relative w-6 h-5 block">
         <span
           className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
           style={{
@@ -93,6 +94,7 @@ export function MobileNav() {
             transform: iconActive ? "translateY(-50%) rotate(-45deg)" : "none",
           }}
         />
+        </span>
       </button>
 
       {overlayMounted &&
