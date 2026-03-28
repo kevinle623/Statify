@@ -19,7 +19,7 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         <div className="absolute left-1/2 -translate-x-1/2">
           <LandingNav />
         </div>
-        <div className="ml-auto flex items-center gap-6">
+        <div className="ml-auto flex items-center gap-4">
           <ThemeToggle />
           <MobileNav />
         </div>

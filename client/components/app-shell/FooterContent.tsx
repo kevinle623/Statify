@@ -30,11 +30,11 @@ export function FooterContent() {
           </a>
         </div>
       </div>
-      <div className="flex items-center gap-4 text-on-surface-variant">
-        <span className="font-label text-[9px] uppercase tracking-widest">
+      <div className="inline-flex items-center gap-1.5 text-on-surface-variant">
+        <span className="font-label text-[9px] uppercase tracking-widest leading-none">
           System: Active
         </span>
-        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        <div className="size-1.5 shrink-0 rounded-full bg-primary animate-pulse -translate-y-px" />
       </div>
     </>
   );

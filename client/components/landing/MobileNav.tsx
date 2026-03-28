@@ -69,7 +69,7 @@ export function MobileNav() {
         onClick={iconActive ? handleClose : handleOpen}
         aria-label={iconActive ? "Close menu" : "Open menu"}
       >
-        <span className="relative w-6 h-5 block">
+        <span className="relative w-[18px] h-[14px] block">
           <span
             className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
             style={{
