@@ -70,30 +70,32 @@ export function MobileNav() {
         aria-label={iconActive ? "Close menu" : "Open menu"}
       >
         <span className="relative w-6 h-5 block">
-        <span
-          className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
-          style={{
-            top: iconActive ? "50%" : "0",
-            transform: iconActive ? "translateY(-50%) rotate(45deg)" : "none",
-          }}
-        />
-        <span
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
-          style={{
-            opacity: iconActive ? 0 : 1,
-            transform: iconActive
-              ? "translateY(-50%) scaleX(0)"
-              : "translateY(-50%) scaleX(1)",
-          }}
-        />
-        <span
-          className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
-          style={{
-            bottom: iconActive ? "auto" : "0",
-            top: iconActive ? "50%" : "auto",
-            transform: iconActive ? "translateY(-50%) rotate(-45deg)" : "none",
-          }}
-        />
+          <span
+            className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
+            style={{
+              top: iconActive ? "50%" : "0",
+              transform: iconActive ? "translateY(-50%) rotate(45deg)" : "none",
+            }}
+          />
+          <span
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
+            style={{
+              opacity: iconActive ? 0 : 1,
+              transform: iconActive
+                ? "translateY(-50%) scaleX(0)"
+                : "translateY(-50%) scaleX(1)",
+            }}
+          />
+          <span
+            className="absolute left-0 w-full h-[2px] bg-on-surface-variant group-hover:bg-on-surface transition-all duration-300 ease-in-out"
+            style={{
+              bottom: iconActive ? "auto" : "0",
+              top: iconActive ? "50%" : "auto",
+              transform: iconActive
+                ? "translateY(-50%) rotate(-45deg)"
+                : "none",
+            }}
+          />
         </span>
       </button>
 
