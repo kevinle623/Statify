@@ -34,7 +34,7 @@ export function FooterContent() {
         <span className="font-label text-[9px] uppercase tracking-widest leading-none">
           System: Active
         </span>
-        <div className="size-1.5 shrink-0 rounded-full bg-primary animate-pulse -translate-y-px" />
+        <div className="size-1.5 shrink-0 rounded-full bg-primary animate-pulse -translate-y-[0.5px]" />
       </div>
     </>
   );
